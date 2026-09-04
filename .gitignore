@@ -1,0 +1,12 @@
+# Godot editor and import cache
+.godot/
+
+# Exported builds and packages
+builds/
+exports/
+*.pck
+
+# Local/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
