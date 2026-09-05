@@ -12,5 +12,6 @@ Rules:
 - Keep later features and speculative final architecture out of the plan.
 - Record actual evidence and deviations as implementation proceeds.
 
-`F00_project_foundation.md` is the active plan. Its environment preflight is recorded there and
-in `PROGRESS.md`; implementation must proceed one requested step at a time.
+`F01_first_expedition_and_lethal_retry.md` is the active plan. Its preflight is recorded there
+and in `PROGRESS.md`; implementation must proceed one requested step at a time. The completed
+F00 plan remains the foundation and regression baseline.

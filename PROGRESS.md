@@ -4,21 +4,22 @@ Last documentation update: 2026-09-05
 
 ## Current state
 
-- Overall status: F00 complete; F01 not started.
+- Overall status: F00 complete; F01 planned.
 - Last completed feature or milestone: F00 - Project foundation.
-- Current feature: None; F00 is complete and F01 has not been planned.
-- Current step: None.
-- Next action: Approve or revise the proposed F01 Basin surface content, then request
-  `Generate the plan for the next feature` to create only the F01 plan.
-- Known blockers: F01 planning requires approval or revision of its proposed Basin surface
-  content.
-- Unverified manual checks: Future comprehension, recovery, and pacing checks remain assigned
-  in the roadmap.
-- Pending user decisions: Approve or revise the proposed first-slice content in `docs/CONTENT_CATALOG.md` before the feature that consumes each item.
+- Current feature: F01 - First expedition and lethal retry.
+- Current step: S01 - Build the playable Basin route (`Not started`).
+- Next action: Request `Implement the next step` to implement only F01/S01: the controllable
+  player, static shuttle, and bounded authored Basin route without hazard or retry behavior.
+- Known blockers: None.
+- Unverified manual checks: F01/S01 movement and route presentation, followed by F01/S02-S03
+  hazard readability and repeated shuttle retry, remain pending implementation and user review.
+- Pending user decisions: Approve or revise proposed first-slice content before the later
+  feature that consumes each item. Basin surface is approved; other proposed items remain
+  unapproved.
 
 ## Canonical status line
 
-`Status: F00 complete | Last: F00 project foundation | Current: no active feature; F01 not planned | Next: approve or revise F01 Basin surface content, then request its plan | Blockers: F01 content approval pending`
+`Status: F00 complete; F01 planned | Last: F00 project foundation | Current: F01/S01 playable Basin route not started | Next: implement only F01/S01 | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -29,7 +30,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 | ID | Feature | Status | Plan | Implementation evidence | Verification evidence |
 | --- | --- | --- | --- | --- | --- |
 | F00 | Project foundation | Complete | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | S03 reconfirmed Godot `4.7.1.stable.official.a13da4feb`; clean-state import, focused test, smoke run, and `git diff --check` passed. The user confirmed both placeholder labels were visible, and the window closed normally. |
-| F01 | First expedition and lethal retry | Not started | Not generated | None | None |
+| F01 | First expedition and lethal retry | Planned | `plans/F01_first_expedition_and_lethal_retry.md` | No gameplay implementation yet. The approved Basin concept is preserved at `docs/concepts/f01_basin_surface_concept.png`. | Planning preflight passed the Godot headless import, F00 focused test, two-frame main-scene smoke run, and `git diff --check`; all exited 0. |
 | F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
 | F03 | Static mothership base | Not started | Not generated | None | None |
 | F04 | Branching exploration and coordinates | Not started | Not generated | None | None |
@@ -68,16 +69,24 @@ approves a change.
 
 ## Active blockers and known issues
 
-- F01 planning is waiting on approval or revision of its proposed Basin surface content.
+- None. The Basin surface direction is approved and F01 is planned.
 - F00/S01 is complete; the runnable shell now exists.
 - F00/S02 is complete; the four movement actions and focused test entry point now exist.
 - F00/S03 is complete; full automated acceptance passed, the user confirmed both labels were
   visible, and the launched process closed normally.
 - Content names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly
-  approved; the review approval does not approve all content candidates.
+  approved. Basin surface is approved; the review approval and Basin approval do not approve
+  other content candidates.
 
 ## Latest documentation evidence
 
+- F01 planning on 2026-09-05 inspected the complete F00 project and verified a clean `main`
+  worktree before planning. Headless editor import, the F00 focused test, the two-frame main-scene
+  smoke run, and `git diff --check` all exited 0. The user approved the Basin surface direction
+  after reviewing a generated concept; the reference is stored at
+  `docs/concepts/f01_basin_surface_concept.png`. The F01 plan defines three independently
+  requestable steps: build the playable authored route, add lethal contact and local shuttle
+  retry, then run full automated and manual acceptance. No game code was implemented.
 - F00/S03 on 2026-09-05 confirmed console version `4.7.1.stable.official.a13da4feb`. The
   clean-state headless editor import, focused foundation test, main-scene smoke run, and
   `git diff --check` all exited 0. Git status was clean before S03 bookkeeping. The user then
@@ -110,15 +119,16 @@ approves a change.
 - `docs/GAME_DESIGN.md` defines stable meanings versus variable solutions, an early inference
   example, bounded persistent statuses, resource/cache retry rules, checkpoint abandonment,
   basic mothership recovery, and pacing guided by observations rather than a duration minimum.
-- `docs/CONTENT_CATALOG.md` assigns content owners and updates approval timing. Proposed content
-  remains proposed. `plans/FEATURE_PLAN_TEMPLATE.md` carries ownership, persistence, recovery,
-  and applicable manual gates into future plans.
+- `docs/CONTENT_CATALOG.md` assigns content owners and updates approval timing. Unapproved
+  catalog content remains proposed. `plans/FEATURE_PLAN_TEMPLATE.md` carries ownership,
+  persistence, recovery, and applicable manual gates into future plans.
 - Prior documentation-review verification inspected the then-clean Git baseline and the
   placeholder-only `game/` scaffold. At that time no active feature plan, `project.godot`, or
   runnable tests existed, and all 15 roadmap features were `Not started`. Documentation
   cross-reference checks and `git diff --check` passed before F00 planning and implementation.
-- No gameplay system or architecture refactor was introduced; no architecture-log entry is
-  warranted. F00 is now `In progress`; later features remain `Not started`.
+- No gameplay system or architecture refactor was introduced during planning; no
+  architecture-log entry is warranted. F00 is complete, F01 is planned, and later features
+  remain `Not started`.
 
 ## Decision log
 
@@ -133,13 +143,15 @@ approves a change.
 | 2026-09-05 | Apply the approved review: move the first knowledge loop to F06 and assign remaining content to explicit owners. | Test observation and inference before generation/survival investment; avoid unassigned work accumulating at release. |
 | 2026-09-05 | Introduce recovery with survival, retain bounded statuses on death, and define resource/cache reset rules. | Death should not serve as treatment; repeated failure and finite resources must not prevent another viable expedition. |
 | 2026-09-05 | Preserve vocabulary meanings while varying evidenced solutions; use comprehension and pacing playtests. | Reachability tests cannot prove understandable deductions or enjoyable duration. |
+| 2026-09-05 | Approve the Basin surface visual direction for F01 and its later F07 generation role. | The reviewed concept communicates a readable static shuttle origin, compact rock route, and strong cyan-safe versus amber-red-danger language while remaining reducible to Godot-native placeholder art. |
 
 ## Latest handoff
 
-F00/S01, S02, and S03 are complete. S03 reconfirmed the expected Godot version and passed the
-clean-state headless import, focused foundation test, two-frame main-scene smoke run,
-configuration inspection, and `git diff --check`. The user confirmed seeing `LANDZONE` and
-`Project foundation`, and the launched process closed normally. F01 is not planned. Its proposed
-Basin surface content must be approved or revised before planning; after that decision, the
-exact next implementation-process action is to generate only the F01 plan. Do not implement F01
-or generate any later plan in advance.
+F00/S01-S03 are complete. The user approved the Basin surface direction after reviewing its
+concept image, which is now preserved under `docs/concepts/`. F01 is planned in
+`plans/F01_first_expedition_and_lethal_retry.md` as three independently requestable steps. Its
+planning baseline passed headless import, the F00 focused test, the main-scene smoke run, and
+`git diff --check`; no gameplay code was implemented. The exact next action is to request
+`Implement the next step`, which must mark and implement only F01/S01: the controllable player,
+static shuttle, and bounded authored Basin route. Do not add the hazard/retry from S02 or
+generate a later feature plan in advance.

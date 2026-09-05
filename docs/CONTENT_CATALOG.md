@@ -43,13 +43,19 @@ behaviors or combine arbitrary enemies without an authored fairness rule.
 
 | Content | State | Owner | Purpose |
 | --- | --- | --- | --- |
-| Basin surface | Proposed | F01; F07 generation | Readable rock paths, compass-aligned forks, and the initial landing region; hunting resources arrive in F10. |
+| Basin surface | Approved | F01; F07 generation | Readable rock paths, compass-aligned forks, and the initial landing region; hunting resources arrive in F10. |
 | Spore margin | Proposed | F07; F10 exposure | Alternate surface presentation and authored ground-hazard modules; status exposure activates only with F10 recovery support. |
 | Silent structure | Proposed | F09 | Principal cave/ruin site holding the first artifact and entrance checkpoint. |
 | Survey cairn | Proposed | F06; F07 placement | Reusable clue landmark whose form remains recognizable when its location changes. |
 | Optional resource site | Proposed | F07 reachable node; F10 content | Optional branch containing the huntable creature and ordinary resources; mandatory progression cannot depend on exhausting it. |
 | Phase fault | Proposed | F08 | Lethal gap/anomaly used for the first precision-blink challenge. |
 | Boss gate | Proposed | F12 coordinate; F13 encounter | Authored final encounter entrance with a nearby shuttle landing and immediate checkpoint. |
+
+The user approved the Basin surface direction on 2026-09-05 after reviewing
+`docs/concepts/f01_basin_surface_concept.png`. The image is a mood, palette, and readability
+reference rather than a requirement for asset-level fidelity; F01 remains limited to simple
+Godot-native placeholder visuals. The approval also preserves Basin surface as F07's first
+generated surface presentation, without approving any other proposed F07 content.
 
 ## Statuses and survival content
 
