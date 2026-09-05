@@ -4,7 +4,7 @@
 - Roadmap dependency: None
 - Created: 2026-09-05
 - Completed: -
-- Current step: S02
+- Current step: S03
 
 ## Objective
 
@@ -102,7 +102,7 @@ Allowed statuses: `Not started`, `In progress`, `Blocked`, `Complete`.
 | Step | Outcome | Status | Verification |
 | --- | --- | --- | --- |
 | S01 | A Compatibility-renderer Godot project launches its labelled placeholder main scene. | Complete | Godot 4.7.1 headless editor import and two-frame main-scene smoke run exited 0 without parser, load, or runtime errors; `git diff --check` passed. |
-| S02 | Movement inputs and a focused F00 test entry point establish the repeatable automated baseline. | Not started | Focused test reports all project, renderer, input, and scene-load checks passing; S01 checks still pass. |
+| S02 | Movement inputs and a focused F00 test entry point establish the repeatable automated baseline. | Complete | Focused test reported all project, renderer, movement-input, and scene-load checks passing; headless editor import, main-scene smoke, and `git diff --check` also passed. |
 | S03 | Full F00 acceptance evidence is recorded, including the manual visible launch check. | Not started | All automated commands and `git diff --check` pass; user confirms the expected placeholder window. |
 
 ## Implementation steps
@@ -249,17 +249,20 @@ enough to distinguish pass from failure.
 
 Fill this section during implementation rather than predicting results:
 
-- Actual files changed: S01 added `game/project.godot` and `game/main.tscn`; bookkeeping updated
-  this plan and `PROGRESS.md`.
-- Steps completed: S01.
-- Commands/tests and results: Godot 4.7.1 headless editor import exited 0; the configured main
-  scene smoke run with `--quit-after 2` exited 0; `git diff --check` exited 0 with no whitespace
-  errors.
+- Actual files changed: S01 added `game/project.godot` and `game/main.tscn`. S02 updated
+  `game/project.godot`, added `game/tests/run_tests.gd`, its Godot-generated `.gd.uid`, and
+  `game/tests/README.md`. Bookkeeping updated this plan and `PROGRESS.md`.
+- Steps completed: S01 and S02.
+- Commands/tests and results: The focused SceneTree test printed `F00 checks passed: project,
+  renderer, movement inputs, and main scene.` and exited 0. Godot 4.7.1 headless editor import
+  and the configured main-scene smoke run with `--quit-after 2` exited 0 without parser, load,
+  or runtime errors. `git diff --check` exited 0 with no whitespace errors.
 - Manual checks performed: None. The visible placeholder-window check remains deliberately
   deferred to S03.
 - Deviations from plan: None.
 - Architecture log entries: None; the planned flat project-to-main-scene boundary does not
   constitute a refactor or additional architecture decision.
-- Remaining risks or debt: S02 must add and verify only the four planned movement inputs and
-  focused test entry point. S03 still owns full acceptance and the user's visual confirmation.
-- Suggested commit boundary: F00/S01 runnable project shell and its bookkeeping.
+- Remaining risks or debt: S03 still owns full acceptance, including a clean-state rerun and
+  the user's visual confirmation of the launched placeholder window.
+- Suggested commit boundary: F00/S02 movement-input and focused-verification baseline with its
+  bookkeeping.

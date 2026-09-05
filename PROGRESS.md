@@ -5,10 +5,10 @@ Last documentation update: 2026-09-05
 ## Current state
 
 - Overall status: F00 implementation in progress.
-- Last completed feature or milestone: F00/S01 - Runnable Compatibility-renderer project shell.
+- Last completed feature or milestone: F00/S02 - Movement-input and focused-verification baseline.
 - Current feature: F00 - Project foundation (`In progress`).
-- Current step: F00/S02 - Establish inputs and focused verification (`Not started`).
-- Next action: Implement only F00/S02 from `plans/F00_project_foundation.md`.
+- Current step: F00/S03 - Verify and accept the foundation (`Not started`).
+- Next action: Implement only F00/S03 from `plans/F00_project_foundation.md`.
 - Known blockers: None.
 - Unverified manual checks: F00/S03 will require the user to confirm that the placeholder window
   opens and shows `LANDZONE` and `Project foundation` legibly. The runnable shell exists, but
@@ -18,7 +18,7 @@ Last documentation update: 2026-09-05
 
 ## Canonical status line
 
-`Status: F00 implementation in progress | Last: F00/S01 runnable project shell | Current: F00/S02 - inputs and focused verification not started | Next: implement only F00/S02 | Blockers: none`
+`Status: F00 implementation in progress | Last: F00/S02 movement-input and focused-verification baseline | Current: F00/S03 - foundation acceptance not started | Next: implement only F00/S03 | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -28,7 +28,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 | ID | Feature | Status | Plan | Implementation evidence | Verification evidence |
 | --- | --- | --- | --- | --- | --- |
-| F00 | Project foundation | In progress | `plans/F00_project_foundation.md` | S01 added `game/project.godot` and the self-contained Control-based `game/main.tscn`; no script, input, autoload, gameplay, or external asset was added. | Godot 4.7.1 headless editor import and two-frame main-scene smoke run exited 0 without parser, load, or runtime errors; `git diff --check` passed. |
+| F00 | Project foundation | In progress | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | The focused test reported all project, renderer, movement-input, and scene-load checks passing. Godot 4.7.1 headless editor import, two-frame main-scene smoke, and `git diff --check` passed. |
 | F01 | First expedition and lethal retry | Not started | Not generated | None | None |
 | F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
 | F03 | Static mothership base | Not started | Not generated | None | None |
@@ -46,13 +46,13 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 ## Verification baseline
 
-A minimal Godot project and main scene now exist. No focused automated verification script
-exists yet; F00/S02 owns that next baseline. The F00 plan owns:
+A minimal Godot project, main scene, movement-input baseline, and focused automated verification
+script now exist. F00/S03 owns the final clean-state acceptance pass. The F00 plan owns:
 
 - Recording the installed Godot version and executable paths.
 - Maintaining `game/project.godot` and its minimal runnable main scene.
 - Establishing the first repeatable headless import and smoke checks.
-- Creating the initial `game/tests/` verification entry point.
+- Maintaining the initial `game/tests/` verification entry point.
 - Confirming the Compatibility renderer and project layout.
 
 Confirmed executables:
@@ -69,12 +69,20 @@ Both files exist with file version `4.7.1`; the console reports
 
 - No active blockers.
 - F00/S01 is complete; the runnable shell now exists.
-- F00/S02 has not started, so movement inputs and the focused test entry point do not yet exist.
+- F00/S02 is complete; the four movement actions and focused test entry point now exist.
+- F00/S03 has not started; full acceptance and the manual runtime-window check remain pending.
 - Content names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly
   approved; the review approval does not approve all content candidates.
 
 ## Latest documentation evidence
 
+- F00/S02 on 2026-09-05 added `move_up`, `move_down`, `move_left`, and `move_right` with paired
+  physical WASD and arrow-key bindings. It added one focused SceneTree test and a README with
+  the exact local verification commands; no player motion or future-feature input was added.
+- S02 verification passed: the focused test confirmed project identity, main-scene setting,
+  Compatibility renderer settings/features, all eight required key bindings, and main-scene
+  loadability. Headless editor import, the two-frame main-scene smoke run, and
+  `git diff --check` also exited 0.
 - F00/S01 on 2026-09-05 added a Godot 4.7.1 project with an explicit Compatibility renderer,
   960x540 2D viewport, and `res://main.tscn` as the main scene. The self-contained Control scene
   displays the literal labels `LANDZONE` and `Project foundation` over a plain background.
@@ -121,10 +129,10 @@ Both files exist with file version `4.7.1`; the console reports
 
 ## Latest handoff
 
-F00/S01 is complete. `game/project.godot` now selects the self-contained labelled
-`game/main.tscn` under the explicit Compatibility renderer. Godot 4.7.1 headless editor import,
-the two-frame main-scene smoke run, and `git diff --check` passed. The exact next action is to
-implement only F00/S02: add the four planned movement inputs and focused test entry point, then
-rerun the S01 checks. Do not perform S03 acceptance or claim its manual visual confirmation.
-No content-catalog approval is needed for F00; proposed content still needs approval before its
-consuming later feature.
+F00/S01 and S02 are complete. The project has the labelled Compatibility-renderer shell, only
+the four planned movement actions with WASD/arrow bindings, and a focused headless test with
+documented commands. The focused test, headless editor import, two-frame main-scene smoke run,
+and `git diff --check` passed. The exact next action is to implement only F00/S03: rerun the full
+acceptance set from a clean editor state, inspect integration points, and record the user's
+runtime-window confirmation. Do not begin F01 or generate its plan. No content-catalog approval
+is needed for F00; proposed content still needs approval before its consuming later feature.
