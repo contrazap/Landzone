@@ -37,9 +37,10 @@ The intended feeling is:
 
 ### Knowledge is progression
 
-Enemy behaviors, environmental rules, coordinates, vocabulary, routes, and artifact functions
-remain consistent enough to be learned. A new run rearranges where evidence appears; it does
-not arbitrarily change the truth the evidence describes.
+Enemy behaviors, environmental rules, vocabulary meanings, and artifact functions remain
+consistent across runs. Coordinates, routes, and the particular solution remain stable within
+a run. A new run can change the destination and evidence arrangement while preserving the
+rules used to interpret them; learned meanings never randomly reverse.
 
 ### The mothership is home
 
@@ -110,8 +111,11 @@ The first complete replayable expedition contains:
 - A boss landing coordinate derived through the codex.
 - A new-run action that preserves the rules but rearranges the expedition from a new seed.
 
-Target experience for a learned successful run: roughly 60-120 minutes. This is a design target,
-not a deadline or an acceptance criterion until tested.
+The provisional duration hypothesis for a learned successful run is roughly 60-120 minutes.
+It is not a minimum, deadline, or acceptance criterion. Playtests determine appropriate duration;
+do not add travel, repeated preparation, or command entry to reach it. Record exploration,
+inference, combat/retries, travel, and preparation separately so pacing problems are visible.
+A shorter satisfying run is acceptable within the required content scope.
 
 ## Explicit exclusions for the first slice
 
@@ -245,8 +249,35 @@ journal append 14 "ACHVNTSAT may mean ascent or north"
 artifact unlock ACHVNTSAT VEL ORUUN
 ```
 
-Early implementations may use one fixed clue chain. Procedural distribution is a later feature
-and should refactor only boundaries that the fixed implementation proves are needed.
+F06 first tests this loop with a fixed chain on the authored exterior: observe evidence, write
+and retrieve a useful note, interpret the evidence through the codex, and navigate to a local
+landmark. It needs neither an artifact nor a boss. A player unfamiliar with the answer must
+demonstrate and explain the inference before procedural generation begins. F09 extends the
+chain to an artifact unlock; F12 varies the solution and derives the boss landing coordinate.
+
+### Stable meanings and variable solutions
+
+Vocabulary meanings, interpretation rules, and clue-template logic are authored and stable.
+The selected referent, relationships between placed landmarks, destination coordinate, and
+supporting evidence locations may vary by seed. A complete solution is selected before the
+world is laid out; every mandatory inference receives at least two forms of reachable evidence.
+
+For example, suppose an approved term means "north" and another means "marked stone". One run's
+evidence might identify a northern marked stone at local N17 E09, while another identifies a
+different northern marked stone at N08 E12. A directional inscription and a separate identifying
+mark together distinguish the target from other stones. The player can reuse the vocabulary,
+but needs the current run's identifying evidence to derive its destination. This illustrates
+the rule, not approval of those words, coordinates, or a particular clue template.
+
+Do not scramble learned meanings or require journal text as a gate. A valid inferred answer is
+accepted even if the player did not collect every supporting clue; adequate evidence is a
+generation obligation, not a mandatory evidence-collection checklist. Wrong answers receive
+clear feedback without leaking the solution one symbol at a time. A remembered coordinate
+from another seed is not automatically a valid destination in the current run.
+
+Structural validation checks dependencies, reachability, and evidence coverage. Manual
+playtests separately check ambiguity, understandable deductions, and whether learned rules
+remain useful on another seed. Passing graph tests does not establish those human outcomes.
 
 ## Input and command interface
 
@@ -318,6 +349,19 @@ Initial status dimensions:
 Statuses must have observable causes and readable effects. They should create pressure to prepare
 and return home, not produce arbitrary surprise deaths.
 
+Penalties are capped: they cannot remove movement, the base attack, or required traversal
+capabilities, or make an otherwise valid mandatory crossing impossible. Death retains current
+hunger, fatigue, and conditions; retry itself neither worsens nor cures them. Status clocks
+stop during the command pause, death/restart, and scene loading.
+
+F10 must introduce basic mothership recovery in the same feature as the first status penalties.
+Initially a simple contextual command supplies rest, basic care, and emergency nourishment
+without requiring carried resources. It restores an expedition-capable baseline. F11 expands
+this into station procedures and the food chain while preserving that fallback; prepared food
+must provide a readable benefit, such as a longer interval before hunger penalties return.
+The exact rates and preparation benefit are tuned in those feature plans. Depleting finite
+world resources must never make recovery or mandatory progression impossible.
+
 The first slice includes hunting and one food preparation chain. Successful procedures may later
 be saved as reusable recipes so discovery does not become repetitive clerical entry.
 
@@ -352,9 +396,34 @@ Death preserves:
 - Critical artifacts and permanent ability unlocks.
 - Activated progression gates.
 
-Ordinary unbanked samples or resources may be dropped or lost, subject to later tuning. A site
-checkpoint is active only while that site is the current expedition context unless a later
-approved design changes this rule.
+A site checkpoint is active only while that site is the current expedition context unless a
+later approved design changes this rule.
+
+### Retry and recovery contract
+
+Apply each rule when its owning feature introduces the relevant state; early features do not
+prebuild inventory or survival systems.
+
+| State | Death/retry behavior |
+| --- | --- |
+| Position and transient combat state | Respawn at the active safe checkpoint; remove live projectiles and pending attacks, reset weapon heat/recovery, and restore control promptly. |
+| Enemy encounters | Reset ordinary and elite enemies in the current exterior/site, or an unfinished boss encounter, to their authored initial states and positions. Preserve ownership of any stolen resources through this reset. Completed bosses remain completed. Normal scene revisits preserve encounter state; they are not retries. |
+| World and progression | Preserve seed, topology, clue instances, critical artifacts, ability unlocks, activated gates, and confirmed facts. No reroll on retry. |
+| Hunger, fatigue, and physical conditions | Preserve their current bounded values; no restoration or extra deterioration from death itself. Recovery takes place on the mothership. |
+| Ordinary carried resources | From F10, move unbanked resources into one recoverable death cache. Place it at the last safe reachable ground when death occurs in invalid terrain. A new nonempty cache replaces any unrecovered cache; its old ordinary contents are lost. Empty-handed deaths do not erase the cache. Critical items never enter it. |
+| Resource sources and storage | Preserve harvested-source state and banked contents. Resetting encounters never recreates harvested creatures' yields or consumed pickups. Recovering a cache or reclaiming elite-stolen samples transfers the same items once. |
+| Durable state | Save/load preserves these outcomes once the state exists, including cache ownership, harvested sources, status values, and completed progression. Loading cannot duplicate resources or reroll the world. |
+
+From F10, a player at an activated checkpoint may deliberately abandon the expedition and
+return to the mothership through a static transition. This is distinct from automatic death
+respawn and does not change checkpoint priority. Abandonment forfeits carried ordinary resources,
+preserves critical progression and any existing death cache, ends the site checkpoint context,
+and does not itself cure conditions. Ordinary return through the shuttle retains carried
+resources. Both routes reach the basic recovery fallback, so repeated failure cannot trap a
+player in an unrecoverable expedition.
+
+F10/F11 verification must exercise repeated death, an empty inventory, depleted resource sites,
+cache replacement/recovery, checkpoint abandonment, and subsequent recovery and redeployment.
 
 ## Presentation
 
@@ -382,3 +451,8 @@ The slice is complete only when a player can:
 9. Begin another seed whose layout and evidence placement differ while the learned rules remain
    useful.
 10. Save, close, reload, and continue without invalidating the generated world or journal.
+11. Recover and redeploy after repeated deaths or resource depletion without resetting the run.
+
+Completion evidence must include player observations of clue comprehension, lethal-attack and
+traversal readability, and pacing. The feature ownership and playtest gates in `docs/ROADMAP.md`
+define when these checks begin; they must not all be deferred to release.

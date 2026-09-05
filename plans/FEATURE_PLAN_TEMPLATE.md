@@ -22,6 +22,8 @@ feature. State the learning value without turning the feature into a generic fra
 ## In scope
 
 - Required behavior for this feature only.
+- Slice requirements and content owned by this feature in `docs/ROADMAP.md`; confirm approval
+  of any proposed catalog items before planning their implementation.
 - Necessary integration with completed features.
 - Diagnostics or test seams required to verify it.
 
@@ -90,6 +92,9 @@ Repeat the same structure for each step.
 - [ ] Progress and architecture documentation match actual state.
 
 Replace generic criteria with concrete feature-specific statements during plan generation.
+Include the roadmap's applicable playtest gate and all owned slice requirements. For new durable
+state, include death, scene transition, and save/load outcomes. If introducing a penalty or
+resource cost, include a usable recovery path in this feature rather than depending on later work.
 
 ## Verification plan
 
@@ -104,6 +109,8 @@ Replace generic criteria with concrete feature-specific statements during plan g
 - Exact setup and actions.
 - Literal visible or audible expectations.
 - Failure cases to attempt.
+- Applicable comprehension, retry, or pacing observations from the roadmap; identify checks
+  that require an unfamiliar player rather than developer knowledge of the solution.
 
 ## Completion notes
 
