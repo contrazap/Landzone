@@ -1,0 +1,260 @@
+[gd_scene load_steps=9 format=3]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top_west"]
+size = Vector2(1040, 300)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top_east"]
+size = Vector2(1120, 260)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_west"]
+size = Vector2(1040, 300)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_east"]
+size = Vector2(1120, 260)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_cap"]
+size = Vector2(80, 900)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_cap"]
+size = Vector2(80, 900)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shuttle"]
+size = Vector2(116, 94)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sign"]
+bg_color = Color(0.06, 0.09, 0.115, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22, 0.68, 0.68, 0.75)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="BasinSurface" type="Node2D"]
+
+[node name="BasinGround" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 2160, 0, 2160, 900, 0, 900)
+color = Color(0.075, 0.09, 0.12, 1)
+
+[node name="RouteFloor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(40, 300, 350, 284, 690, 312, 1010, 300, 1320, 338, 1640, 300, 2120, 318, 2120, 592, 1740, 610, 1400, 574, 1080, 616, 720, 590, 360, 614, 40, 598)
+color = Color(0.2, 0.2, 0.215, 1)
+
+[node name="RouteInner" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(60, 330, 350, 316, 690, 342, 1010, 332, 1320, 370, 1640, 332, 2100, 350, 2100, 560, 1740, 578, 1400, 542, 1080, 584, 720, 558, 360, 582, 60, 566)
+color = Color(0.27, 0.255, 0.245, 1)
+
+[node name="UpperRockMass" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 2160, 0, 2160, 285, 2030, 310, 1840, 282, 1660, 308, 1490, 292, 1320, 340, 1120, 304, 920, 322, 700, 294, 520, 304, 330, 268, 170, 292, 0, 270)
+color = Color(0.105, 0.12, 0.15, 1)
+
+[node name="UpperRockFace" type="Line2D" parent="."]
+points = PackedVector2Array(0, 270, 170, 292, 330, 268, 520, 304, 700, 294, 920, 322, 1120, 304, 1320, 340, 1490, 292, 1660, 308, 1840, 282, 2030, 310, 2160, 285)
+width = 18.0
+default_color = Color(0.16, 0.17, 0.2, 1)
+joint_mode = 2
+
+[node name="UpperStrata" type="Line2D" parent="."]
+points = PackedVector2Array(0, 240, 180, 258, 340, 238, 520, 274, 710, 264, 930, 290, 1120, 274, 1320, 310, 1490, 262, 1660, 278, 1840, 252, 2030, 280, 2160, 255)
+width = 4.0
+default_color = Color(0.19, 0.205, 0.235, 0.72)
+
+[node name="LowerRockMass" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 630, 180, 608, 360, 632, 550, 602, 730, 618, 910, 594, 1080, 634, 1260, 606, 1420, 592, 1590, 628, 1760, 612, 1940, 634, 2160, 615, 2160, 900, 0, 900)
+color = Color(0.095, 0.11, 0.14, 1)
+
+[node name="LowerRockFace" type="Line2D" parent="."]
+points = PackedVector2Array(0, 630, 180, 608, 360, 632, 550, 602, 730, 618, 910, 594, 1080, 634, 1260, 606, 1420, 592, 1590, 628, 1760, 612, 1940, 634, 2160, 615)
+width = 18.0
+default_color = Color(0.155, 0.165, 0.195, 1)
+
+[node name="LowerStrata" type="Line2D" parent="."]
+points = PackedVector2Array(0, 664, 180, 642, 360, 666, 550, 636, 730, 652, 910, 628, 1080, 668, 1260, 640, 1420, 626, 1590, 662, 1760, 646, 1940, 668, 2160, 649)
+width = 4.0
+default_color = Color(0.18, 0.195, 0.225, 0.72)
+
+[node name="SafeArea" type="Polygon2D" parent="."]
+position = Vector2(330, 450)
+polygon = PackedVector2Array(-150, -56, -112, -112, -56, -145, 52, -145, 116, -105, 150, -48, 150, 48, 116, 105, 52, 145, -56, 145, -112, 112, -150, 56)
+color = Color(0.08, 0.29, 0.31, 0.48)
+
+[node name="SafeAreaRing" type="Line2D" parent="."]
+position = Vector2(330, 450)
+points = PackedVector2Array(-150, -56, -112, -112, -56, -145, 52, -145, 116, -105, 150, -48, 150, 48, 116, 105, 52, 145, -56, 145, -112, 112, -150, 56, -150, -56)
+width = 5.0
+default_color = Color(0.18, 0.84, 0.82, 0.8)
+joint_mode = 2
+
+[node name="LandingGuides" type="Node2D" parent="."]
+
+[node name="North" type="Line2D" parent="LandingGuides"]
+points = PackedVector2Array(330, 316, 330, 352)
+width = 3.0
+default_color = Color(0.38, 0.88, 0.86, 0.78)
+
+[node name="South" type="Line2D" parent="LandingGuides"]
+points = PackedVector2Array(330, 548, 330, 584)
+width = 3.0
+default_color = Color(0.38, 0.88, 0.86, 0.78)
+
+[node name="West" type="Line2D" parent="LandingGuides"]
+points = PackedVector2Array(180, 450, 216, 450)
+width = 3.0
+default_color = Color(0.38, 0.88, 0.86, 0.78)
+
+[node name="East" type="Line2D" parent="LandingGuides"]
+points = PackedVector2Array(444, 450, 480, 450)
+width = 3.0
+default_color = Color(0.38, 0.88, 0.86, 0.78)
+
+[node name="Shuttle" type="StaticBody2D" parent="." groups=["shuttle"]]
+position = Vector2(302, 450)
+collision_layer = 2
+collision_mask = 1
+
+[node name="Shadow" type="Polygon2D" parent="Shuttle"]
+position = Vector2(-5, 8)
+polygon = PackedVector2Array(-65, -40, 36, -48, 70, -24, 70, 32, 35, 52, -64, 42, -78, 10, -78, -10)
+color = Color(0.015, 0.025, 0.035, 0.6)
+
+[node name="Hull" type="Polygon2D" parent="Shuttle"]
+polygon = PackedVector2Array(-60, -35, 32, -45, 64, -22, 64, 22, 32, 45, -60, 35, -74, 8, -74, -8)
+color = Color(0.57, 0.62, 0.65, 1)
+
+[node name="Core" type="Polygon2D" parent="Shuttle"]
+polygon = PackedVector2Array(-36, -26, 28, -32, 48, -16, 48, 16, 28, 32, -36, 26, -50, 7, -50, -7)
+color = Color(0.26, 0.31, 0.35, 1)
+
+[node name="Canopy" type="Polygon2D" parent="Shuttle"]
+position = Vector2(15, 0)
+polygon = PackedVector2Array(-18, -19, 15, -16, 26, -7, 26, 7, 15, 16, -18, 19, -27, 8, -27, -8)
+color = Color(0.08, 0.19, 0.24, 1)
+
+[node name="LeftWing" type="Polygon2D" parent="Shuttle"]
+polygon = PackedVector2Array(-38, -27, 15, -54, 35, -51, 20, -29)
+color = Color(0.38, 0.43, 0.47, 1)
+
+[node name="RightWing" type="Polygon2D" parent="Shuttle"]
+polygon = PackedVector2Array(-38, 27, 15, 54, 35, 51, 20, 29)
+color = Color(0.38, 0.43, 0.47, 1)
+
+[node name="EngineGlowTop" type="Polygon2D" parent="Shuttle"]
+position = Vector2(-51, -23)
+polygon = PackedVector2Array(-9, -6, 7, -6, 11, 0, 7, 6, -9, 6)
+color = Color(0.16, 0.91, 0.89, 1)
+
+[node name="EngineGlowBottom" type="Polygon2D" parent="Shuttle"]
+position = Vector2(-51, 23)
+polygon = PackedVector2Array(-9, -6, 7, -6, 11, 0, 7, 6, -9, 6)
+color = Color(0.16, 0.91, 0.89, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shuttle"]
+shape = SubResource("RectangleShape2D_shuttle")
+
+[node name="ShuttleSpawn" type="Marker2D" parent="." groups=["shuttle_spawn"]]
+position = Vector2(480, 450)
+
+[node name="LandingSign" type="PanelContainer" parent="."]
+offset_left = 216.0
+offset_top = 526.0
+offset_right = 392.0
+offset_bottom = 558.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sign")
+
+[node name="Label" type="Label" parent="LandingSign"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.9, 0.88, 1)
+theme_override_font_sizes/font_size = 13
+text = "  SHUTTLE CHECKPOINT  "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RouteMarkers" type="Node2D" parent="."]
+
+[node name="MarkerA" type="Polygon2D" parent="RouteMarkers"]
+position = Vector2(760, 452)
+polygon = PackedVector2Array(-7, -18, 7, -18, 7, 18, -7, 18)
+color = Color(0.28, 0.61, 0.61, 0.72)
+
+[node name="MarkerB" type="Polygon2D" parent="RouteMarkers"]
+position = Vector2(1190, 480)
+polygon = PackedVector2Array(-7, -18, 7, -18, 7, 18, -7, 18)
+color = Color(0.28, 0.61, 0.61, 0.72)
+
+[node name="MarkerC" type="Polygon2D" parent="RouteMarkers"]
+position = Vector2(1630, 456)
+polygon = PackedVector2Array(-7, -18, 7, -18, 7, 18, -7, 18)
+color = Color(0.28, 0.61, 0.61, 0.72)
+
+[node name="Pebbles" type="Node2D" parent="."]
+
+[node name="Pebble1" type="Polygon2D" parent="Pebbles"]
+position = Vector2(628, 371)
+polygon = PackedVector2Array(-18, -8, -8, -16, 13, -12, 20, 1, 8, 13, -13, 11)
+color = Color(0.14, 0.15, 0.175, 1)
+
+[node name="Pebble2" type="Polygon2D" parent="Pebbles"]
+position = Vector2(914, 548)
+polygon = PackedVector2Array(-14, -8, -4, -14, 14, -10, 18, 3, 6, 12, -12, 9)
+color = Color(0.15, 0.155, 0.18, 1)
+
+[node name="Pebble3" type="Polygon2D" parent="Pebbles"]
+position = Vector2(1308, 426)
+polygon = PackedVector2Array(-16, -9, -4, -15, 16, -10, 18, 5, 5, 13, -13, 9)
+color = Color(0.14, 0.15, 0.175, 1)
+
+[node name="Pebble4" type="Polygon2D" parent="Pebbles"]
+position = Vector2(1512, 536)
+polygon = PackedVector2Array(-15, -8, -3, -13, 14, -9, 17, 4, 4, 12, -13, 8)
+color = Color(0.15, 0.155, 0.18, 1)
+
+[node name="BoundaryTopWest" type="StaticBody2D" parent="." groups=["path_boundary"]]
+position = Vector2(520, 150)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryTopWest"]
+shape = SubResource("RectangleShape2D_top_west")
+
+[node name="BoundaryTopEast" type="StaticBody2D" parent="." groups=["path_boundary"]]
+position = Vector2(1600, 130)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryTopEast"]
+shape = SubResource("RectangleShape2D_top_east")
+
+[node name="BoundaryBottomWest" type="StaticBody2D" parent="." groups=["path_boundary"]]
+position = Vector2(520, 750)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryBottomWest"]
+shape = SubResource("RectangleShape2D_bottom_west")
+
+[node name="BoundaryBottomEast" type="StaticBody2D" parent="." groups=["path_boundary"]]
+position = Vector2(1600, 770)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryBottomEast"]
+shape = SubResource("RectangleShape2D_bottom_east")
+
+[node name="BoundaryLeftCap" type="StaticBody2D" parent="." groups=["path_boundary"]]
+position = Vector2(-40, 450)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryLeftCap"]
+shape = SubResource("RectangleShape2D_left_cap")
+
+[node name="BoundaryRightCap" type="StaticBody2D" parent="." groups=["path_boundary"]]
+position = Vector2(2200, 450)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryRightCap"]
+shape = SubResource("RectangleShape2D_right_cap")
