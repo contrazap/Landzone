@@ -191,6 +191,9 @@ position = Vector2(1630, 456)
 color = Color(0.28, 0.61, 0.61, 0.72)
 polygon = PackedVector2Array(-7, -18, 7, -18, 7, 18, -7, 18)
 
+[node name="StalkerSpawn" type="Marker2D" parent="." groups=["stalker_spawn"]]
+position = Vector2(1660, 450)
+
 [node name="LethalHazard" type="Area2D" parent="." unique_id=782657598 groups=["hazard"]]
 z_index = 1
 position = Vector2(1115, 405)

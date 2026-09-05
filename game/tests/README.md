@@ -31,6 +31,24 @@ one second, rejects duplicate death/retry requests, and proves three consecutive
 the same player at the exact shuttle marker with clean movement while preserving the Basin.
 Success prints a concise `F01/S02 checks passed` summary and exits with code 0.
 
+## F02 ranged-combat test
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f02_ranged_combat.gd
+```
+
+This command preserves the S01 primary-button, visible weapon/muzzle, normalized aim, fixed
+recovery, forward-pulse, impact/lifetime, and death-cleanup checks. From S02 it also verifies one
+authored Stalker and spawn, explicit collision intent, bounded trigger range, the nonlethal tell
+window, locked committed direction, lethal-hitbox timing, readable recovery, exactly one hit per
+pulse, visible hit acknowledgement, defeat on the third hit, inactivity after defeat, and actual
+committed-attack contact causing the existing lethal player transition. Success prints a concise
+From S03 it also proves defeat persists until death, clears transient pulses, performs three
+actual Stalker-contact retries plus environmental retries, resets the same Stalker exactly once
+before player control returns, preserves player/Basin/Stalker identities, and restores immediate
+movement, aim, and fire. Success prints a concise `F02/S03 checks passed` summary and exits with
+code 0.
+
 ## Import and parser check
 
 ```powershell

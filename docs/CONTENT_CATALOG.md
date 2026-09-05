@@ -16,8 +16,8 @@ their specific content candidates remain subject to approval before the consumin
 
 | Content | State | Owner | Purpose |
 | --- | --- | --- | --- |
-| Surveyor weapon/tool | Approved | F02 | The player's single medium weapon; fires a reliable low-damage pulse and also interfaces with artifacts. |
-| Base pulse | Approved | F02 | Always available direct attack; constrained by heat or recovery rather than finite ammunition. |
+| Surveyor weapon/tool | Implemented | F02 | The player's single medium weapon; fires a reliable low-damage pulse and also interfaces with artifacts. |
+| Base pulse | Implemented | F02 | Always available direct attack; constrained by heat or recovery rather than finite ammunition. |
 | Precision blink | Proposed | F08 | Paused-command traversal ability using bearing/distance or relative offset; invalid landings are lethal. |
 | Resonance interrupt | Proposed | F09 | Artifact ability that interrupts a clearly telegraphed enemy or environmental action rather than increasing raw damage. |
 | Artifact environmental/traversal effect (pairing undecided) | Proposed | F09 | The same artifact also grants access through one authored environmental/traversal obstacle; its own acquisition route must not require this effect. |
@@ -30,7 +30,7 @@ available in F08 and is not locked behind this artifact. F09 owns both new artif
 
 | Working name | State | Owner | Readable role |
 | --- | --- | --- | --- |
-| Stalker | Approved | F02 | Conceals itself, reveals a clear tell, then commits to a lethal approach. Tests observation and spacing. |
+| Stalker | Implemented | F02 | Conceals itself, reveals a clear tell, then commits to a lethal approach. Tests observation and spacing. |
 | Spitter | Proposed | F07 | Projects a visible delayed hazard onto ground and forces route changes. It cannot attack unreadably from off-screen. |
 | Bulwark | Proposed | F09 | Protected from the front and defeated through positioning or an artifact verb rather than higher damage. |
 | Scavenger elite | Proposed | F10 | A variation of an existing ordinary role that attempts to take dropped samples and retreat. Reclaiming them transfers existing items, never generates duplicate loot. |
@@ -42,6 +42,13 @@ behaviors or combine arbitrary enemies without an authored fairness rule.
 The user approved the Surveyor weapon/tool, Base pulse, and Stalker candidates as written on
 2026-09-05 for F02 planning and implementation. This approval does not extend to later weapons,
 artifact verbs, or enemy roles.
+
+F02/S01 implemented the Surveyor weapon/tool presentation, direct mouse aiming, fixed-recovery
+Base pulse, world impact/lifetime expiration, and retry cleanup on 2026-09-05. F02/S02 implemented
+the one authored Stalker encounter through readable state presentation, locked lethal approach,
+three-hit defeat, and concrete pulse-impact routing on the same date. F02/S03 then implemented
+exact same-instance Stalker restoration through the existing shuttle retry; this remains concrete
+encounter behavior rather than a separate content candidate.
 
 ## Environment and locations
 

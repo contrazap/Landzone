@@ -4,23 +4,21 @@ Last documentation update: 2026-09-05
 
 ## Current state
 
-- Overall status: F00-F01 complete; F02 planned.
-- Last completed feature or milestone: F01 - First expedition and lethal retry.
-- Current feature: F02 - Ranged combat and first enemy (`Planned`).
-- Current step: F02/S01 - Add direct aiming and the Base pulse (`Not started`).
-- Next action: Request `Implement the next step` to implement only F02/S01 - add mouse aiming,
-  the primary-button `shoot` action, and the always-available Base pulse; do not add the Stalker.
+- Overall status: F00-F02 complete.
+- Last completed feature or milestone: F02 - Ranged combat and first enemy.
+- Current feature: F03 - Static mothership base (`Not started`; plan not generated).
+- Current step: None.
+- Next action: Request `Generate the plan for the next feature` to create only the F03 static-
+  mothership-base plan; do not implement F03 yet.
 - Known blockers: None.
-- Unverified manual checks: None for F01. The user confirmed movement and collision, an avoidable
-  lethal hazard, visible respawn feedback, exact shuttle return, and the complete repeated-retry,
-  post-respawn control/stability, presentation, camera, diagonal, and both-control-set gate.
-- Pending user decisions: Surveyor weapon/tool, Base pulse, and Stalker are approved for F02;
-  Basin surface is implemented. Other proposed first-slice content remains unapproved and must
-  be approved or revised before its consuming feature is planned.
+- Unverified manual checks: None for F00-F02.
+- Pending user decisions: Surveyor weapon/tool, Base pulse, Stalker, and Basin surface are
+  implemented. Other proposed first-slice content remains unapproved and must be approved or
+  revised before its consuming feature is planned.
 
 ## Canonical status line
 
-`Status: F00-F01 complete; F02 planned | Last: F01 first expedition and lethal retry | Current: F02/S01 aiming and Base pulse not started | Next: implement only F02/S01 | Blockers: none`
+`Status: F00-F02 complete | Last: F02 ranged combat and first enemy | Current: F03 not started; plan not generated | Next: generate only the F03 feature plan | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -32,7 +30,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 | --- | --- | --- | --- | --- | --- |
 | F00 | Project foundation | Complete | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | S03 reconfirmed Godot `4.7.1.stable.official.a13da4feb`; clean-state import, focused test, smoke run, and `git diff --check` passed. The user confirmed both placeholder labels were visible, and the window closed normally. |
 | F01 | First expedition and lethal retry | Complete | `plans/F01_first_expedition_and_lethal_retry.md` | S01 built the native-shape Basin route, static shuttle, explorer, boundaries, and camera. S02 added one avoidable amber-red contact hazard, explicit collision intent, player death state, main-owned duplicate-safe 0.65-second retry, exact shuttle restoration, and visible redeploy feedback. | S03 reconfirmed Godot 4.7.1, clean import, F00 regression, focused safe-contact/three-retry suite, smoke, scoped status, and diff check. User confirmed the full environment, controls, avoidable lethal contact, visible feedback, repeated prompt shuttle restoration, and stable post-respawn behavior gate. |
-| F02 | Ranged combat and first enemy | Planned | `plans/F02_ranged_combat_and_first_enemy.md` | None; planning changed no game code. | Planning preflight from clean `01264b4`: Godot 4.7.1 version/import, F00, F01, smoke, and diff checks passed. Surveyor weapon/tool, Base pulse, and Stalker are explicitly approved. |
+| F02 | Ranged combat and first enemy | Complete | `plans/F02_ranged_combat_and_first_enemy.md` | S01 added direct aim/fire and bounded Base pulses. S02 added one eastern Basin Stalker with five authored states, locked approach, three-hit defeat, and concrete pulse routing. S03 resets that same Stalker and transient shots exactly once through the existing retry. | S04 clean version/import, F00/F01/F02, smoke, ownership/collision/scope, intended-file, and diff checks pass. User confirmed the complete loop, three resets, approximately 1-second death-to-control and 4-second runback-to-tell, acceptable pacing, and a reddish tell before every attack. |
 | F03 | Static mothership base | Not started | Not generated | None | None |
 | F04 | Branching exploration and coordinates | Not started | Not generated | None | None |
 | F05 | Searchable journal and basic persistence | Not started | Not generated | None | None |
@@ -75,11 +73,11 @@ approves a change.
 - F00/S02 is complete; the four movement actions and focused test entry point now exist.
 - F00/S03 is complete; full automated acceptance passed, the user confirmed both labels were
   visible, and the launched process closed normally.
-- F02 is planned in four independently requestable steps. S01 is next and must add only direct
-  mouse aiming and the always-available Base pulse; it must not add the Stalker before S02.
-- Surveyor weapon/tool, Base pulse, and Stalker are approved for F02. Other names and tuning
-  values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly approved. Basin surface
-  is implemented; these approvals do not approve any later content candidate.
+- F02/S04 and F02 are complete. All four steps, twelve acceptance criteria, automated/ownership/
+  scope checks, and hands-on combat/retry/timing gates pass. F03 remains unplanned and unimplemented.
+- Surveyor weapon/tool and Base pulse are implemented for F02/S01, and Stalker is implemented for
+  F02/S02. Other names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until
+  explicitly approved. Basin surface is implemented; these states do not approve later content.
 - F01/S01 is complete: automated checks cover scene composition, normalized movement, intended
   collision layers, actual wall collision, and camera presence. S03 later closed its hands-on
   checkpoint; S02 extends this verified movement baseline with lethal retry.
@@ -92,6 +90,78 @@ approves a change.
 
 ## Latest documentation evidence
 
+- On 2026-09-05 the user completed the F02/S04 hands-on gate. Death-to-control measured
+  approximately 1 second and shuttle-to-first-telegraph approximately 4 seconds. Across three
+  Stalker-death retries, the Stalker returned concealed and activated again only on proximity.
+  The user found the runback fine and not far, and every attack was preceded by the reddish tell.
+  Combined with the passing automated pulse cleanup, identity, duplicate, control, and world-
+  stability assertions, this closes S04, all twelve acceptance criteria, and F02.
+- F02/S04 automated acceptance ran on 2026-09-05 without requiring a gameplay fix. Godot reported
+  `4.7.1.stable.official.a13da4feb`; clean import, F00, F01, focused F02/S03, two-frame main-scene
+  smoke, intended-file status, and `git diff --check` all passed/exited 0. Inspection confirmed
+  the approved LMB input, explicit collision layers, one player/one Stalker composition, concrete
+  player-to-Main shot ownership, guarded pulse impact, Stalker-owned states, and Main-owned exact-
+  once retry/reset order. A runtime-only scope scan found no health, armor, ammunition, inventory,
+  later enemy, persistence, command, procedural, autoload, or generalized combat/checkpoint system.
+  At that point eleven of twelve acceptance criteria had evidence; the later user timing/pacing
+  and repeated-run report closed the remaining criterion and completes S04/F02.
+- On 2026-09-05 the user confirmed the core F02/S03 hands-on reset: after the Stalker was defeated
+  and the player subsequently died, the Stalker returned and attacked again when the player came
+  near. This verifies encounter restoration and proximity-gated reactivation. Repeated combat-
+  death cleanup, identity, control, and unchanged-geometry observations were carried into S04.
+- F02/S03 completed on 2026-09-05. `Stalker.reset_encounter()` now restores the authored marker,
+  concealed state, full three-hit requirement, clean motion/direction, inactive attack, enabled
+  trigger, and initial presentation on the existing instance. The main retry calls it once at the
+  timer timeout before `player.respawn_at()`, while retry start continues to clear all active Base
+  pulses and reject duplicate requests. Godot remained `4.7.1.stable.official.a13da4feb`; final
+  import, F00, F01, focused F02/S03, smoke, scope inspection, and `git diff --check` passed/exited
+  0. The focused suite proves the defeated state persists before death, then exercises one reset
+  after defeat, three actual Stalker-contact deaths, and a later hazard death. Across all five
+  cycles it proves sequential exact-once reset before player control, pulse cleanup, unchanged
+  player/Basin/Stalker identities, no duplicates, exact markers and initial combat state, and
+  immediately usable movement/aim/fire. The corresponding hands-on repeated-run check is pending.
+- On 2026-09-05 the user deliberately took a committed Stalker hit and confirmed instant death
+  followed by respawn at the shuttle. Together with the previously confirmed red tell, locked
+  dodgeable approach, repeat cycle, and three-pulse defeat, this closes the complete F02/S02
+  hands-on checkpoint. Resetting the Stalker itself after either death source remains S03.
+- On 2026-09-05 the user confirmed that the F02/S02 Stalker activates in range with a reddish
+  visual, commits toward the player's position and can be dodged by moving out of that path,
+  begins another attack cycle after landing, and dies after three pulses. This closes the tell,
+  locked-direction dodge, repeat-cycle, and defeat observations. Deliberately taking committed
+  contact to confirm immediate lethal behavior without a health bar remains pending.
+- F02/S02 completed on 2026-09-05 without adding S03 encounter reset. The authored Basin now has
+  one `StalkerSpawn` at `(1660, 450)` in a clear eastern route section, and the main composition
+  has exactly one concrete Stalker. It owns concealed, telegraph, committed, recovery, and
+  defeated behavior with a 235-unit trigger inside the default camera view, a 0.8-second
+  nonlethal tell, one locked 430-unit/second approach for 0.55 seconds, a 0.7-second nonlethal
+  recovery, and distinct native-shape presentation for each readable state. The attack Area2D is
+  inactive outside commitment and calls the existing player death transition only on committed
+  contact. Base pulses now detect enemy layer 16, emit one guarded impact, and the current main
+  owner routes only this concrete Stalker hit; three impacts flash visibly and defeat it. Godot
+  remained `4.7.1.stable.official.a13da4feb`; headless import, F00, F01, extended F02/S02, smoke,
+  runtime scope inspection, and `git diff --check` all passed/exited 0. Tests prove the state
+  sequence, minimum tell, locked direction, hitbox timing, exactly one hit per pulse, third-hit
+  defeat, post-defeat inactivity, and actual lethal committed contact. No enemy reset, health,
+  loot, navigation, random behavior, later enemy, or generic combat framework was added. The
+  The later user report closed S02 hands-on combat readability; S03 now owns and implements exact
+  retry reset, with only its hands-on repeated-run checkpoint still pending.
+- On 2026-09-05 the user confirmed that F02/S01 mouse aiming and Base-pulse firing work with LMB,
+  including automatic repeated fire while LMB is held. The user then confirmed movement speed is
+  good while aiming, pulses disappear on rock impact, and ammunition is unlimited. Together these
+  observations close the complete S01 hands-on checkpoint.
+- F02/S01 completed on 2026-09-05 from the clean F02 planning baseline. It added only the
+  primary-mouse `shoot` action; a visible player-owned Surveyor weapon, muzzle, world-space aim,
+  and 0.24-second fixed recovery; a cyan Base-pulse Area2D with centralized 620-unit speed and
+  1.4-second lifetime; and main-owned projectile creation/cleanup through the existing local
+  retry. Existing layer-2 Basin bodies stop pulses, so `basin_surface.tscn` needed no change.
+  The generated script UIDs and a focused F02 test were added, and the HUD now states mouse aim
+  and LMB fire. Godot remained `4.7.1.stable.official.a13da4feb`; final headless import, F00, F01,
+  F02/S01, two-frame smoke, scope inspection, and `git diff --check` all passed/exited 0. The
+  focused suite proves primary-button binding, normalized aim and weapon rotation, exact muzzle
+  requests, recovery rejection and renewed no-ammunition fire, forward travel, first world-
+  impact/lifetime expiration, and active-pulse removal at retry start. No enemy, alternate fire,
+  health, inventory, command, persistence, or generalized combat/checkpoint system was added.
+  Hands-on aim/pulse presentation and firing feel remain explicitly pending; S02 is next.
 - F02 planning on 2026-09-05 began from clean commit `01264b4` on `main`, tracking
   `origin/main`. Inspection confirmed the F01 concrete ownership: `BasinExplorer` owns movement
   and alive/dead action state, `main.gd` owns the one local retry timer and exact shuttle
@@ -211,10 +281,12 @@ approves a change.
 
 ## Latest handoff
 
-F00 and F01 are complete, and F02 is planned. The project launches into the authored Basin,
-supports normalized movement and bounded collision, presents one avoidable lethal hazard, and
-restores the same player promptly at the static shuttle without reloading the world. The approved
-F02 content is the Surveyor weapon/tool, always-available Base pulse, and readable lethal Stalker.
-The exact next action is to request `Implement the next step`, which must implement only F02/S01:
-add direct mouse aiming, the primary-button `shoot` action, and bounded Base pulses without adding
-the Stalker or any later combat system.
+F00-F02 are complete. F02's clean automated, ownership, collision, scope, intended-file, smoke,
+and diff reviews passed without a gameplay fix. User reports confirm aim/fire, pulse behavior, the
+reddish tell, locked dodgeable attack, three-hit defeat, immediate lethality, shuttle respawn, and
+repeatable proximity-gated restoration. The final measurements were approximately 1 second from
+death to control and 4 seconds from shuttle to first telegraph; the user found the runback fine and
+observed the reddish tell before every attack across three retry cycles. No F02 manual or automated
+gate remains.
+The exact next action is to request `Generate the plan for the next feature`, which must create only
+the F03 static-mothership-base plan from the verified repository state and must not implement F03.

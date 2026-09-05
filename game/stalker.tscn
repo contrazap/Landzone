@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://stalker.gd" id="1_stalker"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_trigger"]
+radius = 235.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 25.0
+
+[node name="Stalker" type="CharacterBody2D" groups=["stalker"]]
+z_index = 1
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_stalker")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+position = Vector2(0, 14)
+polygon = PackedVector2Array(-23, -5, -14, -10, 14, -10, 23, -5, 15, 3, -15, 3)
+color = Color(0.01, 0.015, 0.025, 0.65)
+
+[node name="HintRing" type="Line2D" parent="."]
+points = PackedVector2Array(28, 0, 20, 20, 0, 28, -20, 20, -28, 0, -20, -20, 0, -28, 20, -20, 28, 0)
+width = 2.0
+default_color = Color(0.35, 0.31, 0.29, 0.42)
+
+[node name="TelegraphGlow" type="Polygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(0, -38, 10, -21, 32, -24, 25, -7, 40, 6, 20, 13, 18, 34, 0, 23, -18, 34, -20, 13, -40, 6, -25, -7, -32, -24, -10, -21)
+color = Color(0.92, 0.25, 0.055, 0.48)
+
+[node name="TelegraphRing" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(38, 0, 27, 27, 0, 38, -27, 27, -38, 0, -27, -27, 0, -38, 27, -27, 38, 0)
+width = 5.0
+default_color = Color(1, 0.51, 0.1, 0.95)
+
+[node name="RecoveryRing" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(-28, -16, -34, 0, -28, 16, -15, 27, 0, 31, 15, 27)
+width = 4.0
+default_color = Color(0.35, 0.7, 0.73, 0.75)
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, -22, 16, -15, 23, 0, 15, 18, 0, 23, -15, 18, -23, 0, -16, -15)
+color = Color(0.11, 0.14, 0.17, 0.38)
+
+[node name="Eye" type="Polygon2D" parent="."]
+position = Vector2(8, -4)
+polygon = PackedVector2Array(-7, 0, 0, -5, 8, 0, 0, 5)
+color = Color(0.42, 0.25, 0.16, 0.38)
+
+[node name="AttackCore" type="Polygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(0, -28, 25, -12, 31, 0, 25, 12, 0, 28, -25, 12, -31, 0, -25, -12)
+color = Color(0.95, 0.1, 0.045, 0.42)
+
+[node name="HitFlash" type="Polygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(0, -25, 19, -18, 26, 0, 19, 19, 0, 26, -19, 19, -26, 0, -19, -18)
+color = Color(0.5, 1, 0.95, 0.82)
+
+[node name="DefeatedMark" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(-22, -8, -8, 1, 8, -2, 23, 8)
+width = 6.0
+default_color = Color(0.2, 0.24, 0.26, 0.72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+shape = SubResource("CircleShape2D_trigger")
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 1
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_attack")
+disabled = true
+
+[node name="HitFlashTimer" type="Timer" parent="."]
+one_shot = true

@@ -1,10 +1,10 @@
 # F02 - Ranged combat and first enemy
 
-- Feature status: Planned
+- Feature status: Complete
 - Roadmap dependency: F01 - First expedition and lethal retry (Complete)
 - Created: 2026-09-05
-- Completed: -
-- Current step: S01
+- Completed: 2026-09-05
+- Current step: None (feature complete)
 
 ## Objective
 
@@ -171,10 +171,10 @@ Allowed statuses: `Not started`, `In progress`, `Blocked`, `Complete`.
 
 | Step | Outcome | Status | Verification |
 | --- | --- | --- | --- |
-| S01 | The player can aim the Surveyor weapon/tool and repeatedly fire visible, bounded Base pulses with no ammunition cost. | Not started | Headless import, F00/F01 regressions, focused input/aim/recovery/projectile checks, smoke, and `git diff --check`. |
-| S02 | One authored Stalker reveals a nonlethal tell, commits to a lethal approach, acknowledges pulse hits, and can be defeated. | Not started | Focused state/timing/collision/three-hit-defeat checks plus import, regressions, smoke, and diff check. |
-| S03 | Combat death and later hazard death both clear transient shots and reset the same Stalker encounter exactly once before shuttle control returns. | Not started | Focused enemy-attack death, defeat persistence, multi-cycle encounter reset, identity, timing, and regression checks. |
-| S04 | Full F02 acceptance evidence records readable combat, lethal-attack comprehension, death-to-control time, and runback time. | Not started | Clean full automated suite, ownership/scope inspection, and user-confirmed manual combat/retry observations. |
+| S01 | The player can aim the Surveyor weapon/tool and repeatedly fire visible, bounded Base pulses with no ammunition cost. | Complete | Godot 4.7.1 import, F00/F01 regressions, focused aim/recovery/projectile/death-cleanup checks, smoke, scope inspection, and `git diff --check` passed. User confirmed aim/fire, held-button automatic fire, unchanged movement speed, rock-impact disappearance, and unlimited ammunition. |
+| S02 | One authored Stalker reveals a nonlethal tell, commits to a lethal approach, acknowledges pulse hits, and can be defeated. | Complete | Godot 4.7.1 import, F00/F01 regressions, focused state/timing/collision/three-hit-defeat/lethal-contact checks, smoke, scope inspection, and diff check passed. User confirmed the red tell, dodgeable locked approach, repeat cycle, three-pulse defeat, instant lethal contact, and shuttle respawn. |
+| S03 | Combat death and later hazard death both clear transient shots and reset the same Stalker encounter exactly once before shuttle control returns. | Complete | Godot 4.7.1 import, F00/F01 regressions, focused defeat-persistence/five-retry/reset-order/identity/control checks, smoke, scope inspection, and `git diff --check` passed. User confirmed a defeated Stalker returns after the next death and attacks only when approached; repeated-cycle cleanup observations remain for S04. |
+| S04 | Full F02 acceptance evidence records readable combat, lethal-attack comprehension, death-to-control time, and runback time. | Complete | Godot 4.7.1 clean import, F00/F01/F02, smoke, ownership/collision/scope inspection, intended-file review, and diff check pass. User measured about 1 second death-to-control and 4 seconds shuttle-to-tell, found the runback fine, confirmed three proximity-gated resets, and saw the reddish tell before every attack. |
 
 ## Implementation steps
 
@@ -337,37 +337,37 @@ was not preceded by the identified tell.
 
 ## Feature acceptance criteria
 
-- [ ] The player visibly aims the approved Surveyor weapon/tool with the mouse and fires the
+- [x] The player visibly aims the approved Surveyor weapon/tool with the mouse and fires the
   approved Base pulse using a direct primary-button action while moving or stationary.
-- [ ] Base pulses travel in the aimed world-space direction, stop on their first valid impact or
+- [x] Base pulses travel in the aimed world-space direction, stop on their first valid impact or
   lifetime limit, visibly acknowledge firing/impact, and are always available after a short
   fixed recovery without ammunition, reload, inventory, or a heat-management UI.
-- [ ] Exactly one approved Stalker occupies one authored, on-screen-readable Basin encounter and
+- [x] Exactly one approved Stalker occupies one authored, on-screen-readable Basin encounter and
   follows only the authored concealed, telegraph, committed approach, recovery, and defeated
   behavior defined by this plan.
-- [ ] The Stalker's lethal hitbox is inactive before its clear tell completes, its approach locks
+- [x] The Stalker's lethal hitbox is inactive before its clear tell completes, its approach locks
   direction rather than homing after commitment, and a missed attack gives a readable recovery
   before another cycle.
-- [ ] Each Base pulse can register at most one Stalker hit, hits are visibly acknowledged, and
+- [x] Each Base pulse can register at most one Stalker hit, hits are visibly acknowledged, and
   exactly three valid hits defeat and disable the Stalker for the remainder of that life.
-- [ ] Any committed Stalker attack that touches the live player kills immediately through the
+- [x] Any committed Stalker attack that touches the live player kills immediately through the
   existing player lifecycle, with no hit points, armor, damage accumulation, invulnerability
   ladder, healing, or health bar.
-- [ ] A combat or environmental death starts exactly one prompt existing retry, clears transient
+- [x] A combat or environmental death starts exactly one prompt existing retry, clears transient
   pulses, and resets the same Stalker instance once at its authored spawn and initial state before
   restoring movement, aim, and fire control at the exact shuttle marker.
-- [ ] A defeated Stalker remains defeated during the current successful life but returns after
+- [x] A defeated Stalker remains defeated during the current successful life but returns after
   the next death; repeated retries never duplicate or replace the player, Basin, or Stalker and
   never reroll or alter the authored exterior.
-- [ ] The implementation contains no later weapon/enemy role, loot, inventory, mothership,
+- [x] The implementation contains no later weapon/enemy role, loot, inventory, mothership,
   persistence, command interface, coordinate system, procedural generation, or speculative
   generic combat/checkpoint framework.
-- [ ] Godot import/parser, F00 regression, F01 regression, focused F02, and main-scene smoke checks
+- [x] Godot import/parser, F00 regression, F01 regression, focused F02, and main-scene smoke checks
   pass with the confirmed Godot 4.7.1 console executable, and `git diff --check` is clean.
-- [ ] The user identifies the Stalker's lethal tell, confirms aiming/firing/hit/defeat readability
+- [x] The user identifies the Stalker's lethal tell, confirms aiming/firing/hit/defeat readability
   and repeatable lethal retry, and reports measured death-to-control and shuttle-to-telegraph
   runback times plus whether either interval feels slow or repetitive.
-- [ ] The active plan, content catalog, and `PROGRESS.md` match actual evidence; the architecture
+- [x] The active plan, content catalog, and `PROGRESS.md` match actual evidence; the architecture
   log changes only if implementation establishes a material boundary beyond this plan.
 
 ## Verification plan
@@ -421,11 +421,70 @@ was not preceded by the identified tell.
 
 Fill this section during implementation rather than predicting results:
 
-- Actual files changed:
-- Steps completed:
-- Commands/tests and results:
-- Manual checks performed:
-- Deviations from plan:
-- Architecture log entries:
-- Remaining risks or debt:
-- Suggested commit boundary:
+- Actual files changed: S01 modified `game/project.godot`, `game/main.tscn`, `game/main.gd`,
+  `game/player.tscn`, `game/player.gd`, and `game/tests/README.md`; added
+  `game/base_pulse.tscn`, `game/base_pulse.gd`, `game/tests/test_f02_ranged_combat.gd`, and the
+  two generated script UID companions; updated this plan, `PROGRESS.md`, and the implemented
+  states in `docs/CONTENT_CATALOG.md`. S02 additionally modified `game/basin_surface.tscn`,
+  `game/main.tscn`, `game/main.gd`, `game/base_pulse.tscn`, `game/base_pulse.gd`, the focused F02
+  test, and its README; added `game/stalker.tscn`, `game/stalker.gd`, and the generated Stalker
+  script UID; and updated the plan, catalog, and progress ledger.
+  S03 modified `game/main.gd`, `game/stalker.gd`, the focused F02 test and its README, then
+  updated the plan, catalog, and progress ledger. S04 has changed only this plan and
+  `PROGRESS.md` while recording acceptance evidence; no gameplay fix was required.
+- Steps completed: S01 - direct mouse aiming and the always-available Base pulse; S02 - one
+  authored readable Stalker through three-hit defeat and lethal committed contact; S03 - exact
+  same-instance encounter reset through the existing shuttle retry; S04 - complete automated,
+  ownership, scope, and hands-on acceptance of the first combat loop.
+- Commands/tests and results: Before implementation, headless import, F00, F01, two-frame smoke,
+  and `git diff --check` passed. After implementation, Godot reported
+  `4.7.1.stable.official.a13da4feb`; headless import, F00, F01, focused F02/S01, smoke, runtime
+  scope inspection, and `git diff --check` all passed/exited 0. The focused test verifies the
+  primary mouse binding, normalized world aim, visible weapon/muzzle, accepted and recovery-
+  rejected shots, repeat availability without ammunition, forward motion, first world impact,
+  lifetime expiration, and retry-start pulse cleanup. S02 began from that passing baseline. Its
+  final headless import, F00, F01, extended focused F02/S02, two-frame smoke, runtime scope
+  inspection, and diff check passed/exited 0. The focused suite proves one Stalker at its marker,
+  explicit collision intent, a 235-unit on-screen trigger, inactive attack through the 0.8-second
+  tell, locked committed direction, nonlethal 0.7-second recovery, one acknowledged hit per pulse,
+  defeat on hit three, inactivity after defeat, and actual committed contact causing one existing
+  lethal player transition and pulse cleanup. S03 began from the passing S02 baseline. Its final
+  version, import, F00, F01, extended focused F02/S03, two-frame smoke, runtime scope inspection,
+  and diff check all passed/exited 0. The focused suite proves defeat persistence before death,
+  pulse cleanup, one preliminary defeated-encounter reset, three actual Stalker-contact retries,
+  a later hazard retry, sequential exact-once resets before control returns, preserved player/
+  Basin/Stalker identities, restored spawn/state/hits/collision intent, and immediately usable
+  movement, aim, and fire after every cycle. S04 reconfirmed version
+  `4.7.1.stable.official.a13da4feb`; clean import, F00, F01, F02/S03, two-frame smoke, intended-
+  file status, and `git diff --check` all passed/exited 0. Inspection confirmed the one LMB action,
+  explicit player/world/hazard/projectile/enemy/attack collision intent, concrete player/Main/
+  pulse/Stalker signal and lifecycle ownership, exactly one player and Stalker composition, and
+  no out-of-scope runtime health, ammunition, inventory, later content, persistence, procedural,
+  or generalized manager symbols.
+- Manual checks performed: The user confirmed on 2026-09-05 that mouse aiming and Base-pulse
+  firing work on LMB, including automatic repeated fire while LMB is held; movement speed remains
+  good while aiming; pulses disappear on rock impact; and ammunition is unlimited. This closes
+  the S01 hands-on checkpoint. For S02, the user confirmed that entering range activates a
+  reddish visual tell, the Stalker attacks the player's committed position and can be dodged by
+  leaving that path, it activates another cycle after landing, and exactly three pulses kill it.
+  The user then deliberately took a committed hit and confirmed instant death followed by
+  respawn at the shuttle. This closes the S02 hands-on checkpoint. S03's hands-on defeated-
+  encounter restoration is also confirmed: after defeating the Stalker and subsequently dying,
+  the user observed that it reset and attacked again only when approached. Three repeated combat
+  runbacks plus lingering-pulse, duplicate, immediate-control, identity, and geometry observations
+  were carried into S04 acceptance. The user then completed three Stalker-death retries and
+  observed the Stalker concealed after each restoration until proximity activation. They measured
+  death-to-control at approximately 1 second and shuttle-to-first-telegraph at approximately 4
+  seconds, reported that the runback feels fine and is not far, and confirmed every attack was
+  preceded by the reddish tell. Together with the automated pulse/identity/control/world-stability
+  evidence, this closes the S04 hands-on gate.
+- Deviations from plan: No Basin scene edit was necessary in S01 because its existing world
+  bodies already occupy collision layer 2, which the Base pulse detects. No Stalker or enemy
+  collision was added. During focused-test development, pulse monitorability was left enabled
+  after verification showed it was required for reliable world-contact reporting.
+- Architecture log entries: None; this is the planned concrete player-to-main shot-request
+  and concrete main-to-Stalker impact routing, not a refactor or generalized combat boundary.
+- Remaining risks or debt: None for F02 acceptance. Broader checkpoint and scene-transition policy
+  remains deliberately absent for F03 to address from this concrete baseline.
+- Suggested commit boundary: Complete F02 direct ranged combat, first authored enemy, exact local
+  encounter retry, focused evidence, and acceptance bookkeeping.
