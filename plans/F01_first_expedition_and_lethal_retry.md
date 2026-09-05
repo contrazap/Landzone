@@ -4,7 +4,7 @@
 - Roadmap dependency: F00 - Project foundation (Complete)
 - Created: 2026-09-05
 - Completed: -
-- Current step: S02
+- Current step: S03
 
 ## Objective
 
@@ -142,7 +142,7 @@ Allowed statuses: `Not started`, `In progress`, `Blocked`, `Complete`.
 | Step | Outcome | Status | Verification |
 | --- | --- | --- | --- |
 | S01 | The player can walk from the static shuttle through a bounded authored Basin path with correct collision and camera behavior. | Complete | Headless import, F00 regression, F01 composition/movement/physics-collision checks, main-scene smoke, and `git diff --check` pass. The user confirmed movement and blocking by the route boundaries and shuttle; remaining presentation/camera observations stay pending. |
-| S02 | Contact with the readable lethal hazard causes one prompt retry and restores the player at the shuttle with clean movement state. | Not started | Focused death/retry checks cover contact, exact checkpoint restoration, retry timing, and repeated deaths; all earlier checks pass. |
+| S02 | Contact with the readable lethal hazard causes one prompt retry and restores the player at the shuttle with clean movement state. | Complete | Focused checks prove an avoidable safe lane, actual lethal contact, a 0.65-second delay, disabled control, duplicate rejection, exact clean restoration, and the same player/Basin across three cycles; import, regressions, smoke, and diff checks pass. Manual readability/retry feel remains pending. |
 | S03 | Full F01 acceptance evidence is recorded, including manual environment, hazard-readability, and lethal-retry observations. | Not started | Complete automated suite and diff check pass; the user confirms the specified hands-on checks. |
 
 ## Implementation steps
@@ -332,24 +332,35 @@ Fill this section during implementation rather than predicting results:
   `game/player.tscn`, `game/player.gd`, `game/player.gd.uid`,
   `game/tests/test_f01_first_expedition.gd`, and its generated UID; updated
   `game/tests/README.md`, this plan, and `PROGRESS.md`.
-- Steps completed: S01 only. S02-S03 remain `Not started`.
+- Actual files changed for S02: modified `game/basin_surface.tscn`, `game/main.tscn`,
+  `game/player.gd`, `game/tests/test_f01_first_expedition.gd`, and `game/tests/README.md`; added
+  `game/main.gd` and its generated UID; updated this plan and `PROGRESS.md`.
+- Steps completed: S01-S02. S03 remains `Not started`.
 - Commands/tests and results: the Godot headless editor import, F00 focused regression,
   F01/S01 focused check, two-frame main-scene smoke, and `git diff --check` all exited 0.
   The F01 check instantiated the configured main scene, verified one player, shuttle, spawn,
   camera, collision setup, and no hazard; exercised positive, diagonal, and opposing inputs;
   confirmed real CharacterBody2D motion and collision against an upper rock boundary.
+- S02 commands/tests and results: after commit `bb91806` was pushed to `origin/main`, a clean
+  baseline re-passed the F00 and F01/S01 tests and main-scene smoke. The S02 headless import,
+  F00 regression, extended F01 focused check, main-scene smoke, and `git diff --check` all exited
+  0. The extended test proved that the authored lower lane is safe, actual hazard overlap kills,
+  the retry delay is 0.65 seconds, control and velocity stop on death, duplicate requests are
+  rejected, and three consecutive cycles restore the same player at the exact shuttle marker
+  with zero velocity without replacing the Basin or hazard.
 - Manual checks performed: On 2026-09-05 the user reported, "Player moves fine. Boundaries and
   shuttle block player as expected." This confirms working player movement and collision against
   both route boundaries and the static shuttle. The static-shuttle/cyan-area presentation,
   explorer and camera readability, explicit testing of both control sets, diagonal feel, and
   two-way full-route traversal were not stated and remain pending; the complete hazard/retry
-  manual gate remains owned by S02-S03.
+  manual gate remains pending for S03. No S02 visual or hands-on result has been claimed.
 - Deviations from plan: No behavior deviation. `game/main.gd` was not added because S01 needs no
   main-scene logic; it remains planned for S02 when local retry ownership becomes real.
 - Architecture log entries: None. Implementation follows the concrete scene boundary already
   described by this plan and does not establish a broader abstraction.
-- Remaining risks or debt: Movement and blocking collision now have user evidence. Native
-  placeholder presentation, camera/diagonal feel, both control sets, and full-route traversal
-  remain only partially or not manually reported. Route-wall geometry is deliberately concrete
-  and authored.
-- Suggested commit boundary: F01/S01 playable Basin route, after user review if desired.
+- Remaining risks or debt: Movement and blocking collision have user evidence. Hazard
+  readability, safe-passage clarity, death feedback, perceived retry speed, camera/diagonal feel,
+  both control sets, and full-route traversal remain partially or not manually reported.
+  Route-wall, hazard, and checkpoint ownership are deliberately concrete and local.
+- Suggested commit boundary: F01/S01 is committed and pushed as `bb91806`; F01/S02 is the current
+  completed lethal-retry commit boundary.

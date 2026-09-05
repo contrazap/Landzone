@@ -24,11 +24,12 @@ exits with code 0; a failed assertion exits with a nonzero code.
 & 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f01_first_expedition.gd
 ```
 
-During S01, this command checks the authored Basin composition, one static shuttle and spawn,
-solid route-boundary collision intent, the focused player physics scene, positive and opposing
-inputs, normalized diagonal speed, actual CharacterBody2D movement, and the follow camera. It
-also guards the S01 boundary by rejecting any hazard node. Success prints a concise
-`F01/S01 checks passed` summary and exits with code 0.
+This command preserves the S01 checks for the authored Basin composition, static shuttle and
+spawn, solid route boundaries, player physics, normalized movement, and follow camera. From S02
+it also exercises a safe passage and actual lethal contact, verifies the delay does not exceed
+one second, rejects duplicate death/retry requests, and proves three consecutive retries restore
+the same player at the exact shuttle marker with clean movement while preserving the Basin.
+Success prints a concise `F01/S02 checks passed` summary and exits with code 0.
 
 ## Import and parser check
 

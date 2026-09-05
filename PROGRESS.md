@@ -5,23 +5,24 @@ Last documentation update: 2026-09-05
 ## Current state
 
 - Overall status: F00 complete; F01 in progress.
-- Last completed feature or milestone: F01/S01 - Playable Basin route.
+- Last completed feature or milestone: F01/S02 - Lethal contact and shuttle retry.
 - Current feature: F01 - First expedition and lethal retry.
-- Current step: S02 - Add lethal contact and shuttle retry (`Not started`).
-- Next action: Request `Implement the next step` to implement only F01/S02 lethal contact and
-  shuttle retry; the remaining S01 presentation/camera observations can be recorded by S03.
+- Current step: S03 - Verify and accept the first expedition (`Not started`).
+- Next action: User performs the F01/S02 manual checkpoint: take the safe route past the hazard,
+  then touch it three times and report hazard readability, retry speed, exact shuttle return,
+  restored controls, and whether the world/player remain stable.
 - Known blockers: None.
 - Unverified manual checks: F01/S01 movement and blocking by the boundaries and shuttle are user
   confirmed. Presentation, camera/diagonal feel, explicit use of both control sets, and full-route
-  traversal remain unreported. F01/S02-S03 hazard readability and repeated shuttle retry remain
-  pending implementation and user review.
+  traversal remain unreported. F01/S02 hazard readability, safe passage, death feedback, retry
+  speed, three repeated returns, and restored controls await user review for S03 acceptance.
 - Pending user decisions: Approve or revise proposed first-slice content before the later
   feature that consumes each item. Basin surface is approved; other proposed items remain
   unapproved.
 
 ## Canonical status line
 
-`Status: F01 in progress | Last: F01/S01 playable Basin route | Current: F01/S02 lethal contact and shuttle retry not started | Next: implement only F01/S02 | Blockers: none`
+`Status: F01 in progress | Last: F01/S02 lethal contact and shuttle retry | Current: F01/S03 acceptance not started | Next: perform the repeated hazard/retry manual checkpoint | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -32,7 +33,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 | ID | Feature | Status | Plan | Implementation evidence | Verification evidence |
 | --- | --- | --- | --- | --- | --- |
 | F00 | Project foundation | Complete | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | S03 reconfirmed Godot `4.7.1.stable.official.a13da4feb`; clean-state import, focused test, smoke run, and `git diff --check` passed. The user confirmed both placeholder labels were visible, and the window closed normally. |
-| F01 | First expedition and lethal retry | In progress | `plans/F01_first_expedition_and_lethal_retry.md` | S01 replaced the placeholder with a native-shape authored Basin route, static collidable shuttle and spawn, focused CharacterBody2D explorer, solid rock boundaries, camera, and restrained movement HUD. No hazard or retry behavior exists yet. | S01 headless import, F00 regression, F01 composition/movement/physics-collision check, two-frame main-scene smoke, and `git diff --check` passed. The user confirmed movement and blocking by boundaries and shuttle; remaining presentation/camera observations are pending. |
+| F01 | First expedition and lethal retry | In progress | `plans/F01_first_expedition_and_lethal_retry.md` | S01 built the native-shape Basin route, static shuttle, explorer, boundaries, and camera. S02 added one avoidable amber-red contact hazard, explicit collision intent, player death state, main-owned duplicate-safe 0.65-second retry, exact shuttle restoration, and visible redeploy feedback. | S01 checks and reported movement/collision passed. S02 import, F00 regression, focused safe-contact/death/three-retry checks, smoke, and `git diff --check` passed. Hazard readability and retry feel remain pending user review. |
 | F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
 | F03 | Static mothership base | Not started | Not generated | None | None |
 | F04 | Branching exploration and coordinates | Not started | Not generated | None | None |
@@ -81,10 +82,24 @@ approves a change.
   other content candidates.
 - F01/S01 is complete: automated checks cover scene composition, normalized movement, intended
   collision layers, actual wall collision, and camera presence. Its hands-on checkpoint is
-  recorded as pending; no hazard or retry behavior is expected until S02.
+  recorded as pending; S02 now extends this verified movement baseline with lethal retry.
+- F01/S02 is complete: the local main-scene owner coordinates one one-shot retry and the player
+  owns only alive/dead movement state. Automated checks cover safe passage, actual lethal
+  overlap, duplicate rejection, timing, and three exact restorations. Manual hazard/retry review
+  remains pending for S03.
 
 ## Latest documentation evidence
 
+- F01/S02 on 2026-09-05 began from clean commit `bb91806` on `main`, pushed to `origin/main`.
+  It added one amber-red Area2D hazard on collision layer 4 with a traversable safe lane. The
+  player now rejects repeated death, zeros velocity, and disables physics until respawn. A local
+  `main.gd` owner shows redeploy feedback, rejects overlapping retry requests, runs one 0.65-second
+  timer, then restores the same player at the exact shuttle marker with clean velocity and
+  control. The extended focused check exercises safe passage, actual hazard overlap, duplicate
+  requests, and three consecutive retries while retaining the same player, Basin, and hazard.
+  Headless import, F00 regression, focused F01/S02 verification, main-scene smoke, and
+  `git diff --check` passed. No health, combat, global checkpoint, persistence, or scene reload
+  was added. Manual hazard readability and retry feel remain pending.
 - F01/S01 on 2026-09-05 replaced the labelled placeholder with a 2160x900 authored Basin route
   built from Godot-native polygons and lines. It added one static collidable shuttle, a cyan
   landing/checkpoint presentation and exact spawn marker, a focused CharacterBody2D explorer
@@ -163,11 +178,10 @@ approves a change.
 
 ## Latest handoff
 
-F00/S01-S03 and F01/S01 are complete. The project launches into the approved Basin direction at
-native-placeholder fidelity with a static shuttle, cyan safe landing presentation, focused
-movable explorer, follow camera, and bounded authored route. All S01 automated checks pass. The
-user confirmed movement and collision against the boundaries and shuttle; the remaining S01
-presentation/camera observations are recorded for later manual review. F01 remains `In progress`;
-S02-S03 are `Not started`. The next implementation request must mark and implement only F01/S02:
-one readable lethal contact hazard and prompt local shuttle retry. Do not begin F02 or add
-later-feature systems.
+F00/S01-S03 and F01/S01-S02 are complete. The authored Basin now includes one avoidable amber-red
+lethal contact hazard. One death disables the same player and starts one local 0.65-second retry;
+duplicate requests are rejected, feedback appears, and control returns at the exact shuttle
+marker without reloading the Basin. All S02 automated checks pass across three cycles, and the
+implementation is included in the latest repository commit. F01 remains `In progress`; S03 is
+`Not started` pending the user's repeated safe-pass/hazard/retry observations and final acceptance
+verification. Do not begin F02 or add later-feature systems.
