@@ -1,10 +1,10 @@
 # F00 - Project foundation
 
-- Feature status: In progress
+- Feature status: Complete
 - Roadmap dependency: None
 - Created: 2026-09-05
-- Completed: -
-- Current step: S03
+- Completed: 2026-09-05
+- Current step: Complete
 
 ## Objective
 
@@ -103,7 +103,7 @@ Allowed statuses: `Not started`, `In progress`, `Blocked`, `Complete`.
 | --- | --- | --- | --- |
 | S01 | A Compatibility-renderer Godot project launches its labelled placeholder main scene. | Complete | Godot 4.7.1 headless editor import and two-frame main-scene smoke run exited 0 without parser, load, or runtime errors; `git diff --check` passed. |
 | S02 | Movement inputs and a focused F00 test entry point establish the repeatable automated baseline. | Complete | Focused test reported all project, renderer, movement-input, and scene-load checks passing; headless editor import, main-scene smoke, and `git diff --check` also passed. |
-| S03 | Full F00 acceptance evidence is recorded, including the manual visible launch check. | Not started | All automated commands and `git diff --check` pass; user confirms the expected placeholder window. |
+| S03 | Full F00 acceptance evidence is recorded, including the manual visible launch check. | Complete | Full automated acceptance passed; the user confirmed `LANDZONE` and `Project foundation` were visible, and the launched process closed normally. |
 
 ## Implementation steps
 
@@ -199,20 +199,20 @@ enough to distinguish pass from failure.
 
 ## Feature acceptance criteria
 
-- [ ] `game/project.godot` opens as a Godot 4.7.1 2D project and explicitly uses the
+- [x] `game/project.godot` opens as a Godot 4.7.1 2D project and explicitly uses the
   Compatibility renderer.
-- [ ] Running the project opens `game/main.tscn` and visibly shows `LANDZONE` and
+- [x] Running the project opens `game/main.tscn` and visibly shows `LANDZONE` and
   `Project foundation` without obvious clipping.
-- [ ] `move_up`, `move_down`, `move_left`, and `move_right` exist with WASD and arrow-key
+- [x] `move_up`, `move_down`, `move_left`, and `move_right` exist with WASD and arrow-key
   bindings, without unrelated future-feature actions.
-- [ ] The focused test verifies project settings, input bindings, and main-scene loadability and
+- [x] The focused test verifies project settings, input bindings, and main-scene loadability and
   exits nonzero on failure.
-- [ ] Headless import/parser, focused test, and main-scene smoke commands all pass with the
+- [x] Headless import/parser, focused test, and main-scene smoke commands all pass with the
   confirmed `4.7.1.stable.official.a13da4feb` console executable.
-- [ ] The project contains no gameplay systems, external dependencies, or speculative
+- [x] The project contains no gameplay systems, external dependencies, or speculative
   architecture beyond F00.
-- [ ] The user confirms the required manual placeholder presentation check.
-- [ ] The active plan and `PROGRESS.md` match the actual state; an architecture entry exists
+- [x] The user confirms the required manual placeholder presentation check.
+- [x] The active plan and `PROGRESS.md` match the actual state; an architecture entry exists
   only if implementation established a material structural boundary.
 
 ## Verification plan
@@ -252,17 +252,17 @@ Fill this section during implementation rather than predicting results:
 - Actual files changed: S01 added `game/project.godot` and `game/main.tscn`. S02 updated
   `game/project.godot`, added `game/tests/run_tests.gd`, its Godot-generated `.gd.uid`, and
   `game/tests/README.md`. Bookkeeping updated this plan and `PROGRESS.md`.
-- Steps completed: S01 and S02.
-- Commands/tests and results: The focused SceneTree test printed `F00 checks passed: project,
-  renderer, movement inputs, and main scene.` and exited 0. Godot 4.7.1 headless editor import
-  and the configured main-scene smoke run with `--quit-after 2` exited 0 without parser, load,
-  or runtime errors. `git diff --check` exited 0 with no whitespace errors.
-- Manual checks performed: None. The visible placeholder-window check remains deliberately
-  deferred to S03.
+- Steps completed: S01, S02, and S03. F00 is complete.
+- Commands/tests and results: S03 confirmed console version
+  `4.7.1.stable.official.a13da4feb`. The clean-state headless editor import, focused SceneTree
+  test, and configured main-scene smoke run all exited 0; the focused test printed `F00 checks
+  passed: project, renderer, movement inputs, and main scene.` Git status was clean before S03
+  bookkeeping, and `git diff --check` exited 0.
+- Manual checks performed: The user reported, "Yes. I was able to see the title LANDZONE and
+  content Project foundation." The launched Godot process also exited after the user closed it.
 - Deviations from plan: None.
 - Architecture log entries: None; the planned flat project-to-main-scene boundary does not
   constitute a refactor or additional architecture decision.
-- Remaining risks or debt: S03 still owns full acceptance, including a clean-state rerun and
-  the user's visual confirmation of the launched placeholder window.
-- Suggested commit boundary: F00/S02 movement-input and focused-verification baseline with its
-  bookkeeping.
+- Remaining risks or debt: None within F00. Later gameplay and its manual gates remain owned by
+  their roadmap features.
+- Suggested commit boundary: Complete F00 project foundation and acceptance bookkeeping.

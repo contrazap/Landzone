@@ -4,21 +4,21 @@ Last documentation update: 2026-09-05
 
 ## Current state
 
-- Overall status: F00 implementation in progress.
-- Last completed feature or milestone: F00/S02 - Movement-input and focused-verification baseline.
-- Current feature: F00 - Project foundation (`In progress`).
-- Current step: F00/S03 - Verify and accept the foundation (`Not started`).
-- Next action: Implement only F00/S03 from `plans/F00_project_foundation.md`.
-- Known blockers: None.
-- Unverified manual checks: F00/S03 will require the user to confirm that the placeholder window
-  opens and shows `LANDZONE` and `Project foundation` legibly. The runnable shell exists, but
-  this visual check has not been claimed from headless evidence.
-  Future comprehension, recovery, and pacing checks remain assigned in the roadmap.
+- Overall status: F00 complete; F01 not started.
+- Last completed feature or milestone: F00 - Project foundation.
+- Current feature: None; F00 is complete and F01 has not been planned.
+- Current step: None.
+- Next action: Approve or revise the proposed F01 Basin surface content, then request
+  `Generate the plan for the next feature` to create only the F01 plan.
+- Known blockers: F01 planning requires approval or revision of its proposed Basin surface
+  content.
+- Unverified manual checks: Future comprehension, recovery, and pacing checks remain assigned
+  in the roadmap.
 - Pending user decisions: Approve or revise the proposed first-slice content in `docs/CONTENT_CATALOG.md` before the feature that consumes each item.
 
 ## Canonical status line
 
-`Status: F00 implementation in progress | Last: F00/S02 movement-input and focused-verification baseline | Current: F00/S03 - foundation acceptance not started | Next: implement only F00/S03 | Blockers: none`
+`Status: F00 complete | Last: F00 project foundation | Current: no active feature; F01 not planned | Next: approve or revise F01 Basin surface content, then request its plan | Blockers: F01 content approval pending`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -28,7 +28,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 | ID | Feature | Status | Plan | Implementation evidence | Verification evidence |
 | --- | --- | --- | --- | --- | --- |
-| F00 | Project foundation | In progress | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | The focused test reported all project, renderer, movement-input, and scene-load checks passing. Godot 4.7.1 headless editor import, two-frame main-scene smoke, and `git diff --check` passed. |
+| F00 | Project foundation | Complete | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | S03 reconfirmed Godot `4.7.1.stable.official.a13da4feb`; clean-state import, focused test, smoke run, and `git diff --check` passed. The user confirmed both placeholder labels were visible, and the window closed normally. |
 | F01 | First expedition and lethal retry | Not started | Not generated | None | None |
 | F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
 | F03 | Static mothership base | Not started | Not generated | None | None |
@@ -47,7 +47,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 ## Verification baseline
 
 A minimal Godot project, main scene, movement-input baseline, and focused automated verification
-script now exist. F00/S03 owns the final clean-state acceptance pass. The F00 plan owns:
+script now exist, and F00 acceptance is complete. The F00 plan owns:
 
 - Recording the installed Godot version and executable paths.
 - Maintaining `game/project.godot` and its minimal runnable main scene.
@@ -63,19 +63,26 @@ C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe
 ```
 
 Both files exist with file version `4.7.1`; the console reports
-`4.7.1.stable.official.a13da4feb`. F00 implementation must preserve and record this baseline.
+`4.7.1.stable.official.a13da4feb`. Future work must preserve this baseline unless the user
+approves a change.
 
 ## Active blockers and known issues
 
-- No active blockers.
+- F01 planning is waiting on approval or revision of its proposed Basin surface content.
 - F00/S01 is complete; the runnable shell now exists.
 - F00/S02 is complete; the four movement actions and focused test entry point now exist.
-- F00/S03 has not started; full acceptance and the manual runtime-window check remain pending.
+- F00/S03 is complete; full automated acceptance passed, the user confirmed both labels were
+  visible, and the launched process closed normally.
 - Content names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly
   approved; the review approval does not approve all content candidates.
 
 ## Latest documentation evidence
 
+- F00/S03 on 2026-09-05 confirmed console version `4.7.1.stable.official.a13da4feb`. The
+  clean-state headless editor import, focused foundation test, main-scene smoke run, and
+  `git diff --check` all exited 0. Git status was clean before S03 bookkeeping. The user then
+  reported, "Yes. I was able to see the title LANDZONE and content Project foundation," and the
+  launched process exited after being closed. F00 is complete.
 - F00/S02 on 2026-09-05 added `move_up`, `move_down`, `move_left`, and `move_right` with paired
   physical WASD and arrow-key bindings. It added one focused SceneTree test and a README with
   the exact local verification commands; no player motion or future-feature input was added.
@@ -129,10 +136,10 @@ Both files exist with file version `4.7.1`; the console reports
 
 ## Latest handoff
 
-F00/S01 and S02 are complete. The project has the labelled Compatibility-renderer shell, only
-the four planned movement actions with WASD/arrow bindings, and a focused headless test with
-documented commands. The focused test, headless editor import, two-frame main-scene smoke run,
-and `git diff --check` passed. The exact next action is to implement only F00/S03: rerun the full
-acceptance set from a clean editor state, inspect integration points, and record the user's
-runtime-window confirmation. Do not begin F01 or generate its plan. No content-catalog approval
-is needed for F00; proposed content still needs approval before its consuming later feature.
+F00/S01, S02, and S03 are complete. S03 reconfirmed the expected Godot version and passed the
+clean-state headless import, focused foundation test, two-frame main-scene smoke run,
+configuration inspection, and `git diff --check`. The user confirmed seeing `LANDZONE` and
+`Project foundation`, and the launched process closed normally. F01 is not planned. Its proposed
+Basin surface content must be approved or revised before planning; after that decision, the
+exact next implementation-process action is to generate only the F01 plan. Do not implement F01
+or generate any later plan in advance.
