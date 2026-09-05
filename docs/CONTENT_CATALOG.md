@@ -43,7 +43,7 @@ behaviors or combine arbitrary enemies without an authored fairness rule.
 
 | Content | State | Owner | Purpose |
 | --- | --- | --- | --- |
-| Basin surface | Approved | F01; F07 generation | Readable rock paths, compass-aligned forks, and the initial landing region; hunting resources arrive in F10. |
+| Basin surface | Implemented | F01; F07 generation | Readable rock paths, compass-aligned forks, and the initial landing region; hunting resources arrive in F10. |
 | Spore margin | Proposed | F07; F10 exposure | Alternate surface presentation and authored ground-hazard modules; status exposure activates only with F10 recovery support. |
 | Silent structure | Proposed | F09 | Principal cave/ruin site holding the first artifact and entrance checkpoint. |
 | Survey cairn | Proposed | F06; F07 placement | Reusable clue landmark whose form remains recognizable when its location changes. |
@@ -56,6 +56,10 @@ The user approved the Basin surface direction on 2026-09-05 after reviewing
 reference rather than a requirement for asset-level fidelity; F01 remains limited to simple
 Godot-native placeholder visuals. The approval also preserves Basin surface as F07's first
 generated surface presentation, without approving any other proposed F07 content.
+
+F01 implemented the first authored Basin presentation on 2026-09-05 with a static shuttle,
+bounded route, safe cyan origin, and avoidable lethal hazard. F07 still owns converting this
+presentation into generated arrangements; no other F07 catalog item is approved by F01.
 
 ## Statuses and survival content
 

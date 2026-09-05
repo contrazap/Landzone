@@ -32,4 +32,6 @@ The following repository-level constraints exist before F00 and do not imply spe
 - The mothership and shuttle are static; no architecture for real-time flight is needed.
 - Direct play controls and paused deliberate commands are separate input modes.
 
-No code architecture has been established yet.
+Before F01, no gameplay code architecture had been established. F01's first concrete
+player/Basin/local-retry ownership matches its approved plan and is recorded there; no
+implementation-pressure refactor has yet warranted an evolution entry.

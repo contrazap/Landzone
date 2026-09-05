@@ -1,10 +1,10 @@
 # F01 - First expedition and lethal retry
 
-- Feature status: In progress
+- Feature status: Complete
 - Roadmap dependency: F00 - Project foundation (Complete)
 - Created: 2026-09-05
-- Completed: -
-- Current step: S03
+- Completed: 2026-09-05
+- Current step: Complete
 
 ## Objective
 
@@ -141,9 +141,9 @@ Allowed statuses: `Not started`, `In progress`, `Blocked`, `Complete`.
 
 | Step | Outcome | Status | Verification |
 | --- | --- | --- | --- |
-| S01 | The player can walk from the static shuttle through a bounded authored Basin path with correct collision and camera behavior. | Complete | Headless import, F00 regression, F01 composition/movement/physics-collision checks, main-scene smoke, and `git diff --check` pass. The user confirmed movement and blocking by the route boundaries and shuttle; remaining presentation/camera observations stay pending. |
-| S02 | Contact with the readable lethal hazard causes one prompt retry and restores the player at the shuttle with clean movement state. | Complete | Focused checks prove an avoidable safe lane, actual lethal contact, a 0.65-second delay, disabled control, duplicate rejection, exact clean restoration, and the same player/Basin across three cycles; import, regressions, smoke, and diff checks pass. Manual readability/retry feel remains pending. |
-| S03 | Full F01 acceptance evidence is recorded, including manual environment, hazard-readability, and lethal-retry observations. | Not started | Complete automated suite and diff check pass; the user confirms the specified hands-on checks. |
+| S01 | The player can walk from the static shuttle through a bounded authored Basin path with correct collision and camera behavior. | Complete | Headless import, F00 regression, F01 composition/movement/physics-collision checks, main-scene smoke, and `git diff --check` pass. The user confirmed movement and blocking; S03 later closed the remaining presentation/camera gate. |
+| S02 | Contact with the readable lethal hazard causes one prompt retry and restores the player at the shuttle with clean movement state. | Complete | Focused checks prove an avoidable safe lane, actual lethal contact, a 0.65-second delay, disabled control, duplicate rejection, exact clean restoration, and the same player/Basin across three cycles; import, regressions, smoke, and diff checks pass. S03 later closed the manual readability/retry gate. |
+| S03 | Full F01 acceptance evidence is recorded, including manual environment, hazard-readability, and lethal-retry observations. | Complete | Godot version, clean import, F00 regression, focused three-retry suite, smoke run, scoped Git status, diff check, and ownership inspection pass. The user confirmed the complete hands-on presentation, controls, hazard, prompt repeated retry, and post-respawn stability gate. |
 
 ## Implementation steps
 
@@ -264,26 +264,26 @@ comprehension gate is assigned to F01.
 
 ## Feature acceptance criteria
 
-- [ ] The project launches directly into one compact, authored Basin surface presentation
+- [x] The project launches directly into one compact, authored Basin surface presentation
   whose palette and safe/danger language follow the approved concept at placeholder fidelity.
-- [ ] A static exterior shuttle and its cyan safe area clearly identify the expedition origin
+- [x] A static exterior shuttle and its cyan safe area clearly identify the expedition origin
   and the one current respawn checkpoint.
-- [ ] The player can traverse the route with either WASD or arrow keys, diagonals are normalized,
+- [x] The player can traverse the route with either WASD or arrow keys, diagonals are normalized,
   the camera keeps play readable, and collisions prevent leaving the authored path.
-- [ ] One visually distinct hazard can be avoided during traversal and kills immediately on
+- [x] One visually distinct hazard can be avoided during traversal and kills immediately on
   contact without hit points, damage accumulation, or a health bar.
-- [ ] One death starts one retry, disables movement during a fixed delay no greater than one
+- [x] One death starts one retry, disables movement during a fixed delay no greater than one
   second, clears movement state, restores the player at the exact shuttle marker, and promptly
   returns control.
-- [ ] At least three consecutive deaths restore the same player and authored exterior without
+- [x] At least three consecutive deaths restore the same player and authored exterior without
   duplicate retries, duplicate player instances, changed geometry, or a scene reroll.
-- [ ] The implementation introduces no combat, mothership transition, command, branching route,
+- [x] The implementation introduces no combat, mothership transition, command, branching route,
   persistence, survival, procedural generation, or speculative global checkpoint system.
-- [ ] Godot import/parser, F00 regression, F01 focused, and main-scene smoke checks pass with the
+- [x] Godot import/parser, F00 regression, F01 focused, and main-scene smoke checks pass with the
   confirmed Godot 4.7.1 console executable, and `git diff --check` is clean.
-- [ ] The user confirms the manual environment, movement, hazard-readability, and repeated-retry
+- [x] The user confirms the manual environment, movement, hazard-readability, and repeated-retry
   observations at the default window size.
-- [ ] The active plan and `PROGRESS.md` match actual evidence; the architecture log changes only
+- [x] The active plan and `PROGRESS.md` match actual evidence; the architecture log changes only
   if implementation establishes a material boundary beyond the planned concrete ownership.
 
 ## Verification plan
@@ -335,7 +335,9 @@ Fill this section during implementation rather than predicting results:
 - Actual files changed for S02: modified `game/basin_surface.tscn`, `game/main.tscn`,
   `game/player.gd`, `game/tests/test_f01_first_expedition.gd`, and `game/tests/README.md`; added
   `game/main.gd` and its generated UID; updated this plan and `PROGRESS.md`.
-- Steps completed: S01-S02. S03 remains `Not started`.
+- Actual files changed for S03: updated this plan, `PROGRESS.md`,
+  `docs/CONTENT_CATALOG.md`, and `docs/ARCHITECTURE_EVOLUTION.md` only; no game code changed.
+- Steps completed: S01-S03. F01 is complete.
 - Commands/tests and results: the Godot headless editor import, F00 focused regression,
   F01/S01 focused check, two-frame main-scene smoke, and `git diff --check` all exited 0.
   The F01 check instantiated the configured main scene, verified one player, shuttle, spawn,
@@ -348,19 +350,36 @@ Fill this section during implementation rather than predicting results:
   the retry delay is 0.65 seconds, control and velocity stop on death, duplicate requests are
   rejected, and three consecutive cycles restore the same player at the exact shuttle marker
   with zero velocity without replacing the Basin or hazard.
+- S03 commands/tests and results: from clean pushed commit `fd969b6`, the console reported
+  `4.7.1.stable.official.a13da4feb`; headless editor import, F00 regression, the complete focused
+  F01 suite, two-frame main-scene smoke, and `git diff --check` all exited 0. The focused suite
+  again passed its safe passage, actual lethal overlap, duplicate rejection, timing, and three
+  consecutive exact-restoration checks. Git status contained only this plan and `PROGRESS.md`
+  after S03 bookkeeping. Inspection confirmed the player owns only live/dead movement state,
+  `main.gd` owns the one retry timer and shuttle restoration, the Basin owns the static hazard
+  and geometry, and no health, combat, autoloaded checkpoint, persistence, or scene reload exists.
 - Manual checks performed: On 2026-09-05 the user reported, "Player moves fine. Boundaries and
   shuttle block player as expected." This confirms working player movement and collision against
   both route boundaries and the static shuttle. The static-shuttle/cyan-area presentation,
   explorer and camera readability, explicit testing of both control sets, diagonal feel, and
   two-way full-route traversal were not stated and remain pending; the complete hazard/retry
-  manual gate remains pending for S03. No S02 visual or hands-on result has been claimed.
+  manual gate remains pending for S03.
+- During S03 on 2026-09-05, the user reported, "I have played. One hazard that kills player and
+  shows a respawn message. Player respawned at the shuttle spawn point. can traverse around the
+  hazard." This confirms a visible avoidable hazard, lethal contact, visible retry feedback, and
+  correct shuttle restoration. The report does not state three consecutive hands-on deaths,
+  perceived sub-second retry/control restoration, stable world/player across retries, absence of
+  a health bar or error, safe/danger color clarity, camera/diagonal feel, or both control sets.
+  When asked to confirm that complete remaining gate after three consecutive deaths, the user
+  replied, "yes, worked correctly after respawn." This closes the hands-on acceptance gate.
 - Deviations from plan: No behavior deviation. `game/main.gd` was not added because S01 needs no
   main-scene logic; it remains planned for S02 when local retry ownership becomes real.
-- Architecture log entries: None. Implementation follows the concrete scene boundary already
-  described by this plan and does not establish a broader abstraction.
-- Remaining risks or debt: Movement and blocking collision have user evidence. Hazard
-  readability, safe-passage clarity, death feedback, perceived retry speed, camera/diagonal feel,
-  both control sets, and full-route traversal remain partially or not manually reported.
-  Route-wall, hazard, and checkpoint ownership are deliberately concrete and local.
+- Architecture log entries: None. `docs/ARCHITECTURE_EVOLUTION.md` now states that the first
+  concrete ownership exists and remains documented here, but no implementation-pressure
+  refactor or broader abstraction warranted an evolution entry.
+- Remaining risks or debt: No known F01 acceptance gap. Route-wall, hazard, and checkpoint
+  ownership are deliberately concrete and local; F02 may extend the same local death event for
+  encounter reset without prebuilding a global checkpoint system.
 - Suggested commit boundary: F01/S01 is committed and pushed as `bb91806`; F01/S02 is the current
-  completed lethal-retry commit boundary.
+  completed lethal-retry commit boundary at `fd969b6`; F01/S03 acceptance bookkeeping is the
+  final documentation-only boundary for this feature.
