@@ -12,6 +12,6 @@ Rules:
 - Keep later features and speculative final architecture out of the plan.
 - Record actual evidence and deviations as implementation proceeds.
 
-`F01_first_expedition_and_lethal_retry.md` is the active plan. Its preflight is recorded there
-and in `PROGRESS.md`; implementation must proceed one requested step at a time. The completed
-F00 plan remains the foundation and regression baseline.
+`F02_ranged_combat_and_first_enemy.md` is the active plan. Its preflight is recorded there and
+in `PROGRESS.md`; implementation must proceed one requested step at a time. The completed F00
+and F01 plans remain the foundation and regression baseline.

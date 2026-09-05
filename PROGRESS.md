@@ -4,23 +4,23 @@ Last documentation update: 2026-09-05
 
 ## Current state
 
-- Overall status: F00-F01 complete.
+- Overall status: F00-F01 complete; F02 planned.
 - Last completed feature or milestone: F01 - First expedition and lethal retry.
-- Current feature: None; F02 is not yet planned.
-- Current step: None.
-- Next action: Request `Generate the plan for the next feature` to inspect and plan only F02 -
-  Ranged combat and first enemy; do not implement F02 during planning.
+- Current feature: F02 - Ranged combat and first enemy (`Planned`).
+- Current step: F02/S01 - Add direct aiming and the Base pulse (`Not started`).
+- Next action: Request `Implement the next step` to implement only F02/S01 - add mouse aiming,
+  the primary-button `shoot` action, and the always-available Base pulse; do not add the Stalker.
 - Known blockers: None.
 - Unverified manual checks: None for F01. The user confirmed movement and collision, an avoidable
   lethal hazard, visible respawn feedback, exact shuttle return, and the complete repeated-retry,
   post-respawn control/stability, presentation, camera, diagonal, and both-control-set gate.
-- Pending user decisions: Approve or revise proposed first-slice content before the later
-  feature that consumes each item. Basin surface is implemented; other proposed items remain
-  unapproved.
+- Pending user decisions: Surveyor weapon/tool, Base pulse, and Stalker are approved for F02;
+  Basin surface is implemented. Other proposed first-slice content remains unapproved and must
+  be approved or revised before its consuming feature is planned.
 
 ## Canonical status line
 
-`Status: F00-F01 complete | Last: F01 first expedition and lethal retry | Current: no active feature plan | Next: generate only the F02 plan | Blockers: none`
+`Status: F00-F01 complete; F02 planned | Last: F01 first expedition and lethal retry | Current: F02/S01 aiming and Base pulse not started | Next: implement only F02/S01 | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -32,7 +32,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 | --- | --- | --- | --- | --- | --- |
 | F00 | Project foundation | Complete | `plans/F00_project_foundation.md` | S01 added the runnable shell. S02 added only four movement actions with WASD/arrow bindings, `game/tests/run_tests.gd`, its generated UID, and focused-test documentation; no player motion or later-feature action was added. | S03 reconfirmed Godot `4.7.1.stable.official.a13da4feb`; clean-state import, focused test, smoke run, and `git diff --check` passed. The user confirmed both placeholder labels were visible, and the window closed normally. |
 | F01 | First expedition and lethal retry | Complete | `plans/F01_first_expedition_and_lethal_retry.md` | S01 built the native-shape Basin route, static shuttle, explorer, boundaries, and camera. S02 added one avoidable amber-red contact hazard, explicit collision intent, player death state, main-owned duplicate-safe 0.65-second retry, exact shuttle restoration, and visible redeploy feedback. | S03 reconfirmed Godot 4.7.1, clean import, F00 regression, focused safe-contact/three-retry suite, smoke, scoped status, and diff check. User confirmed the full environment, controls, avoidable lethal contact, visible feedback, repeated prompt shuttle restoration, and stable post-respawn behavior gate. |
-| F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
+| F02 | Ranged combat and first enemy | Planned | `plans/F02_ranged_combat_and_first_enemy.md` | None; planning changed no game code. | Planning preflight from clean `01264b4`: Godot 4.7.1 version/import, F00, F01, smoke, and diff checks passed. Surveyor weapon/tool, Base pulse, and Stalker are explicitly approved. |
 | F03 | Static mothership base | Not started | Not generated | None | None |
 | F04 | Branching exploration and coordinates | Not started | Not generated | None | None |
 | F05 | Searchable journal and basic persistence | Not started | Not generated | None | None |
@@ -75,9 +75,11 @@ approves a change.
 - F00/S02 is complete; the four movement actions and focused test entry point now exist.
 - F00/S03 is complete; full automated acceptance passed, the user confirmed both labels were
   visible, and the launched process closed normally.
-- Content names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly
-  approved. Basin surface is implemented; its approval and implementation do not approve
-  other content candidates.
+- F02 is planned in four independently requestable steps. S01 is next and must add only direct
+  mouse aiming and the always-available Base pulse; it must not add the Stalker before S02.
+- Surveyor weapon/tool, Base pulse, and Stalker are approved for F02. Other names and tuning
+  values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly approved. Basin surface
+  is implemented; these approvals do not approve any later content candidate.
 - F01/S01 is complete: automated checks cover scene composition, normalized movement, intended
   collision layers, actual wall collision, and camera presence. S03 later closed its hands-on
   checkpoint; S02 extends this verified movement baseline with lethal retry.
@@ -90,6 +92,19 @@ approves a change.
 
 ## Latest documentation evidence
 
+- F02 planning on 2026-09-05 began from clean commit `01264b4` on `main`, tracking
+  `origin/main`. Inspection confirmed the F01 concrete ownership: `BasinExplorer` owns movement
+  and alive/dead action state, `main.gd` owns the one local retry timer and exact shuttle
+  restoration, and the authored Basin owns static route geometry and its environmental hazard.
+  No aim action, weapon, projectile, enemy, damage, combat manager, or persistence system exists.
+  The console reported `4.7.1.stable.official.a13da4feb`; headless editor import, F00 regression,
+  the complete F01 safe-contact/three-retry suite, two-frame main-scene smoke, and
+  `git diff --check` all exited 0. The user explicitly approved the Surveyor weapon/tool, Base
+  pulse, and Stalker catalog entries as written. The F02 plan defines four independently
+  requestable steps: direct aiming/Base pulse, the authored readable Stalker encounter, exact
+  encounter reset through the existing shuttle retry, and full automated/manual acceptance with
+  attack-tell comprehension plus measured death-to-control and runback times. No game code was
+  implemented.
 - F01/S03 completed on 2026-09-05 after the user answered "yes, worked correctly after respawn"
   to the remaining combined gate covering three consecutive prompt retries, restored controls,
   stable player/world, no health bar/error/stuck input, cyan/amber clarity, camera and diagonal
@@ -192,12 +207,14 @@ approves a change.
 | 2026-09-05 | Introduce recovery with survival, retain bounded statuses on death, and define resource/cache reset rules. | Death should not serve as treatment; repeated failure and finite resources must not prevent another viable expedition. |
 | 2026-09-05 | Preserve vocabulary meanings while varying evidenced solutions; use comprehension and pacing playtests. | Reachability tests cannot prove understandable deductions or enjoyable duration. |
 | 2026-09-05 | Approve the Basin surface visual direction for F01 and its later F07 generation role. | The reviewed concept communicates a readable static shuttle origin, compact rock route, and strong cyan-safe versus amber-red-danger language while remaining reducible to Godot-native placeholder art. |
+| 2026-09-05 | Approve the Surveyor weapon/tool, always-available Base pulse, and Stalker candidates for F02. | The user explicitly approved the catalog entries as written so F02 can establish one readable direct-combat loop without assuming later equipment or enemies. |
 
 ## Latest handoff
 
-F00 and F01 are complete. F01/S01 is committed as `bb91806`, F01/S02 as `fd969b6`, and S03 has
-now recorded full automated and manual acceptance. The project launches into the authored Basin,
+F00 and F01 are complete, and F02 is planned. The project launches into the authored Basin,
 supports normalized movement and bounded collision, presents one avoidable lethal hazard, and
-restores the same player promptly at the static shuttle without reloading the world. There is no
-active feature plan. The exact next action is to request `Generate the plan for the next feature`,
-which must inspect the clean baseline and create only the F02 plan without implementing game code.
+restores the same player promptly at the static shuttle without reloading the world. The approved
+F02 content is the Surveyor weapon/tool, always-available Base pulse, and readable lethal Stalker.
+The exact next action is to request `Implement the next step`, which must implement only F02/S01:
+add direct mouse aiming, the primary-button `shoot` action, and bounded Base pulses without adding
+the Stalker or any later combat system.
