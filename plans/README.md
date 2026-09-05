@@ -12,5 +12,5 @@ Rules:
 - Keep later features and speculative final architecture out of the plan.
 - Record actual evidence and deviations as implementation proceeds.
 
-This folder intentionally contains no F00 plan yet. The next agent must inspect the local
-environment before generating it.
+`F00_project_foundation.md` is the active plan. Its environment preflight is recorded there and
+in `PROGRESS.md`; implementation must proceed one requested step at a time.

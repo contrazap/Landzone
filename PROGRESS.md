@@ -4,19 +4,20 @@ Last documentation update: 2026-09-05
 
 ## Current state
 
-- Overall status: Preproduction review incorporated; implementation not started.
+- Overall status: F00 planned; implementation not started.
 - Last completed feature or milestone: Approved development-plan review revisions: earlier knowledge loop, content ownership, recovery rules, and playtest gates.
-- Current feature: No active feature; F00 is not yet planned.
-- Current step: None.
-- Next action: Generate `plans/F00_project_foundation.md` from the actual local environment.
+- Current feature: F00 - Project foundation (`Planned`).
+- Current step: F00/S01 - Create the runnable project shell (`Not started`).
+- Next action: Implement only F00/S01 from `plans/F00_project_foundation.md`.
 - Known blockers: None.
-- Unverified manual checks: No playable build exists yet. Future comprehension, recovery, and
-  pacing checks are assigned in the roadmap; none have been performed or credited as passing.
+- Unverified manual checks: F00/S03 will require the user to confirm that the placeholder window
+  opens and shows `LANDZONE` and `Project foundation` legibly. No playable build exists yet.
+  Future comprehension, recovery, and pacing checks remain assigned in the roadmap.
 - Pending user decisions: Approve or revise the proposed first-slice content in `docs/CONTENT_CATALOG.md` before the feature that consumes each item.
 
 ## Canonical status line
 
-`Status: Preproduction review incorporated; implementation not started | Last: development-plan review revisions | Current: no active feature | Next: generate F00 - Project foundation | Blockers: none`
+`Status: F00 planned; implementation not started | Last: development-plan review revisions | Current: F00/S01 - runnable project shell not started | Next: implement only F00/S01 | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -26,7 +27,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 | ID | Feature | Status | Plan | Implementation evidence | Verification evidence |
 | --- | --- | --- | --- | --- | --- |
-| F00 | Project foundation | Not started | Not generated | None | None |
+| F00 | Project foundation | Planned | `plans/F00_project_foundation.md` | None | Planning preflight confirmed both Godot 4.7.1 executables, console build `4.7.1.stable.official.a13da4feb`, placeholder-only `game/` tree, clean Git state, and clean `git diff --check`. |
 | F01 | First expedition and lethal retry | Not started | Not generated | None | None |
 | F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
 | F03 | Static mothership base | Not started | Not generated | None | None |
@@ -44,7 +45,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 ## Verification baseline
 
-No Godot project or automated verification exists yet. F00 owns:
+No Godot project or automated verification exists yet. The F00 plan now owns:
 
 - Recording the installed Godot version and executable paths.
 - Creating `game/project.godot` and a minimal runnable main scene.
@@ -52,22 +53,34 @@ No Godot project or automated verification exists yet. F00 owns:
 - Creating the initial `game/tests/` verification entry point.
 - Confirming the Compatibility renderer and project layout.
 
-Expected executables, to be verified rather than assumed:
+Confirmed executables:
 
 ```text
 C:\MyFiles\Godot\Godot_v4.7.1-stable_win64.exe
 C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe
 ```
 
+Both files exist with file version `4.7.1`; the console reports
+`4.7.1.stable.official.a13da4feb`. F00 implementation must preserve and record this baseline.
+
 ## Active blockers and known issues
 
 - No active blockers.
 - No game files exist yet by design.
+- F00 is planned but no implementation step has started.
 - Content names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly
   approved; the review approval does not approve all content candidates.
 
 ## Latest documentation evidence
 
+- F00 planning preflight on 2026-09-05 inspected the actual placeholder-only `game/` tree,
+  confirmed a clean `main` worktree tracking `origin/main`, verified both expected Godot
+  executables and console build `4.7.1.stable.official.a13da4feb`, and passed
+  `git diff --check`.
+- `plans/F00_project_foundation.md` defines three independently requestable steps: create the
+  runnable Compatibility-renderer shell, add the movement input and focused test baseline, then
+  run full automated acceptance and record the user's manual placeholder-window check. No game
+  code or project files were created during planning.
 - User approved the review recommendations and requested the necessary changes on 2026-09-05.
 - `docs/ROADMAP.md` now moves the fixed knowledge loop to F06, renumbers former F06-F10 to
   F07-F11, assigns every first-slice requirement, and defines staged playtest gates.
@@ -102,11 +115,10 @@ C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe
 
 ## Latest handoff
 
-The approved review revisions are incorporated in the design, roadmap, content catalog, and
-feature-plan template. Use the revised IDs: F06 is the first knowledge loop, F07 generation,
-F08 blink, F09 artifact/site, F10 survival/basic recovery, and F11 full mothership procedures.
-No Godot project or feature plan has been created. The exact next action remains to inspect the
-local environment and generate only `plans/F00_project_foundation.md` when requested. The user
-then reviews that plan and requests its first implementation step. Content candidates still
-need approval before their consuming plans, now including vocabulary before F06. Review edits
-form a self-contained documentation milestone; the next product action remains F00 planning.
+F00 is planned in `plans/F00_project_foundation.md`; no implementation has started and `game/`
+still contains only `.gitkeep` placeholders. The installed GUI and console executables are
+present, and the console reports `4.7.1.stable.official.a13da4feb`. The exact next action is to
+implement only F00/S01: create `game/project.godot` and the self-contained labelled
+`game/main.tscn`, then run its headless import, smoke, and diff checks. Do not add inputs or the
+test runner until S02. F00/S03 owns the user's visual confirmation. No content-catalog approval
+is needed for F00; proposed content still needs approval before its consuming later feature.
