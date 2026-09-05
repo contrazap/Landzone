@@ -4,20 +4,21 @@ Last documentation update: 2026-09-05
 
 ## Current state
 
-- Overall status: F00 planned; implementation not started.
-- Last completed feature or milestone: Approved development-plan review revisions: earlier knowledge loop, content ownership, recovery rules, and playtest gates.
-- Current feature: F00 - Project foundation (`Planned`).
-- Current step: F00/S01 - Create the runnable project shell (`Not started`).
-- Next action: Implement only F00/S01 from `plans/F00_project_foundation.md`.
+- Overall status: F00 implementation in progress.
+- Last completed feature or milestone: F00/S01 - Runnable Compatibility-renderer project shell.
+- Current feature: F00 - Project foundation (`In progress`).
+- Current step: F00/S02 - Establish inputs and focused verification (`Not started`).
+- Next action: Implement only F00/S02 from `plans/F00_project_foundation.md`.
 - Known blockers: None.
 - Unverified manual checks: F00/S03 will require the user to confirm that the placeholder window
-  opens and shows `LANDZONE` and `Project foundation` legibly. No playable build exists yet.
+  opens and shows `LANDZONE` and `Project foundation` legibly. The runnable shell exists, but
+  this visual check has not been claimed from headless evidence.
   Future comprehension, recovery, and pacing checks remain assigned in the roadmap.
 - Pending user decisions: Approve or revise the proposed first-slice content in `docs/CONTENT_CATALOG.md` before the feature that consumes each item.
 
 ## Canonical status line
 
-`Status: F00 planned; implementation not started | Last: development-plan review revisions | Current: F00/S01 - runnable project shell not started | Next: implement only F00/S01 | Blockers: none`
+`Status: F00 implementation in progress | Last: F00/S01 runnable project shell | Current: F00/S02 - inputs and focused verification not started | Next: implement only F00/S02 | Blockers: none`
 
 Agents must reconstruct this line from verified state rather than copying it blindly.
 
@@ -27,7 +28,7 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 | ID | Feature | Status | Plan | Implementation evidence | Verification evidence |
 | --- | --- | --- | --- | --- | --- |
-| F00 | Project foundation | Planned | `plans/F00_project_foundation.md` | None | Planning preflight confirmed both Godot 4.7.1 executables, console build `4.7.1.stable.official.a13da4feb`, placeholder-only `game/` tree, clean Git state, and clean `git diff --check`. |
+| F00 | Project foundation | In progress | `plans/F00_project_foundation.md` | S01 added `game/project.godot` and the self-contained Control-based `game/main.tscn`; no script, input, autoload, gameplay, or external asset was added. | Godot 4.7.1 headless editor import and two-frame main-scene smoke run exited 0 without parser, load, or runtime errors; `git diff --check` passed. |
 | F01 | First expedition and lethal retry | Not started | Not generated | None | None |
 | F02 | Ranged combat and first enemy | Not started | Not generated | None | None |
 | F03 | Static mothership base | Not started | Not generated | None | None |
@@ -45,10 +46,11 @@ Allowed statuses: `Not started`, `Planned`, `In progress`, `Blocked`, `Complete`
 
 ## Verification baseline
 
-No Godot project or automated verification exists yet. The F00 plan now owns:
+A minimal Godot project and main scene now exist. No focused automated verification script
+exists yet; F00/S02 owns that next baseline. The F00 plan owns:
 
 - Recording the installed Godot version and executable paths.
-- Creating `game/project.godot` and a minimal runnable main scene.
+- Maintaining `game/project.godot` and its minimal runnable main scene.
 - Establishing the first repeatable headless import and smoke checks.
 - Creating the initial `game/tests/` verification entry point.
 - Confirming the Compatibility renderer and project layout.
@@ -66,13 +68,19 @@ Both files exist with file version `4.7.1`; the console reports
 ## Active blockers and known issues
 
 - No active blockers.
-- No game files exist yet by design.
-- F00 is planned but no implementation step has started.
+- F00/S01 is complete; the runnable shell now exists.
+- F00/S02 has not started, so movement inputs and the focused test entry point do not yet exist.
 - Content names and tuning values in `docs/CONTENT_CATALOG.md` remain proposed until explicitly
   approved; the review approval does not approve all content candidates.
 
 ## Latest documentation evidence
 
+- F00/S01 on 2026-09-05 added a Godot 4.7.1 project with an explicit Compatibility renderer,
+  960x540 2D viewport, and `res://main.tscn` as the main scene. The self-contained Control scene
+  displays the literal labels `LANDZONE` and `Project foundation` over a plain background.
+- S01 verification passed: headless editor import and the two-frame main-scene smoke run both
+  exited 0 without parser, load, or runtime errors; `git diff --check` exited 0. The visual
+  presentation remains unverified until the explicit S03 manual gate.
 - F00 planning preflight on 2026-09-05 inspected the actual placeholder-only `game/` tree,
   confirmed a clean `main` worktree tracking `origin/main`, verified both expected Godot
   executables and console build `4.7.1.stable.official.a13da4feb`, and passed
@@ -90,14 +98,12 @@ Both files exist with file version `4.7.1`; the console reports
 - `docs/CONTENT_CATALOG.md` assigns content owners and updates approval timing. Proposed content
   remains proposed. `plans/FEATURE_PLAN_TEMPLATE.md` carries ownership, persistence, recovery,
   and applicable manual gates into future plans.
-- Verification: inspected the clean pre-edit Git baseline and actual `game/` scaffold (only
-  `.gitkeep` placeholders). No active feature plan, `project.godot`, or runnable tests exist.
-  Documentation checks passed: all 15 feature IDs/names match between roadmap and ledger, all
-  remain `Not started`, all numeric feature references resolve, and no game code or feature
-  plans were created. `git diff --check` passed. Reviewed ownership and dependency boundaries
-  against the slice requirements; gameplay and manual checks remain unavailable until implemented.
-- No game implementation or architecture refactor was performed; no architecture-log entry is
-  warranted. All feature statuses remain `Not started`.
+- Prior documentation-review verification inspected the then-clean Git baseline and the
+  placeholder-only `game/` scaffold. At that time no active feature plan, `project.godot`, or
+  runnable tests existed, and all 15 roadmap features were `Not started`. Documentation
+  cross-reference checks and `git diff --check` passed before F00 planning and implementation.
+- No gameplay system or architecture refactor was introduced; no architecture-log entry is
+  warranted. F00 is now `In progress`; later features remain `Not started`.
 
 ## Decision log
 
@@ -115,10 +121,10 @@ Both files exist with file version `4.7.1`; the console reports
 
 ## Latest handoff
 
-F00 is planned in `plans/F00_project_foundation.md`; no implementation has started and `game/`
-still contains only `.gitkeep` placeholders. The installed GUI and console executables are
-present, and the console reports `4.7.1.stable.official.a13da4feb`. The exact next action is to
-implement only F00/S01: create `game/project.godot` and the self-contained labelled
-`game/main.tscn`, then run its headless import, smoke, and diff checks. Do not add inputs or the
-test runner until S02. F00/S03 owns the user's visual confirmation. No content-catalog approval
-is needed for F00; proposed content still needs approval before its consuming later feature.
+F00/S01 is complete. `game/project.godot` now selects the self-contained labelled
+`game/main.tscn` under the explicit Compatibility renderer. Godot 4.7.1 headless editor import,
+the two-frame main-scene smoke run, and `git diff --check` passed. The exact next action is to
+implement only F00/S02: add the four planned movement inputs and focused test entry point, then
+rerun the S01 checks. Do not perform S03 acceptance or claim its manual visual confirmation.
+No content-catalog approval is needed for F00; proposed content still needs approval before its
+consuming later feature.
