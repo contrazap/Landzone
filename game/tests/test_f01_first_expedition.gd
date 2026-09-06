@@ -23,9 +23,24 @@ func _run() -> void:
 		_finish(failures)
 		return
 
-	var main_instance := main_scene.instantiate()
-	root.add_child(main_instance)
+	var app := main_scene.instantiate() as LandzoneMain
+	root.add_child(app)
 	await process_frame
+	var mothership := app.active_location as Mothership
+	if mothership == null or not app.request_location_change(&"basin", mothership):
+		failures.append("Main could not deploy from Kestrel into the Basin regression scene.")
+		app.queue_free()
+		await process_frame
+		_finish(failures)
+		return
+	await create_timer(app.transition_delay_seconds + 0.1).timeout
+	var main_instance := app.active_location as BasinExpedition
+	if main_instance == null:
+		failures.append("Main did not activate the Basin expedition after deployment.")
+		app.queue_free()
+		await process_frame
+		_finish(failures)
+		return
 
 	var player := main_instance.get_node_or_null("Player") as CharacterBody2D
 	var spawn := main_instance.get_node_or_null("BasinSurface/ShuttleSpawn") as Marker2D
@@ -46,7 +61,7 @@ func _run() -> void:
 		)
 
 	_release_movement_inputs()
-	main_instance.queue_free()
+	app.queue_free()
 	await process_frame
 	_finish(failures)
 

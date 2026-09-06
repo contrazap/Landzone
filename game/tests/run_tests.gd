@@ -27,6 +27,7 @@ func _run() -> void:
 	for action_name: StringName in EXPECTED_INPUTS:
 		var expected_keys: Array = EXPECTED_INPUTS[action_name]
 		_check_action(action_name, expected_keys[0], expected_keys[1], failures)
+	_check_physical_key_action(&"interact", KEY_E, failures)
 
 	_check_main_scene(failures)
 
@@ -88,6 +89,18 @@ func _has_key_binding(action_name: StringName, expected_key: int, physical: bool
 		if actual_key == expected_key:
 			return true
 	return false
+
+
+func _check_physical_key_action(
+	action_name: StringName,
+	physical_key: int,
+	failures: Array[String]
+) -> void:
+	if not InputMap.has_action(action_name):
+		failures.append("Missing input action: %s." % action_name)
+		return
+	if not _has_key_binding(action_name, physical_key, true):
+		failures.append("%s is missing its physical key binding." % action_name)
 
 
 func _check_main_scene(failures: Array[String]) -> void:

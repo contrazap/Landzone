@@ -1,0 +1,321 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://mothership.gd" id="1_mothership"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="2_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_horizontal"]
+size = Vector2(960, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical"]
+size = Vector2(36, 540)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bulkhead"]
+size = Vector2(450, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_console"]
+size = Vector2(170, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_deploy"]
+radius = 105.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
+bg_color = Color(0.025, 0.09, 0.105, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.96, 0.9, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_display"]
+bg_color = Color(0.018, 0.055, 0.07, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.18, 0.72, 0.72, 0.86)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Mothership" type="Node2D"]
+script = ExtResource("1_mothership")
+
+[node name="Deck" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 960, 0, 960, 540, 0, 540)
+color = Color(0.055, 0.085, 0.105, 1)
+
+[node name="WarmFloor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(38, 38, 922, 38, 922, 502, 38, 502)
+color = Color(0.115, 0.14, 0.15, 1)
+
+[node name="VehicleBayFloor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(48, 286, 432, 286, 432, 492, 48, 492)
+color = Color(0.09, 0.155, 0.17, 1)
+
+[node name="VehicleBayGuides" type="Line2D" parent="."]
+points = PackedVector2Array(70, 320, 390, 320, 390, 468, 70, 468, 70, 320)
+width = 4.0
+default_color = Color(0.2, 0.75, 0.72, 0.72)
+
+[node name="BridgeFloor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(520, 48, 912, 48, 912, 286, 520, 286, 480, 244, 480, 104)
+color = Color(0.09, 0.145, 0.16, 1)
+
+[node name="BridgeGuide" type="Line2D" parent="."]
+points = PackedVector2Array(500, 248, 500, 104, 540, 66, 890, 66)
+width = 3.0
+default_color = Color(0.2, 0.72, 0.7, 0.58)
+
+[node name="CenterAisle" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(340, 270, 500, 270, 548, 226, 548, 286, 454, 340, 340, 340)
+color = Color(0.17, 0.18, 0.17, 1)
+
+[node name="AisleLights" type="Line2D" parent="."]
+points = PackedVector2Array(370, 296, 480, 296, 530, 252)
+width = 5.0
+default_color = Color(0.9, 0.63, 0.29, 0.82)
+
+[node name="StationBlock" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(472, 334, 920, 334, 920, 500, 472, 500)
+color = Color(0.045, 0.065, 0.08, 1)
+
+[node name="StationBulkhead" type="StaticBody2D" parent="." groups=["sealed_station_boundary"]]
+position = Vector2(696, 334)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StationBulkhead"]
+shape = SubResource("RectangleShape2D_bulkhead")
+
+[node name="StationDoors" type="Node2D" parent="."]
+
+[node name="Research" type="Polygon2D" parent="StationDoors"]
+polygon = PackedVector2Array(482, 322, 560, 322, 560, 346, 482, 346)
+color = Color(0.16, 0.25, 0.28, 1)
+
+[node name="Galley" type="Polygon2D" parent="StationDoors"]
+polygon = PackedVector2Array(570, 322, 648, 322, 648, 346, 570, 346)
+color = Color(0.16, 0.25, 0.28, 1)
+
+[node name="Medical" type="Polygon2D" parent="StationDoors"]
+polygon = PackedVector2Array(658, 322, 736, 322, 736, 346, 658, 346)
+color = Color(0.16, 0.25, 0.28, 1)
+
+[node name="Habitat" type="Polygon2D" parent="StationDoors"]
+polygon = PackedVector2Array(746, 322, 824, 322, 824, 346, 746, 346)
+color = Color(0.16, 0.25, 0.28, 1)
+
+[node name="Workshop" type="Polygon2D" parent="StationDoors"]
+polygon = PackedVector2Array(834, 322, 912, 322, 912, 346, 834, 346)
+color = Color(0.16, 0.25, 0.28, 1)
+
+[node name="KestrelLabel" type="Label" parent="."]
+offset_left = 55.0
+offset_top = 100.0
+offset_right = 320.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(0.64, 1, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.045, 0.055, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 27
+text = "KESTREL // SURVEY VESSEL"
+
+[node name="VehicleBayLabel" type="Label" parent="."]
+offset_left = 84.0
+offset_top = 336.0
+offset_right = 324.0
+offset_bottom = 365.0
+theme_override_colors/font_color = Color(0.48, 0.88, 0.85, 1)
+theme_override_font_sizes/font_size = 18
+text = "VEHICLE BAY // ARRIVAL"
+
+[node name="BridgeLabel" type="Label" parent="."]
+offset_left = 548.0
+offset_top = 78.0
+offset_right = 830.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(0.48, 0.88, 0.85, 1)
+theme_override_font_sizes/font_size = 18
+text = "BRIDGE // NAVIGATION"
+
+[node name="StationLabels" type="Node2D" parent="."]
+
+[node name="Research" type="Label" parent="StationLabels"]
+offset_left = 482.0
+offset_top = 360.0
+offset_right = 560.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(0.38, 0.53, 0.56, 1)
+theme_override_font_sizes/font_size = 11
+text = "RESEARCH\nSEALED"
+horizontal_alignment = 1
+
+[node name="Galley" type="Label" parent="StationLabels"]
+offset_left = 570.0
+offset_top = 360.0
+offset_right = 648.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(0.38, 0.53, 0.56, 1)
+theme_override_font_sizes/font_size = 11
+text = "GALLEY\nSEALED"
+horizontal_alignment = 1
+
+[node name="Medical" type="Label" parent="StationLabels"]
+offset_left = 658.0
+offset_top = 360.0
+offset_right = 736.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(0.38, 0.53, 0.56, 1)
+theme_override_font_sizes/font_size = 11
+text = "MEDICAL\nSEALED"
+horizontal_alignment = 1
+
+[node name="Habitat" type="Label" parent="StationLabels"]
+offset_left = 746.0
+offset_top = 360.0
+offset_right = 824.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(0.38, 0.53, 0.56, 1)
+theme_override_font_sizes/font_size = 11
+text = "HABITAT\nSEALED"
+horizontal_alignment = 1
+
+[node name="Workshop" type="Label" parent="StationLabels"]
+offset_left = 834.0
+offset_top = 360.0
+offset_right = 912.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(0.38, 0.53, 0.56, 1)
+theme_override_font_sizes/font_size = 11
+text = "WORKSHOP\nSEALED"
+horizontal_alignment = 1
+
+[node name="NavigationConsole" type="StaticBody2D" parent="." groups=["navigation_console"]]
+position = Vector2(790, 140)
+collision_layer = 2
+collision_mask = 1
+
+[node name="Console" type="Polygon2D" parent="NavigationConsole"]
+polygon = PackedVector2Array(-90, -36, 90, -36, 82, 36, -82, 36)
+color = Color(0.12, 0.2, 0.23, 1)
+
+[node name="Screen" type="Polygon2D" parent="NavigationConsole"]
+polygon = PackedVector2Array(-70, -24, 70, -24, 64, 16, -64, 16)
+color = Color(0.05, 0.32, 0.32, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NavigationConsole"]
+shape = SubResource("RectangleShape2D_console")
+
+[node name="LandingDisplay" type="PanelContainer" parent="."]
+offset_left = 608.0
+offset_top = 210.0
+offset_right = 912.0
+offset_bottom = 282.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_display")
+
+[node name="Label" type="Label" parent="LandingDisplay"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 1, 0.94, 1)
+theme_override_font_sizes/font_size = 15
+text = "SELECTED LANDING: P1-BASIN-01\nSTATUS: VALID"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeployArea" type="Area2D" parent="."]
+position = Vector2(630, 165)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeployArea"]
+shape = SubResource("CircleShape2D_deploy")
+
+[node name="VehicleBayArrival" type="Marker2D" parent="." groups=["mothership_arrival"]]
+position = Vector2(170, 420)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(170, 420)
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="Top" type="StaticBody2D" parent="Boundaries" groups=["mothership_boundary"]]
+position = Vector2(480, 0)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Top"]
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Bottom" type="StaticBody2D" parent="Boundaries" groups=["mothership_boundary"]]
+position = Vector2(480, 540)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Bottom"]
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Left" type="StaticBody2D" parent="Boundaries" groups=["mothership_boundary"]]
+position = Vector2(0, 270)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Left"]
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Right" type="StaticBody2D" parent="Boundaries" groups=["mothership_boundary"]]
+position = Vector2(960, 270)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Right"]
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="HomePanel" type="PanelContainer" parent="Interface"]
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 260.0
+offset_bottom = 74.0
+self_modulate = Color(0.07, 0.13, 0.15, 0.94)
+
+[node name="Label" type="Label" parent="Interface/HomePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 1, 0.94, 1)
+theme_override_font_sizes/font_size = 17
+text = "  HOME // KESTREL  "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MovementHint" type="Label" parent="Interface"]
+offset_left = 24.0
+offset_top = 496.0
+offset_right = 450.0
+offset_bottom = 524.0
+theme_override_colors/font_color = Color(0.68, 0.78, 0.78, 0.9)
+theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 15
+text = "MOVE  WASD / ARROW KEYS   |   SURVEYOR HOLSTERED"
+
+[node name="DeployPrompt" type="PanelContainer" parent="Interface"]
+visible = false
+offset_left = 316.0
+offset_top = 430.0
+offset_right = 644.0
+offset_bottom = 478.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="Label" type="Label" parent="Interface/DeployPrompt"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 1, 0.96, 1)
+theme_override_colors/font_outline_color = Color(0.01, 0.03, 0.04, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 18
+text = "E - DEPLOY TO P1-BASIN-01"
+horizontal_alignment = 1
+vertical_alignment = 1

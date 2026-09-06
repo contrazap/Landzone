@@ -55,6 +55,21 @@ before player control returns, preserves player/Basin/Stalker identities, and re
 movement, aim, and fire. Success prints a concise `F02/S03 checks passed` summary and exits with
 code 0.
 
+## F03 mothership and transition test
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f03_mothership_transition.gd
+```
+
+This scenario checks physical `E` binding and action routing, the compact Kestrel composition,
+holstered weapon, solid hull/sealed stations, real movement from vehicle bay to bridge, contextual
+prompts, guarded 0.25-second static transfers and single-location/player ownership. It repeats
+three normal return/redeployment cycles, proving new location/player/Stalker identities while
+preserving validated position, phase/time, damage, direction and defeat. It also proves encounter
+time pauses while unloaded, pulses and firing recovery do not persist, and real hazard plus
+committed Stalker contact after revisiting still use the 0.65-second same-instance loaded retry.
+Success prints `F03/D01 checks passed` and exits with code 0.
+
 ## Import and parser check
 
 ```powershell
@@ -88,9 +103,20 @@ two-frame exit does not verify movement, combat, transitions, presentation, or p
 
 ## Rendered and interaction evidence
 
-No reusable rendered-capture/input-automation pipeline currently exists in this repository.
-The current tests check presentation state and some real input/physics behavior headlessly;
-they do not prove that pixels are correctly drawn or text is legible.
+F03 established a focused rendered-capture driver:
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --path game --script res://tests/capture_f03_views.gd
+```
+
+Run it without `--headless`. It drives guarded location requests through the real scenes and saves
+six 960x540 PNGs under `game/tests/artifacts/`: Kestrel arrival, bridge prompt, static transfer,
+shuttle return, mid-route camera follow and redeployed Basin. The camera-follow view drives real
+down/right physics input before capture. It validates image dimensions and save results, but a passing
+command does not assess the pixels: inspect the retained images with an image viewer. The F03 plan
+records the 2026-09-06 inspection. The capture window's synthetic action state is focus-sensitive,
+so the driver calls the same proximity-validated public interaction methods; the headless F03
+scenario separately exercises `Input.action_press/release` through location polling.
 
 A delivery changing visual behavior must establish its needed agent-run capture/interaction
 method, inspect the actual rendered result, and record the setup and artifact path in its plan.

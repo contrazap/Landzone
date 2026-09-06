@@ -1,0 +1,134 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://basin_surface.tscn" id="1_basin"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://basin_expedition.gd" id="3_expedition"]
+[ext_resource type="PackedScene" path="res://stalker.tscn" id="4_stalker"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_return"]
+radius = 135.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
+bg_color = Color(0.025, 0.075, 0.09, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.9, 0.86, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="BasinExpedition" type="Node2D"]
+script = ExtResource("3_expedition")
+
+[node name="BasinSurface" parent="." instance=ExtResource("1_basin")]
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Stalker" parent="." instance=ExtResource("4_stalker")]
+position = Vector2(1660, 450)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(480, 450)
+
+[node name="ReturnArea" type="Area2D" parent="."]
+position = Vector2(360, 450)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReturnArea"]
+shape = SubResource("CircleShape2D_return")
+
+[node name="RetryTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="RegionPanel" type="PanelContainer" parent="Interface"]
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 270.0
+offset_bottom = 78.0
+self_modulate = Color(0.11, 0.15, 0.19, 0.92)
+
+[node name="RegionLabel" type="Label" parent="Interface/RegionPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.91, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.035, 0.055, 0.07, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 17
+text = "  P1-BASIN-01  "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MovementHint" type="Label" parent="Interface"]
+offset_left = 24.0
+offset_top = 492.0
+offset_right = 650.0
+offset_bottom = 522.0
+theme_override_colors/font_color = Color(0.72, 0.76, 0.78, 0.9)
+theme_override_colors/font_outline_color = Color(0.035, 0.045, 0.055, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 15
+text = "MOVE  WASD / ARROWS   |   AIM  MOUSE   |   FIRE  LMB"
+
+[node name="ReturnPrompt" type="PanelContainer" parent="Interface"]
+visible = false
+offset_left = 620.0
+offset_top = 418.0
+offset_right = 920.0
+offset_bottom = 466.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="Label" type="Label" parent="Interface/ReturnPrompt"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 1, 0.96, 1)
+theme_override_colors/font_outline_color = Color(0.01, 0.03, 0.04, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 18
+text = "E - RETURN TO KESTREL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RedeployFeedback" type="Control" parent="Interface"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Tint" type="ColorRect" parent="Interface/RedeployFeedback"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.19, 0.025, 0.015, 0.72)
+
+[node name="Message" type="Label" parent="Interface/RedeployFeedback"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -38.0
+offset_right = 190.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.59, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.015, 0.01, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "CONTACT LOST\nREDEPLOYING TO SHUTTLE"
+horizontal_alignment = 1
+vertical_alignment = 1

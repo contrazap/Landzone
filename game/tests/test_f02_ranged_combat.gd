@@ -28,9 +28,11 @@ func _run() -> void:
 		_finish(failures)
 		return
 
-	var main_instance := main_scene.instantiate()
-	root.add_child(main_instance)
-	await process_frame
+	var app := await _create_basin_app(main_scene, failures)
+	if app == null:
+		_finish(failures)
+		return
+	var main_instance := app.active_location as BasinExpedition
 
 	var player := main_instance.get_node_or_null("Player") as BasinExplorer
 	var projectiles := main_instance.get_node_or_null("Projectiles") as Node2D
@@ -49,16 +51,37 @@ func _run() -> void:
 		await _check_stalker_pulse_defeat(main_instance, stalker, projectiles, failures)
 
 	Input.action_release(&"shoot")
-	main_instance.queue_free()
+	app.queue_free()
 	await process_frame
 
-	var retry_instance := main_scene.instantiate()
-	root.add_child(retry_instance)
-	await process_frame
+	var retry_app := await _create_basin_app(main_scene, failures)
+	if retry_app == null:
+		_finish(failures)
+		return
+	var retry_instance := retry_app.active_location as BasinExpedition
 	await _check_encounter_retry_cycles(retry_instance, failures)
-	retry_instance.queue_free()
+	retry_app.queue_free()
 	await process_frame
 	_finish(failures)
+
+
+func _create_basin_app(main_scene: PackedScene, failures: Array[String]) -> LandzoneMain:
+	var app := main_scene.instantiate() as LandzoneMain
+	root.add_child(app)
+	await process_frame
+	var mothership := app.active_location as Mothership
+	if mothership == null or not app.request_location_change(&"basin", mothership):
+		failures.append("Main could not deploy from Kestrel into the Basin regression scene.")
+		app.queue_free()
+		await process_frame
+		return null
+	await create_timer(app.transition_delay_seconds + 0.1).timeout
+	if app.active_location is not BasinExpedition:
+		failures.append("Main did not activate the Basin expedition after deployment.")
+		app.queue_free()
+		await process_frame
+		return null
+	return app
 
 
 func _check_shoot_input(failures: Array[String]) -> void:

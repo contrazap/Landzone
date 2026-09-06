@@ -106,6 +106,58 @@ func reset_encounter(spawn_position: Vector2) -> void:
 	encounter_reset.emit(reset_count)
 
 
+func capture_encounter() -> RunState.BasinEncounterState:
+	var snapshot := RunState.BasinEncounterState.new()
+	snapshot.position = global_position
+	snapshot.behavior_state = current_state
+	snapshot.elapsed_seconds = state_elapsed_seconds
+	snapshot.hits_remaining = hits_remaining
+	snapshot.committed_direction = committed_direction
+	return snapshot
+
+
+func restore_encounter(snapshot: RunState.BasinEncounterState) -> void:
+	var restored_state := clampi(snapshot.behavior_state, State.CONCEALED, State.DEFEATED) as State
+	global_position = Vector2(
+		clampf(snapshot.position.x, 40.0, 2120.0),
+		clampf(snapshot.position.y, 300.0, 630.0)
+	)
+	current_state = restored_state
+	hits_remaining = clampi(snapshot.hits_remaining, 0, required_hits)
+	if current_state == State.DEFEATED:
+		hits_remaining = 0
+	elif hits_remaining == 0:
+		hits_remaining = 1
+	var state_limit := _duration_for_state(current_state)
+	state_elapsed_seconds = clampf(snapshot.elapsed_seconds, 0.0, state_limit)
+	committed_direction = (
+		snapshot.committed_direction.normalized()
+		if not snapshot.committed_direction.is_zero_approx()
+		else Vector2.RIGHT
+	) if current_state == State.COMMITTED else Vector2.ZERO
+	velocity = committed_direction * committed_speed if current_state == State.COMMITTED else Vector2.ZERO
+	hit_flash_timer.stop()
+	hit_flash.visible = false
+	trigger_area.monitoring = current_state != State.DEFEATED
+	trigger_shape.disabled = current_state == State.DEFEATED
+	attack_active = current_state == State.COMMITTED
+	attack_area.monitoring = attack_active
+	attack_shape.disabled = not attack_active
+	_update_presentation()
+
+
+func _duration_for_state(state: State) -> float:
+	match state:
+		State.TELEGRAPH:
+			return telegraph_duration
+		State.COMMITTED:
+			return committed_duration
+		State.RECOVERY:
+			return recovery_duration
+		_:
+			return 0.0
+
+
 func advance_state(delta: float) -> void:
 	if delta <= 0.0 or current_state == State.CONCEALED or current_state == State.DEFEATED:
 		return

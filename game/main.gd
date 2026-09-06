@@ -1,77 +1,89 @@
+class_name LandzoneMain
 extends Node2D
 
-signal retry_started
-signal retry_completed
+signal transition_started(from_location: StringName, to_location: StringName)
+signal transition_completed(location: StringName)
+signal location_changed(location: StringName)
 
-const BASE_PULSE_SCENE: PackedScene = preload("res://base_pulse.tscn")
+const MOTHERSHIP_SCENE: PackedScene = preload("res://mothership.tscn")
+const BASIN_EXPEDITION_SCENE: PackedScene = preload("res://basin_expedition.tscn")
 
-@export_range(0.1, 1.0, 0.05) var retry_delay_seconds: float = 0.65
+@export_range(0.1, 1.0, 0.05) var transition_delay_seconds: float = 0.25
 
-@onready var player: BasinExplorer = $Player
-@onready var projectiles: Node2D = $Projectiles
-@onready var shuttle_spawn: Marker2D = $BasinSurface/ShuttleSpawn
-@onready var stalker_spawn: Marker2D = $BasinSurface/StalkerSpawn
-@onready var stalker: Stalker = $Stalker
-@onready var lethal_hazard: Area2D = $BasinSurface/LethalHazard
-@onready var retry_timer: Timer = $RetryTimer
-@onready var redeploy_feedback: Control = $Interface/RedeployFeedback
+@onready var location_container: Node2D = $ActiveLocation
+@onready var transition_timer: Timer = $TransitionTimer
+@onready var transition_overlay: Control = $Interface/TransitionOverlay
+@onready var transition_message: Label = $Interface/TransitionOverlay/Message
 
-var retry_in_progress: bool = false
+var run_state: RunState = RunState.new()
+var active_location: Node2D = null
+var current_location: StringName = &""
+var transition_in_progress: bool = false
+var pending_location: StringName = &""
 
 
 func _ready() -> void:
-	player.global_position = shuttle_spawn.global_position
-	stalker.global_position = stalker_spawn.global_position
-	stalker.set_target_player(player)
-	player.died.connect(_on_player_died)
-	player.shot_requested.connect(_on_player_shot_requested)
-	lethal_hazard.body_entered.connect(_on_lethal_hazard_body_entered)
-	retry_timer.timeout.connect(_on_retry_timer_timeout)
+	transition_timer.timeout.connect(_on_transition_timer_timeout)
+	_activate_location(&"mothership")
 
 
-func request_retry() -> bool:
-	if retry_in_progress:
+func request_location_change(destination: StringName, source: Node) -> bool:
+	if transition_in_progress or source != active_location:
+		return false
+	if not _is_valid_route(current_location, destination):
 		return false
 
-	retry_in_progress = true
-	clear_active_pulses()
-	player.visible = false
-	redeploy_feedback.visible = true
-	retry_timer.start(retry_delay_seconds)
-	retry_started.emit()
+	if current_location == &"basin":
+		var expedition := active_location as BasinExpedition
+		if expedition == null or not expedition.prepare_for_mothership_return(run_state):
+			return false
+	else:
+		active_location.call(&"begin_transition")
+
+	transition_in_progress = true
+	pending_location = destination
+	transition_message.text = (
+		"STATIC TRANSFER\nDEPLOYING TO P1-BASIN-01"
+		if destination == &"basin"
+		else "STATIC TRANSFER\nRETURNING TO KESTREL"
+	)
+	transition_overlay.visible = true
+	transition_timer.start(transition_delay_seconds)
+	transition_started.emit(current_location, destination)
 	return true
 
 
-func _on_lethal_hazard_body_entered(body: Node2D) -> void:
-	if body == player:
-		player.die()
+func _is_valid_route(from_location: StringName, destination: StringName) -> bool:
+	return (
+		(from_location == &"mothership" and destination == &"basin")
+		or (from_location == &"basin" and destination == &"mothership")
+	)
 
 
-func _on_player_died() -> void:
-	request_retry()
+func _activate_location(location_name: StringName) -> void:
+	if active_location != null:
+		location_container.remove_child(active_location)
+		active_location.free()
+		active_location = null
+
+	var scene: PackedScene = MOTHERSHIP_SCENE if location_name == &"mothership" else BASIN_EXPEDITION_SCENE
+	active_location = scene.instantiate() as Node2D
+	location_container.add_child(active_location)
+	current_location = location_name
+	var location_source := active_location
+	active_location.location_change_requested.connect(
+		func(destination: StringName) -> void:
+			request_location_change(destination, location_source)
+	)
+	if active_location is BasinExpedition:
+		(active_location as BasinExpedition).initialize_from_run_state(run_state)
+	location_changed.emit(current_location)
 
 
-func _on_player_shot_requested(muzzle_position: Vector2, direction: Vector2) -> void:
-	var pulse := BASE_PULSE_SCENE.instantiate() as BasePulse
-	projectiles.add_child(pulse)
-	pulse.impacted.connect(_on_base_pulse_impacted)
-	pulse.launch(muzzle_position, direction)
-
-
-func _on_base_pulse_impacted(body: Node2D) -> void:
-	if body == stalker:
-		stalker.receive_pulse_hit()
-
-
-func clear_active_pulses() -> void:
-	for pulse: Node in projectiles.get_children():
-		pulse.queue_free()
-
-
-func _on_retry_timer_timeout() -> void:
-	stalker.reset_encounter(stalker_spawn.global_position)
-	player.respawn_at(shuttle_spawn.global_position)
-	player.visible = true
-	redeploy_feedback.visible = false
-	retry_in_progress = false
-	retry_completed.emit()
+func _on_transition_timer_timeout() -> void:
+	var destination := pending_location
+	pending_location = &""
+	_activate_location(destination)
+	transition_overlay.visible = false
+	transition_in_progress = false
+	transition_completed.emit(current_location)
