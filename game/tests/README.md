@@ -222,7 +222,7 @@ F06 adds the knowledge-loop driver:
 & 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --path game --script res://tests/capture_f06_views.gd
 ```
 
-It saves seven 960x540 Compatibility-renderer PNGs: the three evidence readers, the South Hollow
+It saves eight 960x540 Compatibility-renderer PNGs: the three evidence readers, the South Hollow
 mismatch, the North Shelf confirmation, and the Research codex search, codex evidence and
 coordinate-stamped journal read. Inspect the glyph rows against the fixed truth table as well as
 hierarchy, wrapping, clipping and station wording. The F06 plan records the 2026-09-06 inspection
