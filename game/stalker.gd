@@ -116,11 +116,11 @@ func capture_encounter() -> RunState.BasinEncounterState:
 	return snapshot
 
 
-func restore_encounter(snapshot: RunState.BasinEncounterState) -> void:
+func restore_encounter(snapshot: RunState.BasinEncounterState, allowed_bounds: Rect2) -> void:
 	var restored_state := clampi(snapshot.behavior_state, State.CONCEALED, State.DEFEATED) as State
 	global_position = Vector2(
-		clampf(snapshot.position.x, 40.0, 2120.0),
-		clampf(snapshot.position.y, 300.0, 630.0)
+		clampf(snapshot.position.x, allowed_bounds.position.x, allowed_bounds.end.x),
+		clampf(snapshot.position.y, allowed_bounds.position.y, allowed_bounds.end.y)
 	)
 	current_state = restored_state
 	hits_remaining = clampi(snapshot.hits_remaining, 0, required_hits)

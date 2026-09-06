@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="KnowledgeCatalog" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://knowledge/knowledge_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://knowledge/alien_term_definition.gd" id="2_term"]
+[ext_resource type="Script" path="res://knowledge/evidence_definition.gd" id="3_evidence"]
+
+[sub_resource type="Resource" id="Term_achvntsat"]
+script = ExtResource("2_term")
+token = "ACHVNTSAT"
+meaning = "NORTH"
+
+[sub_resource type="Resource" id="Term_vel"]
+script = ExtResource("2_term")
+token = "VEL"
+meaning = "THREE"
+
+[sub_resource type="Resource" id="Term_oruun"]
+script = ExtResource("2_term")
+token = "ORUUN"
+meaning = "SILENT STONE"
+
+[sub_resource type="Resource" id="Evidence_compass"]
+script = ExtResource("3_evidence")
+evidence_id = "compass_array"
+title = "LANDING FORK COMPASS ARRAY"
+glyph_line = "N / ACHVNTSAT\nW       +       E\nS"
+observation = "Standard survey cardinal ring. ACHVNTSAT repeats only along the illuminated N ray."
+term_tokens = PackedStringArray("ACHVNTSAT")
+
+[sub_resource type="Resource" id="Evidence_calibration"]
+script = ExtResource("3_evidence")
+evidence_id = "resonance_calibration"
+title = "NORTH ARC RESONANCE CALIBRATION"
+glyph_line = "I  •   |   II  ••   |   VEL  •••\nCONTROL: 7 RINGS   |   ORUUN: RETURN 0"
+observation = "The third tally row is VEL. The matte ORUUN sample produces no visible return beside a ringing control stone."
+term_tokens = PackedStringArray("VEL", "ORUUN")
+
+[sub_resource type="Resource" id="Evidence_route_slab"]
+script = ExtResource("3_evidence")
+evidence_id = "route_slab"
+title = "REUNION FORK ROUTE SLAB"
+glyph_line = "↑ ACHVNTSAT   |   ••• VEL   |   ● ORUUN (NO WAVE)"
+observation = "Directive: ACHVNTSAT VEL ORUUN. An upward chevron, three-disc cluster, and filled disc without a wave mark repeat the calibration grammar."
+term_tokens = PackedStringArray("ACHVNTSAT", "VEL", "ORUUN")
+
+[resource]
+script = ExtResource("1_catalog")
+terms = Array[ExtResource("2_term")]([SubResource("Term_achvntsat"), SubResource("Term_vel"), SubResource("Term_oruun")])
+evidence_records = Array[ExtResource("3_evidence")]([SubResource("Evidence_compass"), SubResource("Evidence_calibration"), SubResource("Evidence_route_slab")])
+required_evidence_ids = PackedStringArray("compass_array", "resonance_calibration", "route_slab")
+solution_tokens = PackedStringArray("ACHVNTSAT", "VEL", "ORUUN")
+correct_destination_id = "north_shelf_survey_cairn"
+decoy_destination_id = "south_hollow_resonant_cairn"

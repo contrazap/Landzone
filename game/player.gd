@@ -13,6 +13,7 @@ signal shot_requested(muzzle_position: Vector2, direction: Vector2)
 
 var is_alive: bool = true
 var aim_direction: Vector2 = Vector2.RIGHT
+var facing_direction: Vector2 = Vector2.RIGHT
 var weapon_enabled: bool = true
 var death_enabled: bool = true
 
@@ -44,6 +45,7 @@ func update_aim_direction(target_global_position: Vector2) -> bool:
 		return false
 
 	aim_direction = target_offset.normalized()
+	facing_direction = aim_direction
 	surveyor_weapon.global_rotation = aim_direction.angle()
 	return true
 

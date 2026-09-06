@@ -1,0 +1,105 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/evidence_reader.gd" id="1_reader"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reader"]
+bg_color = Color(0.025, 0.038, 0.052, 0.99)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.94, 0.67, 0.25, 0.94)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="EvidenceReader" type="Control"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_reader")
+
+[node name="Tint" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.008, 0.014, 0.024, 0.88)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 70.0
+offset_right = 860.0
+offset_bottom = 470.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_reader")
+
+[node name="Status" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 24.0
+offset_right = 726.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(0.96, 0.7, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = "NEW EVIDENCE"
+
+[node name="Title" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 57.0
+offset_right = 726.0
+offset_bottom = 91.0
+theme_override_colors/font_color = Color(0.68, 1, 0.94, 1)
+theme_override_font_sizes/font_size = 22
+text = "EVIDENCE TITLE"
+
+[node name="Glyph" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 105.0
+offset_right = 726.0
+offset_bottom = 205.0
+theme_override_colors/font_color = Color(0.9, 0.93, 0.75, 1)
+theme_override_font_sizes/font_size = 20
+text = "ALIEN GLYPH CONTEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ObservationCaption" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 218.0
+offset_right = 726.0
+offset_bottom = 244.0
+theme_override_colors/font_color = Color(0.48, 0.62, 0.64, 1)
+theme_override_font_sizes/font_size = 13
+text = "FIELD OBSERVATION"
+
+[node name="Observation" type="RichTextLabel" parent="Panel"]
+offset_left = 34.0
+offset_top = 247.0
+offset_right = 726.0
+offset_bottom = 326.0
+theme_override_colors/default_color = Color(0.8, 0.94, 0.9, 1)
+theme_override_font_sizes/normal_font_size = 17
+text = "Observation text."
+fit_content = false
+scroll_active = false
+autowrap_mode = 2
+
+[node name="CloseHint" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 348.0
+offset_right = 726.0
+offset_bottom = 375.0
+theme_override_colors/font_color = Color(0.58, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "ESC CLOSE   |   OBSERVATION PAUSED"
+horizontal_alignment = 1

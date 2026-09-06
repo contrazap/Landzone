@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="PackedScene" path="res://basin_surface.tscn" id="1_basin"]
 [ext_resource type="PackedScene" path="res://player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://basin_expedition.gd" id="3_expedition"]
 [ext_resource type="PackedScene" path="res://stalker.tscn" id="4_stalker"]
+[ext_resource type="PackedScene" path="res://ui/command_console.tscn" id="5_console"]
+[ext_resource type="PackedScene" path="res://ui/evidence_reader.tscn" id="6_reader"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_return"]
 radius = 135.0
@@ -66,13 +68,13 @@ vertical_alignment = 1
 [node name="MovementHint" type="Label" parent="Interface"]
 offset_left = 24.0
 offset_top = 492.0
-offset_right = 650.0
+offset_right = 900.0
 offset_bottom = 522.0
 theme_override_colors/font_color = Color(0.72, 0.76, 0.78, 0.9)
 theme_override_colors/font_outline_color = Color(0.035, 0.045, 0.055, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
-text = "MOVE  WASD / ARROWS   |   AIM  MOUSE   |   FIRE  LMB"
+text = "MOVE  WASD / ARROWS   |   AIM  MOUSE   |   FIRE  LMB   |   TAB  COMMANDS"
 
 [node name="ReturnPrompt" type="PanelContainer" parent="Interface"]
 visible = false
@@ -132,3 +134,24 @@ theme_override_font_sizes/font_size = 28
 text = "CONTACT LOST\nREDEPLOYING TO SHUTTLE"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CommandConsole" parent="Interface" instance=ExtResource("5_console")]
+
+[node name="EvidenceReader" parent="Interface" instance=ExtResource("6_reader")]
+
+[node name="KnowledgePrompt" type="PanelContainer" parent="Interface"]
+visible = false
+offset_left = 286.0
+offset_top = 430.0
+offset_right = 674.0
+offset_bottom = 478.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="Label" type="Label" parent="Interface/KnowledgePrompt"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.78, 0.38, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 17
+text = "E - OBSERVE EVIDENCE"
+horizontal_alignment = 1

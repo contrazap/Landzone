@@ -16,6 +16,7 @@ func _run() -> void:
 		failures.append("Could not create capture artifact directory: %s." % directory_error)
 
 	var app := MAIN_SCENE.instantiate() as LandzoneMain
+	app.persistence_enabled = false
 	root.add_child(app)
 	await process_frame
 	await physics_frame

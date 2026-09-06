@@ -9,6 +9,8 @@ const MOTHERSHIP_SCENE: PackedScene = preload("res://mothership.tscn")
 const BASIN_EXPEDITION_SCENE: PackedScene = preload("res://basin_expedition.tscn")
 
 @export_range(0.1, 1.0, 0.05) var transition_delay_seconds: float = 0.25
+@export var persistence_enabled: bool = true
+@export var save_path: String = RunSaveStore.DEFAULT_SAVE_PATH
 
 @onready var location_container: Node2D = $ActiveLocation
 @onready var transition_timer: Timer = $TransitionTimer
@@ -16,6 +18,8 @@ const BASIN_EXPEDITION_SCENE: PackedScene = preload("res://basin_expedition.tscn
 @onready var transition_message: Label = $Interface/TransitionOverlay/Message
 
 var run_state: RunState = RunState.new()
+var save_store: RunSaveStore = null
+var load_warning: String = ""
 var active_location: Node2D = null
 var current_location: StringName = &""
 var transition_in_progress: bool = false
@@ -23,6 +27,7 @@ var pending_location: StringName = &""
 
 
 func _ready() -> void:
+	_load_run_state()
 	transition_timer.timeout.connect(_on_transition_timer_timeout)
 	_activate_location(&"mothership")
 
@@ -37,6 +42,7 @@ func request_location_change(destination: StringName, source: Node) -> bool:
 		var expedition := active_location as BasinExpedition
 		if expedition == null or not expedition.prepare_for_mothership_return(run_state):
 			return false
+		persist_run_state()
 	else:
 		active_location.call(&"begin_transition")
 
@@ -76,8 +82,41 @@ func _activate_location(location_name: StringName) -> void:
 			request_location_change(destination, location_source)
 	)
 	if active_location is BasinExpedition:
-		(active_location as BasinExpedition).initialize_from_run_state(run_state)
+		(active_location as BasinExpedition).initialize_from_run_state(
+			run_state,
+			Callable(self, &"persist_run_state")
+		)
+	elif active_location is Mothership:
+		(active_location as Mothership).initialize_from_run_state(
+			run_state,
+			Callable(self, &"persist_run_state")
+		)
 	location_changed.emit(current_location)
+
+
+func persist_run_state() -> bool:
+	if not persistence_enabled:
+		return true
+	if active_location is BasinExpedition:
+		(active_location as BasinExpedition).capture_durable_state(run_state)
+	if save_store == null:
+		save_store = RunSaveStore.new(save_path)
+	var saved := save_store.save_state(run_state)
+	if not saved:
+		push_error("Could not save Landzone run: %s" % save_store.last_error)
+	return saved
+
+
+func _load_run_state() -> void:
+	if not persistence_enabled:
+		run_state = RunState.new()
+		return
+	save_store = RunSaveStore.new(save_path)
+	var result := save_store.load_state()
+	run_state = result.state
+	if not result.ok:
+		load_warning = result.error
+		push_warning("Landzone save ignored: %s" % load_warning)
 
 
 func _on_transition_timer_timeout() -> void:

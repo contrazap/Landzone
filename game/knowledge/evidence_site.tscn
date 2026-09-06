@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://knowledge/evidence_site.gd" id="1_site"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
+radius = 82.0
+
+[node name="EvidenceSite" type="Area2D" groups=["knowledge_site"]]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("1_site")
+
+[node name="InteractionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_interaction")
+
+[node name="MarkerRing" type="Line2D" parent="."]
+points = PackedVector2Array(-30, 0, -21, -21, 0, -30, 21, -21, 30, 0, 21, 21, 0, 30, -21, 21, -30, 0)
+width = 4.0
+default_color = Color(0.95, 0.68, 0.28, 0.9)
+
+[node name="Core" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-17, -17, 17, -17, 17, 17, -17, 17)
+color = Color(0.12, 0.42, 0.42, 1)
+
+[node name="Glyph" type="Label" parent="."]
+offset_left = -42.0
+offset_top = -12.0
+offset_right = 42.0
+offset_bottom = 14.0
+theme_override_colors/font_color = Color(0.85, 1, 0.94, 1)
+theme_override_font_sizes/font_size = 13
+text = "EVIDENCE"
+horizontal_alignment = 1

@@ -19,6 +19,7 @@ func _run() -> void:
 		return
 
 	var app := main_scene.instantiate() as LandzoneMain
+	app.persistence_enabled = false
 	root.add_child(app)
 	await process_frame
 	await physics_frame
@@ -258,7 +259,10 @@ func _check_initial_mothership(
 		failures.append("Kestrel is missing its four solid outer boundaries.")
 	if app.get_tree().get_nodes_in_group(&"sealed_station_boundary").size() != 1:
 		failures.append("Later Kestrel stations are not physically sealed.")
-	for station_name: String in ["Research", "Galley", "Medical", "Habitat", "Workshop"]:
+	var research_label := mothership.get_node_or_null("StationLabels/Research") as Label
+	if research_label == null or "CODEX ONLINE" not in research_label.text:
+		failures.append("Kestrel is missing the F06 Research availability label.")
+	for station_name: String in ["Galley", "Medical", "Habitat", "Workshop"]:
 		var label := mothership.get_node_or_null("StationLabels/%s" % station_name) as Label
 		if label == null or "SEALED" not in label.text:
 			failures.append("Kestrel is missing the sealed %s station label." % station_name)
@@ -318,7 +322,7 @@ func _check_deployed_basin(
 	if not expedition.player.weapon_enabled or not expedition.player.surveyor_weapon.visible:
 		failures.append("Deployment did not restore the Surveyor weapon.")
 	var camera := expedition.player.get_node("Camera2D") as Camera2D
-	if camera.limit_right != 2160:
+	if camera.limit_right != BasinExpedition.BASIN_CAMERA_BOUNDS.end.x:
 		failures.append("Deployment did not restore Basin camera bounds.")
 	if expedition.get_viewport().get_camera_2d() != camera:
 		failures.append("The deployed player's Camera2D is not the viewport's active camera.")

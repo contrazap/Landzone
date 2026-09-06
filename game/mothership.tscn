@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://mothership.gd" id="1_mothership"]
 [ext_resource type="PackedScene" path="res://player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://ui/command_console.tscn" id="3_console"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_horizontal"]
 size = Vector2(960, 36)
@@ -17,6 +18,9 @@ size = Vector2(170, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_deploy"]
 radius = 105.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_research"]
+radius = 88.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
 bg_color = Color(0.025, 0.09, 0.105, 0.96)
@@ -234,6 +238,14 @@ collision_mask = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeployArea"]
 shape = SubResource("CircleShape2D_deploy")
 
+[node name="ResearchArea" type="Area2D" parent="."]
+position = Vector2(521, 292)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResearchArea"]
+shape = SubResource("CircleShape2D_research")
+
 [node name="VehicleBayArrival" type="Marker2D" parent="." groups=["mothership_arrival"]]
 position = Vector2(170, 420)
 
@@ -319,3 +331,20 @@ theme_override_font_sizes/font_size = 18
 text = "E - DEPLOY TO P1-BASIN-01"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ResearchPrompt" type="PanelContainer" parent="Interface"]
+visible = false
+offset_left = 290.0
+offset_top = 430.0
+offset_right = 670.0
+offset_bottom = 478.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="Label" type="Label" parent="Interface/ResearchPrompt"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.78, 0.38, 1)
+theme_override_font_sizes/font_size = 17
+text = "E - ACCESS RESEARCH CODEX"
+horizontal_alignment = 1
+
+[node name="ResearchConsole" parent="Interface" instance=ExtResource("3_console")]

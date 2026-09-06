@@ -24,6 +24,7 @@ func _run() -> void:
 		return
 
 	var app := main_scene.instantiate() as LandzoneMain
+	app.persistence_enabled = false
 	root.add_child(app)
 	await process_frame
 	var mothership := app.active_location as Mothership
@@ -173,15 +174,15 @@ func _check_movement(player: CharacterBody2D, failures: Array[String]) -> void:
 
 func _check_wall_collision(player: CharacterBody2D, failures: Array[String]) -> void:
 	_release_movement_inputs()
-	player.global_position = Vector2(800, 340)
+	player.global_position = Vector2(1350, 620)
 	player.velocity = Vector2.ZERO
 	Input.action_press(&"move_up")
 	player.set_physics_process(true)
-	for _frame: int in 20:
+	for _frame: int in 45:
 		await physics_frame
 	player.set_physics_process(false)
-	if player.global_position.y < 312.0:
-		failures.append("Player passed through the solid upper rock boundary.")
+	if player.global_position.y < 580.0:
+		failures.append("Player crossed the solid loop island instead of following a branch.")
 
 
 func _check_lethal_retry(

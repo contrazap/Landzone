@@ -28,6 +28,7 @@ func _run() -> void:
 		var expected_keys: Array = EXPECTED_INPUTS[action_name]
 		_check_action(action_name, expected_keys[0], expected_keys[1], failures)
 	_check_physical_key_action(&"interact", KEY_E, failures)
+	_check_physical_key_action(&"command_console", KEY_TAB, failures)
 
 	_check_main_scene(failures)
 

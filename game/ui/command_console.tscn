@@ -1,0 +1,122 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/command_console.gd" id="1_console"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_console"]
+bg_color = Color(0.025, 0.045, 0.06, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.82, 0.79, 0.9)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="CommandConsole" type="Control"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_console")
+
+[node name="Tint" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.01, 0.018, 0.028, 0.86)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 65.0
+offset_right = 860.0
+offset_bottom = 475.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_console")
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 24.0
+offset_right = 726.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.55, 1, 0.96, 1)
+theme_override_font_sizes/font_size = 22
+text = "FIELD COMMAND CONSOLE"
+
+[node name="Available" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 67.0
+offset_right = 726.0
+offset_bottom = 94.0
+theme_override_colors/font_color = Color(0.61, 0.7, 0.73, 1)
+theme_override_font_sizes/font_size = 15
+text = "AVAILABLE: where | journal add / find / read / tag / append"
+
+[node name="Prompt" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 113.0
+offset_right = 62.0
+offset_bottom = 151.0
+theme_override_colors/font_color = Color(0.3, 0.95, 0.9, 1)
+theme_override_font_sizes/font_size = 24
+text = ">"
+
+[node name="CommandInput" type="LineEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 108.0
+offset_right = 726.0
+offset_bottom = 154.0
+theme_override_colors/font_color = Color(0.9, 0.96, 0.95, 1)
+theme_override_colors/caret_color = Color(0.3, 1, 0.95, 1)
+theme_override_font_sizes/font_size = 20
+placeholder_text = "where | journal ..."
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="ResponseCaption" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 169.0
+offset_right = 726.0
+offset_bottom = 195.0
+theme_override_colors/font_color = Color(0.43, 0.56, 0.6, 1)
+theme_override_font_sizes/font_size = 13
+text = "FIELD RESPONSE"
+
+[node name="Response" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 195.0
+offset_right = 726.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(0.73, 0.96, 0.91, 1)
+theme_override_font_sizes/normal_font_size = 16
+text = "ENTER A COMMAND"
+fit_content = false
+scroll_active = true
+autowrap_mode = 2
+
+[node name="CloseHint" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 348.0
+offset_right = 726.0
+offset_bottom = 375.0
+theme_override_colors/font_color = Color(0.56, 0.65, 0.68, 1)
+theme_override_font_sizes/font_size = 14
+text = "ENTER SUBMIT   |   TAB / ESC CLOSE   |   GAMEPLAY PAUSED"
+horizontal_alignment = 1

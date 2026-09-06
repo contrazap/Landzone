@@ -161,6 +161,11 @@ For documentation-only work, record evidence in the handoff without inventing a 
 - Godot 4.7.1, 2D, GDScript, Compatibility renderer; project root game/.
 - snake_case for files, variables, methods, groups and input actions; PascalCase for classes;
   SCREAMING_SNAKE_CASE for constants. Prefer useful types and centralized tuning.
+- Treat maintainability and idiomatic Godot organization as default requirements, not optional
+  cleanup that needs a separate feature justification. Put new files in clear feature/domain
+  folders once responsibilities extend beyond a small cohesive set, and reorganize existing files
+  at a safe delivery boundary before a flat or mixed-purpose directory becomes difficult to
+  navigate. Update resource paths, tests and documentation together and verify the moves.
 - Focused reusable scenes/scripts with explicit state ownership and lifecycle.
 - Signals for events crossing ownership boundaries; clear direct calls within ownership.
 - Custom Resources when multiple instances or editor-authored definitions justify them.
@@ -181,6 +186,10 @@ Implement the simplest correct design for current requirements. Refactor for dem
 duplication, unclear ownership/lifecycle, distinct states obscured by conditionals, persistence,
 generation, or integration needs. Within the delivery, establish a baseline, refactor, verify
 preserved behavior, then add behavior where practical; separate approval sessions are unnecessary.
+The demonstrated-pressure rule governs material abstractions and disruptive refactors; it does not
+permit knowingly fragile, non-idiomatic or poorly organized code when an established, comparably
+simple practice is available. Prefer the conventional maintainable approach by default. Record a
+project-specific departure when its tradeoff is material.
 
 Keep docs/CODE_GUIDE.md current: system responsibilities, file links, entry points, ownership,
 important runtime flows, data lifetime, extension examples, reading order, and known limitations.

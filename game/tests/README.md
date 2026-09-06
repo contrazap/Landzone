@@ -70,6 +70,81 @@ time pauses while unloaded, pulses and firing recovery do not persist, and real 
 committed Stalker contact after revisiting still use the 0.65-second same-instance loaded retry.
 Success prints `F03/D01 checks passed` and exits with code 0.
 
+## F04 branching-navigation and coordinates test
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f04_branching_coordinates.gd
+```
+
+This scenario checks physical Tab binding, six authored path segments, three degree-three
+junctions, two surveyed limits and the solid loop/island intent. It drives the real player through
+both complete loop arcs, the east approach and both final branches, verifies solid separators and
+world caps, and checks shuttle-relative north/south/east/west rounding plus all eight facing
+sectors. Through parsed Tab, character, Enter and Escape events it proves LineEdit focus, the exact
+`where` result and bounded errors. It samples live player, Stalker, pulse and weapon-recovery state
+across a real paused interval, then verifies retry/transfer command rejection, balanced unpause,
+expanded-bounds Stalker revisit state and fresh redeployment availability. Success prints
+`F04/D01 checks passed` and exits with code 0.
+
+## F05 journal and persistence tests
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f05_journal_persistence.gd
+```
+
+The integrated phase uses the real Main/Basin/console, current coordinate service and lethal
+retry/transition flows. It checks exact metadata, all five journal commands, quoted parsing,
+newest-first five-result search, tag normalization, append, bounded failures, retained in-memory
+state after a failed save callback, death and location replacement. It also isolates missing,
+malformed, unsupported-version and invalid-entry save cases and proves a valid version-1 reload
+does not alias the serialized journal or encounter objects. Success prints `F05/D01 checks passed`.
+
+Application restart is verified by these two commands in order:
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f05_journal_persistence.gd -- --phase write
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f05_journal_persistence.gd -- --phase read
+```
+
+The writer and reader are separate Godot processes sharing only
+`user://landzone_f05_test/restart.json`. The reader verifies exact journal data, run seed,
+next-ID continuity and the Basin encounter snapshot both as plain state and after real deployment;
+it reads/searches through the console, saves entry #2, and removes only the isolated restart save
+on success. A failure retains the exact fixture for diagnosis. All pre-F05 scenarios disable
+persistence before entering the tree, so they cannot read or overwrite `landzone_save.json`.
+
+## F06 codex and knowledge-loop tests
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f06_codex_knowledge_loop.gd
+```
+
+The integrated scenario validates the three-term authored catalog, hidden versus confirmed
+meanings, repeat-safe evidence, prose isolation, premature/decoy/correct destination outcomes,
+codex command results/errors, strict reconstruction and version-1-to-version-2 migration. It then
+walks the complete loop through the real scenes: physical `E` deployment from the Kestrel vehicle
+bay, the authored southern safe passage past the armed hazard to a premature `EVIDENCE 0/3`
+rejection, the northern arc to all three evidence sites with physical `E`/Escape and a repeat-safe
+review, physical Tab journal prose that cannot move codex truth, a real lethal-hazard death whose
+retry keeps collected evidence, the fully informed South decoy mismatch, the North confirmation,
+and the walk back to Kestrel Research for typed codex queries plus journal find/read/tag/append.
+Success prints `F06/D01 checks passed`. The Stalker's physics is stilled for the clue route so the
+walk is deterministic; F02 and F03 own live combat, committed-attack death and encounter resets.
+
+Application restart is verified by these two commands in order:
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f06_codex_knowledge_loop.gd -- --phase write
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --headless --path game --script res://tests/test_f06_codex_knowledge_loop.gd -- --phase read
+```
+
+The writer and reader are separate Godot processes sharing only
+`user://landzone_f06_test/restart.json`. The writer collects all three records, confirms the North
+Shelf cairn and saves a field entry plus an encounter snapshot. The reader restores the exact
+observed IDs, confirmed meanings, destination, seed, next journal ID and encounter, reapplies the
+encounter on deployment, repeats both interactions without duplicating durable state, and queries
+the restored truth through Kestrel Research. It removes only the isolated fixture on success.
+
 ## Import and parser check
 
 ```powershell
@@ -118,6 +193,43 @@ records the 2026-09-06 inspection. The capture window's synthetic action state i
 so the driver calls the same proximity-validated public interaction methods; the headless F03
 scenario separately exercises `Input.action_press/release` through location polling.
 
+F04 adds a second focused driver:
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --path game --script res://tests/capture_f04_views.gd
+```
+
+It saves six 960x540 Compatibility-renderer PNGs for Landing Fork, Reunion Fork, Far Fork,
+North Shelf limit, South Hollow limit and a non-origin `where` result. The driver validates image
+creation/dimensions; inspect the pixels for branch separation, player/camera framing, caption/HUD
+collisions, complete endpoint text, console focus hierarchy and response legibility. The F04 plan
+records the 2026-09-06 inspection and the two presentation corrections made from it.
+
+F05 adds the journal-response driver:
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --path game --script res://tests/capture_f05_views.gd
+```
+
+It saves three 960x540 Compatibility-renderer PNGs for coordinate-stamped add, a full bounded
+five-result search and metadata-rich read with appended prose. Inspect all three for hierarchy,
+contrast, wrapping, truncation, scroll/clipping and input context. The driver disables disk
+persistence and uses a fixed timestamp; the headless F05 scenarios own durability evidence.
+
+F06 adds the knowledge-loop driver:
+
+```powershell
+& 'C:\MyFiles\Godot\Godot_v4.7.1-stable_win64_console.exe' --path game --script res://tests/capture_f06_views.gd
+```
+
+It saves seven 960x540 Compatibility-renderer PNGs: the three evidence readers, the South Hollow
+mismatch, the North Shelf confirmation, and the Research codex search, codex evidence and
+coordinate-stamped journal read. Inspect the glyph rows against the fixed truth table as well as
+hierarchy, wrapping, clipping and station wording. The F06 plan records the 2026-09-06 inspection
+and the console-wording correction made from it. The driver uses the proximity-validated public
+interaction because the capture window's synthetic action state is focus-sensitive; the headless
+F06 scenario owns physical-key evidence.
+
 A delivery changing visual behavior must establish its needed agent-run capture/interaction
 method, inspect the actual rendered result, and record the setup and artifact path in its plan.
 Use available engine or desktop tooling and focused deterministic scenario drivers. Verify the
@@ -133,7 +245,9 @@ only rendered inspection and existing integration checks; they do not automatica
 ## Coverage added with future features
 
 - F03: return/redeployment and encounter state preservation across normal revisits versus retry.
-- F04-F06: pause/focus, command parsing, journal/codex interfaces and durable state round trips.
+- F04: authored route traversal, coordinates, pause/focus and the first bounded command parser.
+- F05: journal grammar/lifecycle, invalid saves and a true two-process durable round trip.
+- F06: codex interface, walked evidence loop and durable confirmed-fact round trips.
 - F07/F12: multiple fixed seeds, independent random streams, reachability and progression,
   evidence consistency, bounded generation failure and diagnostics.
 - F08-F11: geometry validation, checkpoint/recovery behavior, finite resource ownership,

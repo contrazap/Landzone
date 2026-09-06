@@ -62,7 +62,7 @@ encounter behavior rather than a separate content candidate.
 | Basin surface | Implemented | F01; F07 generation | Readable rock paths, compass-aligned forks, and the initial landing region; hunting resources arrive in F10. |
 | Spore margin | Proposed | F07; F10 exposure | Alternate surface presentation and authored ground-hazard modules; status exposure activates only with F10 recovery support. |
 | Silent structure | Proposed | F09 | Principal cave/ruin site holding the first artifact and entrance checkpoint. |
-| Survey cairn | Proposed | F06; F07 placement | Reusable clue landmark whose form remains recognizable when its location changes. |
+| Survey cairn | Implemented | F06; F07 placement | Reusable clue landmark whose form remains recognizable when its location changes. |
 | Optional resource site | Proposed | F07 reachable node; F10 content | Optional branch containing the huntable creature and ordinary resources; mandatory progression cannot depend on exhausting it. |
 | Phase fault | Proposed | F08 | Lethal gap/anomaly used for the first precision-blink challenge. |
 | Boss gate | Proposed | F12 coordinate; F13 encounter | Authored final encounter entrance with a nearby shuttle landing and immediate checkpoint. |
@@ -110,16 +110,27 @@ relationships, and destination with adequate evidence, as described in `GAME_DES
 
 ## Initial command vocabulary
 
-| Domain | Proposed commands |
-| --- | --- |
-| Location | `where` |
-| Journal | `journal add`, `journal find`, `journal read`, `journal tag`, `journal append` |
-| Codex | `codex search`, `codex evidence` |
-| Deployment | `shuttle land`, `shuttle return` |
-| Traversal | `blink --bearing --distance`, `blink --offset` |
-| Survival | `diagnose`, `treat`, `cook`, `sleep` |
-| Equipment | `search weapon`, `equip ability` |
-| Artifact | `artifact inspect`, `artifact unlock` |
+| Domain | State | Commands |
+| --- | --- | --- |
+| Location | Implemented | `where` |
+| Journal | Implemented | `journal add`, `journal find`, `journal read`, `journal tag`, `journal append` |
+| Codex | Implemented | `codex search`, `codex evidence` |
+| Deployment | Proposed | `shuttle land`, `shuttle return` |
+| Traversal | Proposed | `blink --bearing --distance`, `blink --offset` |
+| Survival | Proposed | `diagnose`, `treat`, `cook`, `sleep` |
+| Equipment | Proposed | `search weapon`, `equip ability` |
+| Artifact | Proposed | `artifact inspect`, `artifact unlock` |
 
 Plans should introduce commands only when their feature owns the behavior. Do not build the full
 registry during the first command feature.
+
+F04 implemented `where` on 2026-09-06. F05 implemented the complete planned journal vocabulary
+on the same date with quoted prose, bounded search/tag behavior and version-1 persistence. These
+commands store and retrieve player-authored text only; they do not create codex truth.
+
+F06 implemented the Survey cairn and the codex vocabulary on 2026-09-06. The Basin carries the
+correct North Shelf Survey Cairn at `N04 E23` and a South Hollow resonant decoy; `codex search`
+and `codex evidence` answer only from observed evidence and confirmed facts, and are available at
+Kestrel Research rather than in the field. The fixed meanings `ACHVNTSAT = NORTH`, `VEL = THREE`
+and `ORUUN = SILENT STONE`, with the Compass Array, Resonance Calibration and Route Slab records,
+are now authored content; F07 may relocate the cairn but must preserve its recognizable form.

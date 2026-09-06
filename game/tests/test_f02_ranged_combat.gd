@@ -67,6 +67,7 @@ func _run() -> void:
 
 func _create_basin_app(main_scene: PackedScene, failures: Array[String]) -> LandzoneMain:
 	var app := main_scene.instantiate() as LandzoneMain
+	app.persistence_enabled = false
 	root.add_child(app)
 	await process_frame
 	var mothership := app.active_location as Mothership
