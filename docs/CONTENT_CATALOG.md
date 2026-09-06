@@ -1,16 +1,21 @@
 # Landzone - First-Slice Content Catalog
 
-Last updated: 2026-09-05
+Last updated: 2026-09-06
 
-This file keeps authored gameplay content finite and discussable before implementation. Entries
-marked **Proposed** are design candidates, not implementation authorization. An agent must ask
-for or infer approval only from an explicit user statement before a consuming feature is planned.
+This file keeps authored gameplay content finite and reviewable. Entries marked **Proposed**
+are candidates that an agent can select or refine in their consuming feature plan without a
+separate pre-planning approval. The user's request to implement that plan authorizes its stated
+in-scope selections. Generating a plan alone does not authorize implementation.
 
 Allowed states: `Proposed`, `Approved`, `Implemented`, `Cut`.
 
 Feature owners below use the revised roadmap IDs. Assigning an owner does not approve a
 proposed name, behavior variant, or tuning value. Required slice roles are approved scope;
-their specific content candidates remain subject to approval before the consuming plan.
+their specific candidates are selected during planning and authorized through implementation
+requests. Record the plan and authorization when changing a candidate to Approved; mark it
+Implemented when the described content exists and passes its required verification. Routine
+tuning may be adjusted with recorded reasons. Core scope changes still require user direction.
+The 2026-09-06 workflow approval does not bulk-approve or implement all candidates below.
 
 ## Player equipment
 
@@ -23,8 +28,8 @@ their specific content candidates remain subject to approval before the consumin
 | Artifact environmental/traversal effect (pairing undecided) | Proposed | F09 | The same artifact also grants access through one authored environmental/traversal obstacle; its own acquisition route must not require this effect. |
 
 The first artifact should unlock one traversal/environmental protection and one related weapon
-verb. The exact pairing must be approved before F09 planning. Precision blink is already
-available in F08 and is not locked behind this artifact. F09 owns both new artifact effects.
+verb. Select the exact pairing in the F09 plan. Precision blink is delivered by F08 and is not
+locked behind this artifact. F09 owns both new artifact effects.
 
 ## Enemy roles
 
@@ -88,7 +93,7 @@ fit that contract; F10 may not defer all recovery to F11.
 
 ## Alien language and clue chain
 
-Working tokens are placeholders until the content pass before F06:
+Working tokens are placeholders until content selection in the F06 plan:
 
 | Token | State | Candidate semantic family |
 | --- | --- | --- |
@@ -98,8 +103,8 @@ Working tokens are placeholders until the content pass before F06:
 
 The first clue chain should use only three to five tokens and at least two forms of evidence for
 any interpretation required to finish the run. Exact words, meanings, code structure, and clue
-templates for the first local inference must be approved before F06. Approve any additions
-needed for artifact integration before F09 and generated destinations before F12. Once a token
+templates for the first local inference are selected in the F06 plan. Select any additions
+needed for artifact integration in F09 and generated destinations in F12. Once a token
 has an approved meaning, new seeds do not change it. Vary the selected referent, landmark
 relationships, and destination with adequate evidence, as described in `GAME_DESIGN.md`.
 

@@ -1,126 +1,110 @@
 # F## - Feature name
 
 - Feature status: Planned
-- Roadmap dependency: F## or none
+- Dependencies: F## or none
 - Created: YYYY-MM-DD
 - Completed: -
-- Current step: S01
+- Delivery mode: Single delivery (default), or split with the reason below
+- Current delivery: D01
 
-## Objective
+## Outcome and scope
 
-One short paragraph describing the player-visible or engineering outcome delivered by this
-feature. State the learning value without turning the feature into a generic framework exercise.
+Describe the concrete player-visible or engineering outcome.
+List the owned roadmap requirements, necessary integration, and explicit exclusions.
+Do not plan later features or paste a speculative implementation.
 
-## Preflight and actual starting state
+## Actual starting state
 
-- Files, scenes, systems, and tests inspected.
-- Previous behavior that must remain working.
-- Exact baseline commands run and their results.
-- Assumptions confirmed from actual files.
-- Uncommitted user changes that must be preserved.
+- Relevant files, scenes, ownership and data lifetimes inspected:
+- Existing behavior to preserve:
+- Baseline commands and actual results:
+- User changes to preserve:
+- Assumptions and required external decisions, if any:
 
-## In scope
+## Content and design decisions
 
-- Required behavior for this feature only.
-- Slice requirements and content owned by this feature in `docs/ROADMAP.md`; confirm approval
-  of any proposed catalog items before planning their implementation.
-- Necessary integration with completed features.
-- Diagnostics or test seams required to verify it.
+Select exact content needed by this feature from the catalog or specify an in-scope alternative.
+Include behavior, meanings, initial tuning, and reasons. Proposed content can be planned without
+prior separate approval; the user's implementation request authorizes the plan's selections.
+Keep scope changes explicit and unresolved until approved.
 
-## Out of scope
+Describe resulting ownership, interfaces, state lifetime, error handling and integration points.
+For material refactoring: identify observed pressure, chosen boundary, alternative rejected,
+and behavior-preserving checks. Write None when no refactor is justified.
 
-- Nearby roadmap work deliberately deferred.
-- Content still awaiting approval.
-- Speculative abstractions and unrelated cleanup.
+## Delivery sizing
 
-## Current design
+Explain why this feature can be completed and verified as one delivery, or identify substantial
+boundaries that require a split. Do not split by file creation, wiring, testing, or documentation.
+A split delivery must leave a runnable coherent outcome. Do not mandate an arbitrary step count.
 
-Describe only the current relevant ownership, lifecycle, event flow, and data shape. Include a
-small diagram when it materially improves understanding.
-
-## Refactoring assessment
-
-- Observed pressure: Concrete duplication, ownership problem, testability problem, or new
-  requirement that justifies structural change; write `None` when absent.
-- Decision: Refactor now or keep the current concrete implementation.
-- Behavior-preserving verification: Checks required before and after a material refactor.
-
-## Expected files
-
-List anticipated new or modified files. This is planning guidance, not permission for unrelated
-changes. Update completion notes if reality differs.
-
-## Step ledger
-
-Allowed statuses: `Not started`, `In progress`, `Blocked`, `Complete`.
-
-| Step | Outcome | Status | Verification |
+| Delivery | Outcome and dependencies | Status | Acceptance IDs |
 | --- | --- | --- | --- |
-| S01 | Small coherent outcome | Not started | Focused check |
-| S02 | Small coherent outcome | Not started | Focused check |
+| D01 | Complete feature, including integration and verification | Not started | A01, A02 |
 
-Use roughly three to eight steps. Each step must be safe to request independently and must not
-leave known parser errors. Prefer a runnable or inspectable checkpoint after every step.
+Delivery statuses: Not started, In progress, Blocked, Complete.
+For a split plan, add only justified deliveries and keep them in this feature's plan.
+"Implement the plan" completes the next delivery; a single-delivery plan completes the feature.
 
-## Implementation steps
+## Delivery implementation checklist
 
-### S01 - Imperative step title
+### D01 - Outcome title
 
-**Purpose:** Why this step exists now.
+- Expected files and their responsibilities:
+- [ ] Implement the cohesive behavior and necessary refactoring.
+- [ ] Integrate with affected existing systems.
+- [ ] Exercise acceptance scenarios and fix in-scope failures.
+- [ ] Review the diff and update evidence, catalog, code guide, decisions and progress.
 
-**Changes:** Concrete files and behavior to add or modify. Do not paste a speculative full
-implementation into the plan unless an exact snippet is essential to remove ambiguity.
+Replace these prompts with concrete internal tasks. The agent executes the entire checklist
+without pausing for user approval. For split features repeat this section per delivery.
 
-**Do not:** Boundaries that prevent spilling into S02 or a later feature.
+## Acceptance and evidence
 
-**Verify:** Exact automated command or static check and the expected result.
+| ID | Required observable outcome | Agent verification method and expected result | Actual evidence / status |
+| --- | --- | --- | --- |
+| A01 | Feature-specific behavior, including a failure case | Exact scenario/command and assertions | Pending |
+| A02 | Affected earlier behavior remains correct | Named regression scenario and success result | Pending |
 
-**Manual checkpoint:** Short interaction and literal expected observation, or `None` when the
-step is entirely nonvisual.
+Cover every owned scope requirement. Include imports, runtime errors, appropriate regressions,
+and rendered evidence for changed presentation. For durable state include death, transitions and
+save/load. For penalties/costs include recovery and depletion in this feature.
+All required criteria must pass before their delivery is complete; all deliveries and feature
+criteria must pass before the feature is complete.
 
-### S02 - Imperative step title
+## Verification execution
 
-Repeat the same structure for each step.
+- Exact commands, working directory, required tools and success/failure signals:
+- Existing checks to reuse; justified new persistent tests and the risk each protects:
+- Runtime scenarios exercising real scenes/physics/input or focused plain-data contracts:
+- Rendered captures/input interactions to inspect for visual changes; setup and artifact paths:
+- Save isolation and cleanup strategy when relevant:
+- Missing verification capabilities and how this delivery will establish them:
 
-## Feature acceptance criteria
+No test-per-function quota. Cosmetic changes can use rendering inspection and relevant existing
+checks. Startup alone cannot verify a feature; headless state flags cannot prove rendering.
+Keep important behavioral regressions; update structural assertions only when their contract
+has legitimately changed. A missing essential check leaves the delivery incomplete, not passed.
 
-- [ ] Player-visible outcome works as specified.
-- [ ] Integration with relevant earlier features remains working.
-- [ ] Godot imports and parses without new errors.
-- [ ] Focused automated verification passes.
-- [ ] Required manual presentation/game-feel checks are confirmed.
-- [ ] Progress and architecture documentation match actual state.
+## Optional experiential limitations
 
-Replace generic criteria with concrete feature-specific statements during plan generation.
-Include the roadmap's applicable playtest gate and all owned slice requirements. For new durable
-state, include death, scene transition, and save/load outcomes. If introducing a penalty or
-resource cost, include a usable recovery path in this feature rather than depending on later work.
+Record subjective enjoyment, first-time clue comprehension, and pacing qualities not observed.
+These are not required user tasks or gates. Keep them distinct from functional/rendering defects
+and required verification gaps. Never claim human understanding from an agent solution walkthrough.
 
-## Verification plan
+## Completion and continuation record
 
-### Automated or headless
+Fill with actual outcomes during implementation:
 
-- Exact command.
-- Expected successful result.
-- Earlier checks that must be rerun.
+- Deliveries completed / current status:
+- Actual changed files, responsibility and reason for change:
+- Acceptance IDs and commands/scenarios/results, including error-log review:
+- Rendered observations and artifact links, or applicability/required gap:
+- Content decisions implemented and tuning deviations:
+- Code guide sections and architecture decision links:
+- Remaining defects, required verification gaps and optional limitations:
+- If interrupted or split: coherent boundary reached, changed scope of delivery, checks already
+  run, first remaining action, and reason:
+- Exact next action:
 
-### Manual
-
-- Exact setup and actions.
-- Literal visible or audible expectations.
-- Failure cases to attempt.
-- Applicable comprehension, retry, or pacing observations from the roadmap; identify checks
-  that require an unfamiliar player rather than developer knowledge of the solution.
-
-## Completion notes
-
-Fill this section during implementation rather than predicting results:
-
-- Actual files changed:
-- Steps completed:
-- Commands/tests and results:
-- Manual checks performed:
-- Deviations from plan:
-- Architecture log entries:
-- Remaining risks or debt:
-- Suggested commit boundary:
+Do not request a separate documentation/test session merely to close this delivery.

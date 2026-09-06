@@ -1,6 +1,6 @@
-# Landzone - Incremental Roadmap
+# Landzone - Feature Roadmap
 
-Last updated: 2026-09-05
+Last updated: 2026-09-06
 
 This roadmap describes player-visible increments and the architectural pressure each may reveal.
 It does not prescribe final internals. Generate one detailed feature plan only when that feature
@@ -9,6 +9,11 @@ is next and after inspecting the actual project.
 Every feature must leave a playable, demonstrable increment. Later features may generalize an
 earlier concrete implementation, but they must preserve already verified behavior unless the
 design explicitly changes it.
+
+Default to implementing a feature in one delivery, including integration, verification and
+documentation. Split only at substantial boundaries justified by the actual starting state;
+record those deliveries in the feature plan. Internal tasks are not separate user gates.
+F00-F02 retain their historical step-based evidence; new work follows AGENTS.md.
 
 | ID | Feature | Player-visible increment | Expected learning/refactoring pressure |
 | --- | --- | --- | --- |
@@ -24,7 +29,7 @@ design explicitly changes it.
 | F09 | First location, checkpoint, and artifact | Reach the principal cave/structure, activate its entrance checkpoint, use fixed clues to unlock an artifact with an environmental/traversal effect and a weapon verb, and encounter the third ordinary enemy. | Multiple checkpoint sources, site lifecycle, progression state, and pressure to generalize a second weapon/traversal ability. |
 | F10 | Hunting, inventory, and expedition status | Hunt one creature at an optional resource site, carry resources, meet the elite variation, experience bounded statuses, recover a death cache, and return home for basic recovery. | Item data, inventory ownership, timed status effects, finite resource identity, checkpoint retreat, and UI observability. |
 | F11 | Mothership cooking, rest, and treatment | Prepare one food chain, sleep, diagnose and treat the initial condition through functional stations, and bank resources; preserve the basic recovery fallback. | Command registration, station interactions, recipes, time advancement, storage, and reusable procedures. |
-| F12 | Procedural mystery and progression validation | Select the run's solution before layout, distribute reachable evidence, derive a valid boss landing coordinate, and validate structural solvability plus human understanding. | Progression graph, clue compiler, multi-seed invariant tests, bounded regeneration, and diagnostic tooling. |
+| F12 | Procedural mystery and progression validation | Select the run's solution before layout, distribute reachable evidence, derive a valid boss landing coordinate, and verify solvability and consistent presented evidence across seeds. | Progression graph, clue compiler, multi-seed invariant tests, bounded regeneration, and diagnostic tooling. |
 | F13 | Boss expedition and completion | Land beside a boss gate, use accumulated knowledge and abilities, defeat an authored boss, and complete the expedition. | Multi-state boss behavior, checkpoint runback, terminal-state coordination, complete-loop balance, and presentation polish. |
 | F14 | Replayability, hardening, and release | Start a new seed, observe meaningful rearrangement, resume a saved run, and export a stable playable build. | Save compatibility, generation variety metrics, profiling, regression suite, accessibility options, and release workflow. |
 
@@ -36,12 +41,12 @@ No feature plans or game code existed at this revision.
 
 - F06 depends only on the authored exterior, coordinates, command overlay, journal, and save
   support from F00-F05. Its destination is a local landmark, not an artifact gate or boss region.
-  It introduces only the codex operations needed for that inference. Exact clue content must
-  be approved before its plan is generated.
-- F06 completion requires a player unfamiliar with the solution to connect the evidence,
-  retrieve a useful note, and explain how they chose the destination without developer hints.
-  Record confusion and revisions. This manual check is required before F07 planning; reachable
-  clues and passing parser tests alone do not establish that the knowledge loop works.
+  It introduces only the codex operations needed for that inference. Select exact clue content
+  in its plan; requesting implementation authorizes that in-scope selection.
+- F06 completion requires an agent-run evidence-to-destination scenario through the actual
+  journal and codex interfaces, rejected invalid answers, and review of presented clues for
+  consistency and ambiguity. Record the evidence supporting each deduction. No unfamiliar-player
+  playtest is required before F07; human comprehension remains unassessed unless observed.
 - F07 generates against F06's fixed progression requirements and preserves their evidence and
   destination relationships. F09 extends that fixed chain to the artifact. F12 later varies
   the solution and supplies it to layout generation first; it does not place required evidence
@@ -74,13 +79,18 @@ already delivered content rather than absorbing unassigned requirements.
 | Boss landing coordinate and expedition completion | F12 derives and registers the coordinate; F13 makes that destination playable and completes the expedition. |
 | Stable world, death persistence, application resume, and new run | F01/F02 retry rules; F03 scene transitions; F05 save baseline; F06-F13 extend persistence as state arrives; F14 player-facing new run, isolation between seeds, and release checks. |
 
-## Playtest and pacing gates
+## Agent verification and pacing evidence
 
-- F02 measures death-to-control time, runback time, and whether the player can identify a lethal
-  attack's tell. F08 repeats this for failed traversal, including command re-entry effort.
-- F06 records inference attempts and note retrieval, including where the player needed help.
-  F12 repeats this with unfamiliar solutions across multiple seeds; automated graph checks
-  establish structural validity, while manual checks assess evidence and comprehension.
+No required user playtest gates. Each owning plan maps these obligations to executable scenarios
+and agent observations; missing essential evidence keeps the affected delivery incomplete.
+
+- F02's historical tell and timing observations remain recorded. F08 measures retry and runback
+  times for failed traversal, exercises command history/re-entry, and inspects rendered scale,
+  danger and destination cues. State flags alone do not establish visible presentation.
+- F06 exercises evidence access, note retrieval, interpretation and the destination through
+  actual interfaces. F12 repeats with multiple fixed seeds, checking stable meanings, valid and
+  invalid answers, reachable evidence coverage, and consistency of rendered clue text with truth.
+  Keep the review of clue ambiguity distinct from proof of unfamiliar-player comprehension.
 - F10/F11 verify recovery after repeated deaths and resource depletion, and record time spent
   preparing versus exploring. Hunting and cooking should give a visible preparation benefit
   over emergency recovery without making depleted resources a permanent progression blocker.
@@ -88,6 +98,12 @@ already delivered content rather than absorbing unassigned requirements.
   The provisional 60-120 minute duration is not a minimum. Adjust pacing from observations;
   do not extend travel, repetition, or waiting to meet it. Product-scope changes still require
   user approval.
+- F14 exports and runs the packaged build, exercises the complete expedition and resume/new-run
+  flows, reviews error logs and performance evidence, and consolidates the code guide against
+  the final files. Maintainability or passing source checks alone does not prove release readiness.
+- Optional human feedback may improve enjoyment and first-time comprehension, but its absence
+  blocks neither completion nor planning. Record those experiential qualities as unassessed;
+  never relabel a known functional or rendering defect as subjective to bypass acceptance.
 
 ## Dependency rule
 
@@ -99,7 +115,9 @@ progress ledger.
 
 The roadmap's final column names likely pressure, not permission to prebuild an abstraction.
 Feature plans must inspect actual evidence and state whether a refactor is now justified. When a
-refactor is material, prefer a behavior-preserving step and commit before adding new behavior.
+refactor is material, establish a baseline, refactor and verify preserved behavior within the
+delivery before adding behavior where practical. No separate approval session or commit is
+required; Git commits remain explicitly user-requested operations.
 
 ## Expansion gate
 

@@ -1,0 +1,112 @@
+# Project agent instructions
+
+Install this file as AGENTS.md in the target project and customize product/stack details during
+setup. This starter text is not an instruction to change the repository containing the template.
+
+## Mission and authority
+
+Build the approved product through feature-sized deliveries with plans on demand. The user
+requests plans and implementation, and studies the result later. The agent owns cohesive
+implementation, integration, in-scope fixes, verification and documentation. No required user
+manual checks or approval pauses between internal checklist items.
+
+The implementation request authorizes routine choices stated in the plan and reasonable tuning
+within approved scope. Product-scope changes, engine/stack migrations and external publication
+need user direction. Do not silently add prerequisites, reorder features or expand the product.
+
+## Context and truth
+
+Read this file, PROGRESS.md, docs/PRODUCT.md and relevant roadmap requirements first. Then read
+the active plan, affected content entries if used, verification profile, relevant code-guide and
+decision sections, and actual code/integration points. Within a session reread changed material.
+Do not load archives, all completed plans, or unrelated systems by default. Actual code and
+verification override stale implementation descriptions; reconcile documentation without silently
+changing product scope. Inspect Git state and preserve unrelated changes.
+
+## Requests and boundaries
+
+- Status-only: silently inspect current state, modify nothing and return exactly one visible line:
+  Status: <overall> | Last: <completed feature/milestone> | Current: <feature/delivery> | Next:
+  <exact next action> | Blockers: <none or concise blocker>. No commentary or extra text.
+- Check next step: read-only explanation of the next action and its dependency.
+- Generate the next plan: inspect the baseline and create only plans/F##_short_name.md for the
+  earliest dependency-satisfied incomplete feature, using FEATURE_PLAN_TEMPLATE.md. Reconcile
+  an existing unfinished plan before generating another. Select concrete in-scope content in the
+  plan without separate pre-planning approval. Mark Planned; do not implement runtime code.
+- Implement the plan / Implement F## / Implement the next step: complete the next incomplete
+  delivery. Single delivery means the whole feature. Split plan means one substantial delivery
+  per request unless the user explicitly requests all deliveries. If no plan exists, generate
+  it and stop for the user's implementation request. Never silently start another feature.
+- Continue implementation: resume the current delivery from the handoff.
+- Verify: run relevant existing checks and review integration; report/update evidence without
+  starting new features. Report newly discovered defects on verification-only requests.
+
+## Size and execute deliveries
+
+Default to one complete feature including integration, fixes, checks and docs. Split only for
+substantial integration/verification boundaries, multiple major systems, a risky data migration,
+or an early outcome that determines later design. No fixed number of files, tasks or sessions.
+Do not separate file creation, wiring, tests or documentation into user-requested microsteps.
+
+Inspect baseline and user changes, mark In progress, implement the full internal checklist,
+verify behavior and regressions, fix in-scope failures, review the diff and document evidence.
+Refactoring may happen within the delivery with checks before/after; it needs no separate session.
+Stop at the planned delivery boundary with a runnable coherent outcome and exact next action.
+
+If complexity requires a split, record the reason and remaining acceptance in the active plan.
+Do not drop requirements to fit a session or call unfinished work complete. On interruption,
+record changed files, known failures, checks run and first remaining action. Resume after context
+compaction; compaction alone is not a reason to end authorized work.
+
+## Verification and completion
+
+Use docs/VERIFICATION.md, customized to the actual stack and available tools. Every required
+acceptance criterion needs suitable agent evidence, including integration/error paths and
+affected regressions. Test real runtime/input boundaries where relevant. For visible changes,
+inspect actual rendered output; DOM/state flags or headless success do not prove presentation.
+For release, execute the actual packaged build or validate the authorized deployment target.
+
+Reuse valuable tests; add persistent tests for important contracts, data integrity, likely
+regressions and deterministic logic. No test-per-function or cosmetic-change quota. Update
+obsolete structural assertions when contracts legitimately change; never weaken valid tests
+to hide failures. Do not introduce a framework merely to satisfy a process requirement.
+
+Record exact commands, observed results, fixtures/seeds and useful artifacts. Check error logs,
+timeouts and expected success signals as well as exit codes. Isolate test data from real user
+data. Missing essential verification leaves a required gap and an incomplete/Blocked delivery.
+Establish safe in-scope tooling when possible; do not assign manual acceptance to the user.
+Ask only for an actual missing external decision/capability when needed to proceed.
+
+Subjective enjoyment, human comprehension and other experiential qualities may remain explicitly
+unassessed and nonblocking. Known functional/rendering defects are not subjective exemptions.
+Never claim observations that did not happen or use code existence as production-readiness proof.
+
+Feature statuses: Not started, Planned, In progress, Blocked, Complete.
+Delivery statuses: Not started, In progress, Blocked, Complete.
+A delivery is complete only after required evidence passes, affected regressions pass, no known
+introduced runtime/build errors remain, the boundary is runnable and documentation matches.
+A feature requires all deliveries and all its acceptance criteria to pass.
+
+## Maintainability and study record
+
+Use stack-appropriate conventions, explicit ownership/lifetime, cohesive modules, useful types,
+centralized tuning, and understandable error handling. Separate durable data from presentation
+where real requirements justify it. Avoid speculative frameworks and intentionally poor designs.
+Document actual project naming, source-root, dependency and security conventions during setup.
+
+After each delivery update docs/CODE_GUIDE.md with responsibilities, actual file links, reading
+order, entry points, important runtime/data flows, extension examples and limitations. Record
+material decisions, alternatives and evidence in docs/ARCHITECTURE_EVOLUTION.md. Detailed changes
+and acceptance evidence belong in the feature plan. Explain non-obvious reasons, not every line.
+Consolidate the guide against final code in the release feature.
+
+Keep PROGRESS.md compact: date, overall state, last completed feature/milestone, active delivery,
+exact next action, blockers/required gaps, concise roadmap evidence links and latest handoff.
+Archive lengthy history with links; retain genuine past evidence without treating it as current.
+
+## Git and external operations
+
+Do not initialize Git, commit, push, create remotes, delete unrelated work, or rewrite history
+unless requested. Inspect intended diffs before commits and remote/branch before pushes.
+Do not publish, provision paid resources, or send external messages without authorization.
+Build and verify locally to prepare a concrete result before any necessary publication decision.

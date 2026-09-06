@@ -1,15 +1,21 @@
 # Landzone - Architecture Evolution
 
-Last updated: 2026-09-05
+Last updated: 2026-09-06
 
 This is a learning record of material structural changes. It is not a speculative architecture
 blueprint. Add an entry only when implementation pressure causes an actual refactor or establishes
 an important boundary.
 
+Use [CODE_GUIDE.md](CODE_GUIDE.md) for current ownership, file navigation and walkthroughs.
+This log explains decisions; completed feature plans own detailed changes and acceptance output.
+Add entries during delivery, not at a separate user checkpoint. F00-F02 plans preserve their
+original rationale and step evidence. The 2026-09-06 workflow migration changes documentation,
+not game architecture; it does not retrospectively invent a refactor or decision.
+
 ## Entry template
 
 ```markdown
-## YYYY-MM-DD - F##/S## - Short decision
+## YYYY-MM-DD - F##/D## - Short decision
 
 - Before: What concrete implementation existed?
 - New pressure: Which verified requirement exposed a limitation?
@@ -19,6 +25,7 @@ an important boundary.
 - Behavior preserved: Which existing checks demonstrate unchanged behavior?
 - New capability: What can the new structure support immediately?
 - Remaining debt: What is deliberately still simple?
+- Code guide and files: Current walkthrough and implementation links.
 ```
 
 ## Initial constraints, not implementations

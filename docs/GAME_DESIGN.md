@@ -1,7 +1,7 @@
 # Landzone - Game Design Document
 
-Document status: Approved baseline for incremental planning
-Last updated: 2026-09-05
+Document status: Approved baseline for feature-sized delivery
+Last updated: 2026-09-06
 
 This document defines the stable product direction. It is not an implementation plan. Feature
 plans must satisfy the current slice of this design without prematurely constructing systems
@@ -112,10 +112,10 @@ The first complete replayable expedition contains:
 - A new-run action that preserves the rules but rearranges the expedition from a new seed.
 
 The provisional duration hypothesis for a learned successful run is roughly 60-120 minutes.
-It is not a minimum, deadline, or acceptance criterion. Playtests determine appropriate duration;
-do not add travel, repeated preparation, or command entry to reach it. Record exploration,
-inference, combat/retries, travel, and preparation separately so pacing problems are visible.
-A shorter satisfying run is acceptable within the required content scope.
+It is not a minimum, deadline, or acceptance criterion. Agent-run scenarios measure travel,
+combat/retries, preparation, and command-entry overhead separately; do not add repetition to
+reach a duration target. Human pacing feedback is optional and must not be fabricated from
+scripted timings. A shorter run is acceptable within the required content scope.
 
 ## Explicit exclusions for the first slice
 
@@ -251,9 +251,12 @@ artifact unlock ACHVNTSAT VEL ORUUN
 
 F06 first tests this loop with a fixed chain on the authored exterior: observe evidence, write
 and retrieve a useful note, interpret the evidence through the codex, and navigate to a local
-landmark. It needs neither an artifact nor a boss. A player unfamiliar with the answer must
-demonstrate and explain the inference before procedural generation begins. F09 extends the
-chain to an artifact unlock; F12 varies the solution and derives the boss landing coordinate.
+landmark. It needs neither an artifact nor a boss. Before procedural generation, agent-run
+verification must exercise evidence access, journal retrieval, codex interpretation and the
+accepted destination, including invalid answers. Review the authored evidence for consistency
+and ambiguity; unfamiliar-player comprehension remains unassessed unless actually observed.
+F09 extends the chain to an artifact unlock; F12 varies the solution and derives the boss
+landing coordinate.
 
 ### Stable meanings and variable solutions
 
@@ -275,9 +278,10 @@ generation obligation, not a mandatory evidence-collection checklist. Wrong answ
 clear feedback without leaking the solution one symbol at a time. A remembered coordinate
 from another seed is not automatically a valid destination in the current run.
 
-Structural validation checks dependencies, reachability, and evidence coverage. Manual
-playtests separately check ambiguity, understandable deductions, and whether learned rules
-remain useful on another seed. Passing graph tests does not establish those human outcomes.
+Structural validation checks dependencies, reachability, evidence coverage and stable meanings
+across seeds. Agent walkthroughs inspect the actual presented evidence and accepted solution.
+Optional human feedback may reveal confusing deductions; it is not a completion or planning
+gate. Passing graph tests or an agent walkthrough does not establish human comprehension.
 
 ## Input and command interface
 
@@ -310,7 +314,8 @@ Any direct enemy attack is lethal. There is no health bar. Fairness therefore re
 
 The player uses one medium scientific weapon/tool. Its base attack cannot be permanently lost.
 Artifacts unlock new verbs rather than simple damage inflation. Candidate modes are maintained
-in `docs/CONTENT_CATALOG.md` and must be approved before implementation.
+in `docs/CONTENT_CATALOG.md`. Their concrete selection is made in the consuming feature plan
+and authorized by the user's request to implement that plan.
 
 ## Precision teleport
 
@@ -453,6 +458,10 @@ The slice is complete only when a player can:
 10. Save, close, reload, and continue without invalidating the generated world or journal.
 11. Recover and redeploy after repeated deaths or resource depletion without resetting the run.
 
-Completion evidence must include player observations of clue comprehension, lethal-attack and
-traversal readability, and pacing. The feature ownership and playtest gates in `docs/ROADMAP.md`
-define when these checks begin; they must not all be deferred to release.
+Completion evidence must include agent-run behavioral checks of the full loop, rendered
+inspection of changed presentation, persistence and generation regressions, and an exported
+build that runs. The verification obligations in `docs/ROADMAP.md` begin at the owning features;
+they must not all be deferred to release. Required functional or rendering gaps prevent completion.
+No user manual verification is required. Human clue comprehension, enjoyment and subjective
+pacing remain explicitly unassessed unless observations exist; they are optional feedback,
+not delivery gates. This acceptance-policy revision does not change the gameplay scope above.
